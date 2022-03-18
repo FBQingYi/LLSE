@@ -1,7 +1,7 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
 const PluginsVersion = [0, 1, 6];
-const PluginsOtherInformation = { "插件作者": "清漪花开" };
+const PluginsOtherInformation = { "插件作者": "清漪花开" ,"开源地址":"https://github.com/FBQingYi/LLSE/blob/main/gives.js"};
 
 
 //命令注册
