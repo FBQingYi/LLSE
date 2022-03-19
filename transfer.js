@@ -22,4 +22,4 @@ mc.listen("onServerStarted", () => {
     Command.setup();
 })
 
-ll.registerPlugin('transfer', '真指令版跨服传送', [0, 0, 1], { "插件作者": "清漪花开" ,"开源地址":"https://github.com/FBQingYi/LLSE/blob/main/transfer.js"})
+ll.registerPlugin('transfer', '真指令版跨服传送', [0, 0, 3], { "插件作者": "清漪花开" ,"开源地址":"https://github.com/FBQingYi/LLSE/blob/main/transfer.js"})
