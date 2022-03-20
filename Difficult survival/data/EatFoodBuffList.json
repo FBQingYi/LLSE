@@ -1,0 +1,39 @@
+{
+	"debuff": [
+		"slowness",
+		"mining_fatigue",
+		"instant_damage",
+		"nausea",
+		"blindness",
+		"hunger",
+		"weakness",
+		"poison",
+		"wither",
+		"unluck",
+		"bad_omen",
+		"darkness"
+	],
+	"buff": [
+		"speed",
+		"haste",
+		"strength",
+		"instant_health",
+		"jump_boost",
+		"regeneration",
+		"resistance",
+		"fire_resistance",
+		"water_breathing",
+		"invisibility",
+		"night_vision",
+		"health_boost",
+		"absorption",
+		"saturation",
+		"glowing",
+		"levitation",
+		"luck",
+		"slow_falling",
+		"conduit_power",
+		"dolphins_grace",
+		"hero_of_the_village"
+	]
+}

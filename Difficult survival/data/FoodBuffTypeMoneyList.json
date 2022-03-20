@@ -1,0 +1,10 @@
+{
+	"minecraft:apple": [
+		"buff",
+		2
+	],
+	"minecraft:rotten_flesh": [
+		"debuff",
+		10
+	]
+}

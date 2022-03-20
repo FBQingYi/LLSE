@@ -182,33 +182,33 @@ function sidebarDisplay() {
                 let sidebarDisplayjson = {}
                 sidebarDisplayjson["§l§5平均延迟"] = playerList[i].getDevice().avgPing;
                 sidebarDisplayjson["§l§6金币余额"] = money.get(playerList[i].xuid);
-                if (playerList[i].hasTag("真实伤害")) {
-                    sidebarDisplayjson["真实伤害"] = attackSkillCDCountdown[playerList[i].xuid]["真实伤害"];
+                if (playerList[i].hasTag("True_Damage")) {
+                    sidebarDisplayjson["真实伤害"] = attackSkillCDCountdown[playerList[i].xuid]["True_Damage"];
                 }
-                if (playerList[i].hasTag("爆炸攻击")) {
-                    sidebarDisplayjson["爆炸攻击"] = attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"];
+                if (playerList[i].hasTag("Blast_Attack")) {
+                    sidebarDisplayjson["爆炸攻击"] = attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"];
                 }
-                if (playerList[i].hasTag("取你装备")) {
-                    sidebarDisplayjson["取你装备"] = attackSkillCDCountdown[playerList[i].xuid]["取你装备"];
+                if (playerList[i].hasTag("Take_Your_Equipment")) {
+                    sidebarDisplayjson["取你装备"] = attackSkillCDCountdown[playerList[i].xuid]["Take_Your_Equipment"];
                 }
-                if (playerList[i].hasTag("神圣守护")) {
-                    sidebarDisplayjson["神圣守护"] = attackSkillCDCountdown[playerList[i].xuid]["神圣守护"];
+                if (playerList[i].hasTag("Holy_Guardian")) {
+                    sidebarDisplayjson["神圣守护"] = attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"];
                 }
-                if (playerList[i].hasTag("有欠款")) {
+                if (playerList[i].hasTag("arrears")) {
                     sidebarDisplayjson["欠款金额"] = parseInt(playerList[i].getScore(nameOfArrearsScoreboard));
                 }
                 playerList[i].setSidebar("§l§3--肝帝纪元--", sidebarDisplayjson);
-                if (attackSkillCDCountdown[playerList[i].xuid]["真实伤害"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["真实伤害"] -= 1;
+                if (attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] > 0) {
+                    attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] -= 1;
                 }
-                if (attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"] -= 1;
+                if (attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] > 0) {
+                    attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] -= 1;
                 }
-                if (attackSkillCDCountdown[playerList[i].xuid]["取你装备"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["取你装备"] -= 1;
+                if (attackSkillCDCountdown[playerList[i].xuid]["Take_Your_Equipment"] > 0) {
+                    attackSkillCDCountdown[playerList[i].xuid]["Take_Your_Equipment"] -= 1;
                 }
-                if (attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] -= 1;
+                if (attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] > 0) {
+                    attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] -= 1;
                 }
             }
         }
@@ -225,13 +225,13 @@ function everyTenMinutes() {
         if (JSON.stringify(playerList) != "[]") {
             for (let i in playerList) {
                 let player = playerList[i];
-                if (player.hasTag("有欠款")) {
+                if (player.hasTag("arrears")) {
                     let amountOwed = parseInt(player.getScore(nameOfArrearsScoreboard));//获取玩家欠款数据
                     let playerLLMoney = money.get(player.xuid);//获取玩家llmoney金币数据
                     if (playerLLMoney >= amountOwed) {//判断玩家余额是否比欠款多或相等
                         if (money.reduce(player.xuid, amountOwed)) {//扣除玩家欠款金额并判断是否成功
                             if (player.reduceScore(nameOfArrearsScoreboard, amountOwed)) {//减少玩家计分板欠款数据并判断是否成功
-                                player.removeTag("有欠款")//移除欠款标签
+                                player.removeTag("arrears")//移除欠款标签
                                 player.tell(`§l§6扣除欠款成功，欠款金额已清零。恭喜！`, 5)
                             }
                         }
@@ -345,10 +345,10 @@ function entityMobDieHandle(mob, source) {
                             }
                         }
                     } else {//末影龙死亡处理
-                        if (player.hasTag("解脱者")) {
-                            player.removeTag('解脱者');
+                        if (player.hasTag("Liberator")) {
+                            player.removeTag('Liberator');
                         }
-                        player.addTag("屠龙者");
+                        player.addTag("Dragon_Slayer");
                         money.add(player.xuid, killEnderDragonAddMoney);
                         mc.broadcast(`§l§6玩家：${player.name} 成功击杀末影龙，获得${killEnderDragonAddMoney} 金币`);
                         if (enderDragonDoesDeathExplode) {
@@ -581,17 +581,17 @@ function palyerJoinHandle(player) {
         if (playersKillEntityRecords[player.xuid] == undefined) {//判断玩家是否有击杀数据
             playersKillEntityRecords[player.xuid] = 0;
         }
-        if (player.hasTag('屠龙者')) {//判断玩家是否有标签
+        if (player.hasTag('Dragon_Slayer')) {//判断玩家是否有标签
             let pos = player.pos;//获取坐标对象
             mc.broadcast(`§l§2屠龙者：${player.name} 上线了！\n§l§2当前所在坐标：${pos.dim} ${Math.round(pos.x)} ${Math.round(pos.y)} ${Math.round(pos.z)}\n§l§2当前血量：${player.health}`)
         }
-        if (!player.hasTag('已给书')) {
-            player.addTag('已给书');
+        if (!player.hasTag('Books_given')) {
+            player.addTag('Books_given');
             player.giveItem(mc.newItem(NBT.parseSNBT(thePluginContentManualCannotBeEdited)));
             player.refreshItems();
         }
         if (whetherEnablePlayerGrowth) {
-            if (!player.hasTag('成长系统')) {
+            if (!player.hasTag('Growth_system')) {
                 let playerNbt = player.getNbt();//获取玩家Nbt数据
                 let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
                 for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
@@ -604,10 +604,10 @@ function palyerJoinHandle(player) {
                     }
                 }
                 player.setNbt(playerNbt);//写入新的nbt数据
-                player.addTag('成长系统');//设置tag标签
+                player.addTag('Growth_system');//设置tag标签
             }
         } else {
-            if (player.hasTag('成长系统')) {
+            if (player.hasTag('Growth_system')) {
                 let playerNbt = player.getNbt();//获取玩家Nbt数据
                 let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
                 for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
@@ -631,7 +631,7 @@ function palyerJoinHandle(player) {
                     }
                 }
                 player.setNbt(playerNbt);//写入新的nbt数据
-                player.removeTag('成长系统');//设置tag标签
+                player.removeTag('Growth_system');//设置tag标签
             }
         }
     } catch (err) {
@@ -998,25 +998,25 @@ function playerChangeDimHandle_removeMoney(player, deductionAmount) {
             if (money.reduce(player.xuid, deductionAmount)) {//判断是否扣款成功
                 player.tell(`§l§3你已扣除传送费用 ${deductionAmount} 金币！`);
             } else {
-                if (player.hasTag("有欠款")) {//判断是否已经欠款
+                if (player.hasTag("arrears")) {//判断是否已经欠款
                     if (player.addScore(nameOfArrearsScoreboard, deductionAmount)) {//判断是否写入欠款额度成功
                         player.tell(`§l§3除传送费用 ${deductionAmount} 金币失败，已计入欠款额度！`);
                     }
                 } else {//尚未欠款处理
                     if (player.addScore(nameOfArrearsScoreboard, deductionAmount)) {//判断是否写入欠款额度成功
-                        player.addTag("有欠款")//写入欠款标签
+                        player.addTag("arrears")//写入欠款标签
                         player.tell(`§l§3除传送费用 ${deductionAmount} 金币失败，已计入欠款额度！`);
                     }
                 }
             }
         } else {
-            if (player.hasTag("有欠款")) {//判断是否已经欠款
+            if (player.hasTag("arrears")) {//判断是否已经欠款
                 if (player.addScore(nameOfArrearsScoreboard, deductionAmount)) {//判断是否写入欠款额度成功
                     player.tell(`§l§3除传送费用 ${deductionAmount} 金币失败，已计入欠款额度！`);
                 }
             } else {//尚未欠款处理
                 if (player.addScore(nameOfArrearsScoreboard, deductionAmount)) {//判断是否写入欠款额度成功
-                    player.addTag("有欠款")//写入欠款标签
+                    player.addTag("arrears")//写入欠款标签
                     player.tell(`§l§3除传送费用 ${deductionAmount} 金币失败，已计入欠款额度！`);
                 }
             }
@@ -1227,7 +1227,7 @@ function playerFormFirstProcessing(player, choiceId) {
             let msg = '玩家不在线或未完成屠龙任务';//设置默认消息
             for (let i in playerOnlineList) {//遍历在线玩家列表
                 let player = playerOnlineList[i];
-                if (player.hasTag("屠龙者")) {//判断玩家有无屠龙者标签
+                if (player.hasTag("Dragon_Slayer")) {//判断玩家有无屠龙者标签
                     let playerPos = player.pos;//获取玩家坐标对象
                     msg = `玩家：${player.name} 在 ${playerPos.dim} ${Math.round(playerPos.x)} ${Math.round(playerPos.y)} ${Math.round(playerPos.z)}`;//设置新的消息内容
                 }
