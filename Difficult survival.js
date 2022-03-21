@@ -15,7 +15,7 @@ if (!File.exists(path)) {
     let KillPlusGoldList = { "minecraft:skeleton": 1, "minecraft:zombie": 1, "minecraft:spider": 1, "minecraft:creeper": 2, "minecraft:zombie_villager": 1 };
     File.writeTo(path1 + 'KillPlusGold.json', JSON.stringify(KillPlusGoldList, null, "\t"));
     //技能相关配置文件
-    let WeaponSkillsMoneyList = {"True_Damage":{"buy":1000,"SkillLevel":3,"tag":"True_Damage","PictureURL":"https://s3.bmp.ovh/imgs/2021/09/e7cadbcf80cab7f9.png","Upgrade":{"2":5000,"3":10000},"Damage":{"1":{"Harm":1,"CD":60},"2":{"Harm":2,"CD":50},"3":{"Harm":3,"CD":40}}},"Blast_Attack":{"buy":1500,"SkillLevel":3,"tag":"Blast_Attack","PictureURL":"https://s3.bmp.ovh/imgs/2021/09/c43e957897b3de91.png","Upgrade":{"2":10000,"3":15000},"Damage":{"1":{"Harm":1,"Scope":2,"CD":80},"2":{"Harm":2,"Scope":3,"CD":70},"3":{"Harm":3,"Scope":4,"CD":60}}},"Monster_Gift":{"buy":2000,"SkillLevel":4,"tag":"Monster_Gift","PictureURL":"https://s3.bmp.ovh/imgs/2021/09/e0d9bbfe35abed45.png","Upgrade":{"2":15000,"3":30000,"4":50000},"Damage":{"1":{"CD":240},"2":{"CD":230},"3":{"CD":220},"4":{"CD":210}}},"Holy_Guardian":{"buy":2500,"SkillLevel":3,"PictureURL":"https://s3.bmp.ovh/imgs/2021/09/27c6bebd486eb69a.png","Upgrade":{"2":10000,"3":15000},"Damage":{"1":{"Healing amount":2,"CD":190},"2":{"Healing amount":3,"CD":180},"3":{"Healing amount":4,"CD":170}}}};
+    let WeaponSkillsMoneyList = { "True_Damage": { "buy": 1000, "SkillLevel": 3, "tag": "True_Damage", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e7cadbcf80cab7f9.png", "Upgrade": { "2": 5000, "3": 10000 }, "Damage": { "1": { "Harm": 1, "CD": 60 }, "2": { "Harm": 2, "CD": 50 }, "3": { "Harm": 3, "CD": 40 } } }, "Blast_Attack": { "buy": 1500, "SkillLevel": 3, "tag": "Blast_Attack", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/c43e957897b3de91.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Harm": 1, "Scope": 2, "CD": 80 }, "2": { "Harm": 2, "Scope": 3, "CD": 70 }, "3": { "Harm": 3, "Scope": 4, "CD": 60 } } }, "Monster_Gift": { "buy": 2000, "SkillLevel": 4, "tag": "Monster_Gift", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e0d9bbfe35abed45.png", "Upgrade": { "2": 15000, "3": 30000, "4": 50000 }, "Damage": { "1": { "CD": 240 }, "2": { "CD": 230 }, "3": { "CD": 220 }, "4": { "CD": 210 } } }, "Holy_Guardian": { "buy": 2500, "SkillLevel": 3, "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/27c6bebd486eb69a.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Healing amount": 2, "CD": 190 }, "2": { "Healing amount": 3, "CD": 180 }, "3": { "Healing amount": 4, "CD": 170 } } } };
     File.writeTo(path1 + 'WeaponSkillsMoneyList.json', JSON.stringify(WeaponSkillsMoneyList, null, "\t"));
     //吃食物获得buff列表
     let EatFoodBuffList = { "debuff": ["slowness", "mining_fatigue", "instant_damage", "nausea", "blindness", "hunger", "weakness", "poison", "wither", "unluck", "bad_omen", "darkness"], "buff": ["speed", "haste", "strength", "instant_health", "jump_boost", "regeneration", "resistance", "fire_resistance", "water_breathing", "invisibility", "night_vision", "health_boost", "absorption", "saturation", "glowing", "levitation", "luck", "slow_falling", "conduit_power", "dolphins_grace", "hero_of_the_village"] };
@@ -71,104 +71,110 @@ if (!File.exists(path)) {
                  佛祖保佑       永无BUG
 */
 
-/*-----------配置文件读取，默认数据，全局变量，内存爆炸专区-----------*/
-let basicProfile = JSON.parse(File.readFrom(path + 'config.json'));//读取基础配置文件
-let SystemLanguage = basicProfile.language;//获取配置文件语言设置
-let moneyUnlockListJson = JSON.parse(File.readFrom(path1 + 'GoldCoinLimitList.json'));//读取金币解锁装备配置文件
-let destructionAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'DestroyBlockAddMoney.json'));//读取破坏加金币配置文件
-let killEntityAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'KillPlusGold.json'));//读取击杀加金币配置文件
-let purchaseSkillsMoneyListJson = JSON.parse(File.readFrom(path1 + 'WeaponSkillsMoneyList.json'));//读取购买技能相关配置文件
-let eatFoodGiveBuffListJson = JSON.parse(File.readFrom(path1 + 'EatFoodBuffList.json'));//读取食物buff列表配置文件
-let foodBuffTypeMoneyListJson = JSON.parse(File.readFrom(path1 + 'FoodBuffTypeMoneyList.json'));//读取食物对应buff类型和金币配置文件
-let itemEnchantListJson = JSON.parse(File.readFrom(path1 + 'ItemEnchantList.json'));//读取物品附魔列表配置文件
-let listOfRandomlyResurrectedCreatures = JSON.parse(File.readFrom(path1 + 'randomlyResurrectedCreatures.json'));//随机复活生物列表
-let injuryDoesNotFallListJson = JSON.parse(File.readFrom(path1 + 'ListOfItemsNotDropped.json'));//读取受伤不掉落物品列表配置文件
-let thePluginContentManualCannotBeEdited = File.readFrom(path2 + 'ServerGiveBooks.txt');//读取进服给玩家的书的snbt
-//---------------其他设置相关配置变量定义
-let Repair_equipment_durability_price = basicProfile["Other_Settings"]["Repair_equipment_durability_price"];//Repair_equipment_durability_price
-let nameOfArrearsScoreboard = basicProfile["Other_Settings"]["Debt_record_scoreboard_name"];//欠款计分板配置文件设置名称
-let showsidebar = basicProfile["Other_Settings"]["Whether_to_show_the_sidebar"];//Whether_to_show_the_sidebar
-let whetherToInterceptBedExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_the_bed_explosion"];//Whether_to_intercept_the_bed_explosion
-let whetherToInterceptTheRebirthAnchorExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_respawn_anchor_explosions"];//Whether_to_intercept_respawn_anchor_explosions
-let whetherToDisplayBloodBarDuringAttack = basicProfile["Other_Settings"]["Whether_to_show_health_bar_when_attacking"];//Whether_to_show_health_bar_when_attacking
-let nweDiddicultSurvivalPlayerCmd = basicProfile["Other_Settings"]["Plugin_Directive"];//读取玩家指令
-let itemDefaultEnchantLevel = basicProfile["Other_Settings"]["Item_default_enchantment_level"];//读取物品默认附魔等级
-let newplugInOPSettingsPanel = basicProfile["Other_Settings"]["Plugin_OP_Settings_Panel"];//读取op指令
-let handHeldItemsWillNotFallIfInjured = basicProfile["Other_Settings"]["Added_hand-held_items_to_not_drop_commands_for_injuries"];//读取增加手持物品为受伤不掉落指令
-let handHeldItemsAreGivenForService = basicProfile["Other_Settings"]["Set_the_item_in_hand_as_the_item_given_in_the_suit"];//读取设置手持物品为进服给予物品
-let isTheSlainMonsterResurrectedRandomly = basicProfile["Other_Settings"]["Whether_the_killed_monster_is_randomly_resurrected"];//Whether_the_killed_monster_is_randomly_resurrected
-let resurrectionProbabilityOfKilledMonster = basicProfile["Other_Settings"]["Chance_of_resurrection"];//被杀怪物复活几率
-//---------------死亡相关设置变量定义
-let doesDeathDeductGoldCoins = basicProfile["Death_related_configuration"]["Does_death_deduct_gold_coins"];//死亡是否扣金币配置文件数据
-let deductGoldCoinsForNonKillDeath = basicProfile["Death_related_configuration"]["Does_non-kill_death_deduct_gold_coins"];//非击杀死亡是否扣金币配置文件数据
-let numberOfGoldCoinsDeductedFromDeath = basicProfile["Death_related_configuration"]["Gold_coin_limit"];//死亡是否扣金币配置文件数据
-//---------------跨世界相关设置变量定义
-let deductMoneyForCrossingDimensions = basicProfile["Cross-world_related_configuration"]["Whether_to_deduct_gold_coins_across_the_world"];//跨纬度是否扣钱
-let enterTheMainWorldRemovemoney = basicProfile["Cross-world_related_configuration"]["Overworld"];//Overworld扣钱数量
-let intoHellRemovemoney = basicProfile["Cross-world_related_configuration"]["Hell"];//Hell扣钱数量
-let enterTheDestinationRemovemoney = basicProfile["Cross-world_related_configuration"]["TheEnd"];//Hell扣钱数量
-//---------------Attack Related设置变量定义
-let enableGoldCoinRestrictedWeapons = basicProfile["Attack_Related"]["Whether_to_enable_gold_limited_weapons"];//Whether_to_enable_gold_limited_weapons
-let whetherToEnableInvalidAttackProbability = basicProfile["Attack_Related"]["Whether_to_enable_attack_chance_is_invalid"];//攻击无效配置文件
-let attackInvalidProbability = basicProfile["Attack_Related"]["Invalid_chance"];//攻击Invalid chance
-let whetherToEnableInjuredItems = basicProfile["Attack_Related"]["Whether_to_enable_damaged_items"];//是否启用受伤掉装备
-let PVPDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVP"];//pvp受伤掉落物品几率
-let PVEDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVE"];//pve受伤掉落物品几率
-let noObjectIsReallHurt = basicProfile["Attack_Related"]["Whether_there_is_no_real_injury_to_the_item"];//Whether_there_is_no_real_injury_to_the_item
-let doesPVPDeductGoldCoins = basicProfile["Attack_Related"]["Does_PVP_deduct_gold_coins"];//Does_PVP_deduct_gold_coins
-let PVPDeductionGoldCoinQuantity = basicProfile["Attack_Related"]["PVP_deduction_gold_coins_quantity"];//PVP_deduction_gold_coins_quantity
-let IsThereAnUpperLimitForPVEPlusGold = basicProfile["Attack_Related"]["Is_there_a_cap_on_PVE_plus_gold_coins"];//Is_there_a_cap_on_PVE_plus_gold_coins
-let PVEPlusGoldUpperLimit = basicProfile["Attack_Related"]["PVE_plus_gold_limit"];//PVE金币上限
-//---------------末影龙相关设置变量定义
-let specificWeaponsHurtEnderDragon = basicProfile["Ender_dragon_related"]["Whether_to_limit_the_damage_of_specific_weapons_to_the_ender_dragon"];//是否特定武器伤害末影龙
-let enderDragonRangedDamageAllow = basicProfile["Ender_dragon_related"]["Can_the_ender_dragon_take_ranged_damage"];//是否能远程伤害末影龙
-let weaponIDCapableOfCausingDamage = basicProfile["Ender_dragon_related"]["Weapon_ID_that_can_deal_damage"];//能对末影龙造成伤害武器ID
-let enderDragonInvalidAttackProbability = basicProfile["Ender_dragon_related"]["Whether_to_set_the_player's_ineffective_chance_of_attacking_the_ender_dragon"];//是否开启对末影龙攻击无效几率
-let contendenderDragonDamageProbability = basicProfile["Ender_dragon_related"]["Attack_on_the_ender_dragon_ineffective_chance"];//对末影龙攻击无效几率
-let enderDragonDoesDeathExplode = basicProfile["Ender_dragon_related"]["Does_the_death_of_the_ender_dragon_cause_an_explosion"];//末影龙死亡是否爆炸
-let enderDragonExplodeRange = basicProfile["Ender_dragon_related"]["Blast_radius"];//末影龙死亡爆炸半径
-let killEnderDragonAddMoney = basicProfile["Ender_dragon_related"]["How_much_gold_to_kill_the_ender_dragon"];//How_much_gold_to_kill_the_ender_dragon
-//---------------破坏加金币相关设置变量定义
-let enableGoldLimitDestruction = basicProfile["Destruction_plus_gold_coins"]["Whether_to_enable_gold_limit_destruction"];//是否启用金币破坏
-let resetDestructionAddMoneyTime = basicProfile["Destruction_plus_gold_coins"]["Reset_Time"];//重置破坏加金币限制配置文件数据
-let limitDailyDamagePlusGold = basicProfile["Destruction_plus_gold_coins"]["Whether_to_limit_the_number_of_daily_destruction_plus_gold_coins"];//获取是否限制每日加金币数量
-let limitTheAmountOfDamageAndGoldCoinsPerDay = basicProfile["Destruction_plus_gold_coins"]["Destruction_Cap"];//获取每日加金币数量
-//---------------抛射物相关设置变量定义
-let enableArrowFishingRodTridentGoldCoinLimit = basicProfile["Projectile_related"]["Whether_to_enable_the_arrow_fishing_rod_trident_gold_limit"];//是否启用限制
-let doYouDeductGoldCoinsForFishing = basicProfile["Projectile_related"]["Does_fishing_deduct_gold_coins"];//是否启钓鱼扣钱
-let fishingRodGoldLimit = basicProfile["Projectile_related"]["Fishing_rod_unlocks_gold_coins"];//Fishing_rod_unlocks_gold_coins
-let numberOfGoldCoinsDeductedForFishing = basicProfile["Projectile_related"]["Fishing_Buckle_Gold_Coins_quantity"];//Fishing_Buckle_Gold_Coins_quantity
-let arrowUnlockGold = basicProfile["Projectile_related"]["Arrows_unlock_coins"];//Arrows_unlock_coins
-let tridentThrowUnlockGoldCoin = basicProfile["Projectile_related"]["Trident_throw_to_unlock_gold_coins"];//Trident_throw_to_unlock_gold_coins
-//---------------玩家成长相关设置变量定义
-let whetherEnablePlayerGrowth = basicProfile["Player_growth"]["Whether_to_enable_the_Player_growth_system"];//Whether_to_enable_the_Player_growth_system
-let playerInitialHealth = basicProfile["Player_growth"]["Player's_initial_health"];//Player's_initial_health
-let playerMoneyAddHealth = basicProfile["Player_growth"]["The_player_adds_a_bit_of_blood_for_every_gold_coin"];//The_player_adds_a_bit_of_blood_for_every_gold_coin
-let playerMoneyAddAttack = basicProfile["Player_growth"]["The_player_adds_a_point_of_attack_for_every_gold_coin"];//The_player_adds_a_point_of_attack_for_every_gold_coin
-//--------------语言文件读取分辨
-let pluginLanguage = {};
-let pluginLanguageFile = {};
-if (SystemLanguage == "en_US") {
-    pluginLanguage = JSON.parse(File.readFrom(path3 + 'en_US.json'));//读取英文语言文件
-} else if (SystemLanguage == "zh_CN") {
-    pluginLanguage = JSON.parse(File.readFrom(path3 + 'zh_CN.json'));//读取英文语言文件
-    pluginLanguageFile = JSON.parse(File.readFrom(path3 + 'item_zh_CN.json'));//读取中英对照语言文件
-}
-//---------------Tag读取
-let TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.tag;
-let BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.tag;
-let MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.tag;
-let HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.tag;
-//---------------附魔相关变量设定
-let ConfigEnchantNameList = [];
-let ConfigEnchantMoneyList = [];
-let ConfigEnchantIDList = [];
-let ii = 0;
-for (let i1 in itemEnchantListJson[SystemLanguage]) {
-    ConfigEnchantNameList[ii] = i1;
-    ConfigEnchantMoneyList[ii] = itemEnchantListJson[SystemLanguage][i1].Price;
-    ConfigEnchantIDList[ii] = itemEnchantListJson[SystemLanguage][i1].ID;
-    ii+=1;
+//----------------申明变量
+let basicProfile, SystemLanguage, moneyUnlockListJson, destructionAddMoneyListJson, killEntityAddMoneyListJson, purchaseSkillsMoneyListJson, eatFoodGiveBuffListJson, foodBuffTypeMoneyListJson, itemEnchantListJson, listOfRandomlyResurrectedCreatures, injuryDoesNotFallListJson, thePluginContentManualCannotBeEdited, Repair_equipment_durability_price, nameOfArrearsScoreboard, showsidebar, whetherToInterceptBedExplosion, whetherToInterceptTheRebirthAnchorExplosion, whetherToDisplayBloodBarDuringAttack, nweDiddicultSurvivalPlayerCmd, itemDefaultEnchantLevel, newplugInOPSettingsPanel, handHeldItemsWillNotFallIfInjured, handHeldItemsAreGivenForService, isTheSlainMonsterResurrectedRandomly, resurrectionProbabilityOfKilledMonster, doesDeathDeductGoldCoins, numberOfGoldCoinsDeductedFromDeath, deductMoneyForCrossingDimensions, enterTheMainWorldRemovemoney, intoHellRemovemoney, enterTheDestinationRemovemoney, enableGoldCoinRestrictedWeapons, whetherToEnableInvalidAttackProbability, deductGoldCoinsForNonKillDeath, attackInvalidProbability, whetherToEnableInjuredItems, PVPDropProbability, PVEDropProbability, noObjectIsReallHurt, doesPVPDeductGoldCoins, PVPDeductionGoldCoinQuantity, IsThereAnUpperLimitForPVEPlusGold, PVEPlusGoldUpperLimit, specificWeaponsHurtEnderDragon, enderDragonRangedDamageAllow, weaponIDCapableOfCausingDamage, enderDragonInvalidAttackProbability, contendenderDragonDamageProbability, enderDragonDoesDeathExplode, killEnderDragonAddMoney, enableGoldLimitDestruction, resetDestructionAddMoneyTime, limitDailyDamagePlusGold, limitTheAmountOfDamageAndGoldCoinsPerDay, enableArrowFishingRodTridentGoldCoinLimit, doYouDeductGoldCoinsForFishing, numberOfGoldCoinsDeductedForFishing, tridentThrowUnlockGoldCoin, whetherEnablePlayerGrowth, playerInitialHealth, playerMoneyAddHealth, playerMoneyAddAttack, pluginLanguage, pluginLanguageFile, TrueDamageTag, BlastAttackTag, MonsterGiftTag, HolyGuardianTag, ConfigEnchantNameList, ConfigEnchantMoneyList, ConfigEnchantIDList, ii;
+
+GlobalVariableAssignment()
+function GlobalVariableAssignment() {
+    /*-----------配置文件读取，默认数据，全局变量，内存爆炸专区-----------*/
+    basicProfile = JSON.parse(File.readFrom(path + 'config.json'));//读取基础配置文件
+    SystemLanguage = basicProfile.language;//获取配置文件语言设置
+    moneyUnlockListJson = JSON.parse(File.readFrom(path1 + 'GoldCoinLimitList.json'));//读取金币解锁装备配置文件
+    destructionAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'DestroyBlockAddMoney.json'));//读取破坏加金币配置文件
+    killEntityAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'KillPlusGold.json'));//读取击杀加金币配置文件
+    purchaseSkillsMoneyListJson = JSON.parse(File.readFrom(path1 + 'WeaponSkillsMoneyList.json'));//读取购买技能相关配置文件
+    eatFoodGiveBuffListJson = JSON.parse(File.readFrom(path1 + 'EatFoodBuffList.json'));//读取食物buff列表配置文件
+    foodBuffTypeMoneyListJson = JSON.parse(File.readFrom(path1 + 'FoodBuffTypeMoneyList.json'));//读取食物对应buff类型和金币配置文件
+    itemEnchantListJson = JSON.parse(File.readFrom(path1 + 'ItemEnchantList.json'));//读取物品附魔列表配置文件
+    listOfRandomlyResurrectedCreatures = JSON.parse(File.readFrom(path1 + 'randomlyResurrectedCreatures.json'));//随机复活生物列表
+    injuryDoesNotFallListJson = JSON.parse(File.readFrom(path1 + 'ListOfItemsNotDropped.json'));//读取受伤不掉落物品列表配置文件
+    thePluginContentManualCannotBeEdited = File.readFrom(path2 + 'ServerGiveBooks.txt');//读取进服给玩家的书的snbt
+    //---------------其他设置相关配置变量定义
+    Repair_equipment_durability_price = basicProfile["Other_Settings"]["Repair_equipment_durability_price"];//Repair_equipment_durability_price
+    nameOfArrearsScoreboard = basicProfile["Other_Settings"]["Debt_record_scoreboard_name"];//欠款计分板配置文件设置名称
+    showsidebar = basicProfile["Other_Settings"]["Whether_to_show_the_sidebar"];//Whether_to_show_the_sidebar
+    whetherToInterceptBedExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_the_bed_explosion"];//Whether_to_intercept_the_bed_explosion
+    whetherToInterceptTheRebirthAnchorExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_respawn_anchor_explosions"];//Whether_to_intercept_respawn_anchor_explosions
+    whetherToDisplayBloodBarDuringAttack = basicProfile["Other_Settings"]["Whether_to_show_health_bar_when_attacking"];//Whether_to_show_health_bar_when_attacking
+    nweDiddicultSurvivalPlayerCmd = basicProfile["Other_Settings"]["Plugin_Directive"];//读取玩家指令
+    itemDefaultEnchantLevel = basicProfile["Other_Settings"]["Item_default_enchantment_level"];//读取物品默认附魔等级
+    newplugInOPSettingsPanel = basicProfile["Other_Settings"]["Plugin_OP_Settings_Panel"];//读取op指令
+    handHeldItemsWillNotFallIfInjured = basicProfile["Other_Settings"]["Added_hand-held_items_to_not_drop_commands_for_injuries"];//读取增加手持物品为受伤不掉落指令
+    handHeldItemsAreGivenForService = basicProfile["Other_Settings"]["Set_the_item_in_hand_as_the_item_given_in_the_suit"];//读取设置手持物品为进服给予物品
+    isTheSlainMonsterResurrectedRandomly = basicProfile["Other_Settings"]["Whether_the_killed_monster_is_randomly_resurrected"];//Whether_the_killed_monster_is_randomly_resurrected
+    resurrectionProbabilityOfKilledMonster = basicProfile["Other_Settings"]["Chance_of_resurrection"];//被杀怪物复活几率
+    //---------------死亡相关设置变量定义
+    doesDeathDeductGoldCoins = basicProfile["Death_related_configuration"]["Does_death_deduct_gold_coins"];//死亡是否扣金币配置文件数据
+    deductGoldCoinsForNonKillDeath = basicProfile["Death_related_configuration"]["Does_non-kill_death_deduct_gold_coins"];//非击杀死亡是否扣金币配置文件数据
+    numberOfGoldCoinsDeductedFromDeath = basicProfile["Death_related_configuration"]["Gold_coin_limit"];//死亡是否扣金币配置文件数据
+    //---------------跨世界相关设置变量定义
+    deductMoneyForCrossingDimensions = basicProfile["Cross-world_related_configuration"]["Whether_to_deduct_gold_coins_across_the_world"];//跨纬度是否扣钱
+    enterTheMainWorldRemovemoney = basicProfile["Cross-world_related_configuration"]["Overworld"];//Overworld扣钱数量
+    intoHellRemovemoney = basicProfile["Cross-world_related_configuration"]["Hell"];//Hell扣钱数量
+    enterTheDestinationRemovemoney = basicProfile["Cross-world_related_configuration"]["TheEnd"];//Hell扣钱数量
+    //---------------Attack Related设置变量定义
+    enableGoldCoinRestrictedWeapons = basicProfile["Attack_Related"]["Whether_to_enable_gold_limited_weapons"];//Whether_to_enable_gold_limited_weapons
+    whetherToEnableInvalidAttackProbability = basicProfile["Attack_Related"]["Whether_to_enable_attack_chance_is_invalid"];//攻击无效配置文件
+    attackInvalidProbability = basicProfile["Attack_Related"]["Invalid_chance"];//攻击Invalid chance
+    whetherToEnableInjuredItems = basicProfile["Attack_Related"]["Whether_to_enable_damaged_items"];//是否启用受伤掉装备
+    PVPDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVP"];//pvp受伤掉落物品几率
+    PVEDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVE"];//pve受伤掉落物品几率
+    noObjectIsReallHurt = basicProfile["Attack_Related"]["Whether_there_is_no_real_injury_to_the_item"];//Whether_there_is_no_real_injury_to_the_item
+    doesPVPDeductGoldCoins = basicProfile["Attack_Related"]["Does_PVP_deduct_gold_coins"];//Does_PVP_deduct_gold_coins
+    PVPDeductionGoldCoinQuantity = basicProfile["Attack_Related"]["PVP_deduction_gold_coins_quantity"];//PVP_deduction_gold_coins_quantity
+    IsThereAnUpperLimitForPVEPlusGold = basicProfile["Attack_Related"]["Is_there_a_cap_on_PVE_plus_gold_coins"];//Is_there_a_cap_on_PVE_plus_gold_coins
+    PVEPlusGoldUpperLimit = basicProfile["Attack_Related"]["PVE_plus_gold_limit"];//PVE金币上限
+    //---------------末影龙相关设置变量定义
+    specificWeaponsHurtEnderDragon = basicProfile["Ender_dragon_related"]["Whether_to_limit_the_damage_of_specific_weapons_to_the_ender_dragon"];//是否特定武器伤害末影龙
+    enderDragonRangedDamageAllow = basicProfile["Ender_dragon_related"]["Can_the_ender_dragon_take_ranged_damage"];//是否能远程伤害末影龙
+    weaponIDCapableOfCausingDamage = basicProfile["Ender_dragon_related"]["Weapon_ID_that_can_deal_damage"];//能对末影龙造成伤害武器ID
+    enderDragonInvalidAttackProbability = basicProfile["Ender_dragon_related"]["Whether_to_set_the_player's_ineffective_chance_of_attacking_the_ender_dragon"];//是否开启对末影龙攻击无效几率
+    contendenderDragonDamageProbability = basicProfile["Ender_dragon_related"]["Attack_on_the_ender_dragon_ineffective_chance"];//对末影龙攻击无效几率
+    enderDragonDoesDeathExplode = basicProfile["Ender_dragon_related"]["Does_the_death_of_the_ender_dragon_cause_an_explosion"];//末影龙死亡是否爆炸
+    enderDragonExplodeRange = basicProfile["Ender_dragon_related"]["Blast_radius"];//末影龙死亡爆炸半径
+    killEnderDragonAddMoney = basicProfile["Ender_dragon_related"]["How_much_gold_to_kill_the_ender_dragon"];//How_much_gold_to_kill_the_ender_dragon
+    //---------------破坏加金币相关设置变量定义
+    enableGoldLimitDestruction = basicProfile["Destruction_plus_gold_coins"]["Whether_to_enable_gold_limit_destruction"];//是否启用金币破坏
+    resetDestructionAddMoneyTime = basicProfile["Destruction_plus_gold_coins"]["Reset_Time"];//重置破坏加金币限制配置文件数据
+    limitDailyDamagePlusGold = basicProfile["Destruction_plus_gold_coins"]["Whether_to_limit_the_number_of_daily_destruction_plus_gold_coins"];//获取是否限制每日加金币数量
+    limitTheAmountOfDamageAndGoldCoinsPerDay = basicProfile["Destruction_plus_gold_coins"]["Destruction_Cap"];//获取每日加金币数量
+    //---------------抛射物相关设置变量定义
+    enableArrowFishingRodTridentGoldCoinLimit = basicProfile["Projectile_related"]["Whether_to_enable_the_arrow_fishing_rod_trident_gold_limit"];//是否启用限制
+    doYouDeductGoldCoinsForFishing = basicProfile["Projectile_related"]["Does_fishing_deduct_gold_coins"];//是否启钓鱼扣钱
+    fishingRodGoldLimit = basicProfile["Projectile_related"]["Fishing_rod_unlocks_gold_coins"];//Fishing_rod_unlocks_gold_coins
+    numberOfGoldCoinsDeductedForFishing = basicProfile["Projectile_related"]["Fishing_Buckle_Gold_Coins_quantity"];//Fishing_Buckle_Gold_Coins_quantity
+    arrowUnlockGold = basicProfile["Projectile_related"]["Arrows_unlock_coins"];//Arrows_unlock_coins
+    tridentThrowUnlockGoldCoin = basicProfile["Projectile_related"]["Trident_throw_to_unlock_gold_coins"];//Trident_throw_to_unlock_gold_coins
+    //---------------玩家成长相关设置变量定义
+    whetherEnablePlayerGrowth = basicProfile["Player_growth"]["Whether_to_enable_the_Player_growth_system"];//Whether_to_enable_the_Player_growth_system
+    playerInitialHealth = basicProfile["Player_growth"]["Player's_initial_health"];//Player's_initial_health
+    playerMoneyAddHealth = basicProfile["Player_growth"]["The_player_adds_a_bit_of_blood_for_every_gold_coin"];//The_player_adds_a_bit_of_blood_for_every_gold_coin
+    playerMoneyAddAttack = basicProfile["Player_growth"]["The_player_adds_a_point_of_attack_for_every_gold_coin"];//The_player_adds_a_point_of_attack_for_every_gold_coin
+    //--------------语言文件读取分辨
+    pluginLanguage = {};
+    pluginLanguageFile = {};
+    if (SystemLanguage == "en_US") {
+        pluginLanguage = JSON.parse(File.readFrom(path3 + 'en_US.json'));//读取英文语言文件
+    } else if (SystemLanguage == "zh_CN") {
+        pluginLanguage = JSON.parse(File.readFrom(path3 + 'zh_CN.json'));//读取英文语言文件
+        pluginLanguageFile = JSON.parse(File.readFrom(path3 + 'item_zh_CN.json'));//读取中英对照语言文件
+    }
+    //---------------Tag读取
+    TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.tag;
+    BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.tag;
+    MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.tag;
+    HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.tag;
+    //---------------附魔相关变量设定
+    ConfigEnchantNameList = [];
+    ConfigEnchantMoneyList = [];
+    ConfigEnchantIDList = [];
+    ii = 0;
+    for (i1 in itemEnchantListJson[SystemLanguage]) {
+        ConfigEnchantNameList[ii] = i1;
+        ConfigEnchantMoneyList[ii] = itemEnchantListJson[SystemLanguage][i1].Price;
+        ConfigEnchantIDList[ii] = itemEnchantListJson[SystemLanguage][i1].ID;
+        ii += 1;
+    }
 }
 
 //---------------插件内部处理相关变量定义
@@ -1531,105 +1537,7 @@ function opPlayerRegCmd(player, args) {
                 player.sendForm(playerFrom, (player, choiceId) => {
                     if (player.isOP()) {
                         if (choiceId == 0) {
-                            /*-----------配置文件读取，默认数据，全局变量，内存爆炸专区-----------*/
-                            basicProfile = JSON.parse(File.readFrom(path + 'config.json'));//读取基础配置文件
-                            SystemLanguage = basicProfile.language;//获取配置文件语言设置
-                            moneyUnlockListJson = JSON.parse(File.readFrom(path1 + 'GoldCoinLimitList.json'));//读取金币解锁装备配置文件
-                            destructionAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'DestroyBlockAddMoney.json'));//读取破坏加金币配置文件
-                            killEntityAddMoneyListJson = JSON.parse(File.readFrom(path1 + 'KillPlusGold.json'));//读取击杀加金币配置文件
-                            purchaseSkillsMoneyListJson = JSON.parse(File.readFrom(path1 + 'WeaponSkillsMoneyList.json'));//读取购买技能相关配置文件
-                            eatFoodGiveBuffListJson = JSON.parse(File.readFrom(path1 + 'EatFoodBuffList.json'));//读取食物buff列表配置文件
-                            foodBuffTypeMoneyListJson = JSON.parse(File.readFrom(path1 + 'FoodBuffTypeMoneyList.json'));//读取食物对应buff类型和金币配置文件
-                            itemEnchantListJson = JSON.parse(File.readFrom(path1 + 'ItemEnchantList.json'));//读取物品附魔列表配置文件
-                            listOfRandomlyResurrectedCreatures = JSON.parse(File.readFrom(path1 + 'randomlyResurrectedCreatures.json'));//随机复活生物列表
-                            injuryDoesNotFallListJson = JSON.parse(File.readFrom(path1 + 'ListOfItemsNotDropped.json'));//读取受伤不掉落物品列表配置文件
-                            thePluginContentManualCannotBeEdited = File.readFrom(path2 + 'ServerGiveBooks.txt');//读取进服给玩家的书的snbt
-                            //---------------其他设置相关配置变量定义
-                            Repair_equipment_durability_price = basicProfile["Other_Settings"]["Repair_equipment_durability_price"];//Repair_equipment_durability_price
-                            nameOfArrearsScoreboard = basicProfile["Other_Settings"]["Debt_record_scoreboard_name"];//欠款计分板配置文件设置名称
-                            showsidebar = basicProfile["Other_Settings"]["Whether_to_show_the_sidebar"];//Whether_to_show_the_sidebar
-                            whetherToInterceptBedExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_the_bed_explosion"];//Whether_to_intercept_the_bed_explosion
-                            whetherToInterceptTheRebirthAnchorExplosion = basicProfile["Other_Settings"]["Whether_to_intercept_respawn_anchor_explosions"];//Whether_to_intercept_respawn_anchor_explosions
-                            whetherToDisplayBloodBarDuringAttack = basicProfile["Other_Settings"]["Whether_to_show_health_bar_when_attacking"];//Whether_to_show_health_bar_when_attacking
-                            nweDiddicultSurvivalPlayerCmd = basicProfile["Other_Settings"]["Plugin_Directive"];//读取玩家指令
-                            itemDefaultEnchantLevel = basicProfile["Other_Settings"]["Item_default_enchantment_level"];//读取物品默认附魔等级
-                            newplugInOPSettingsPanel = basicProfile["Other_Settings"]["Plugin_OP_Settings_Panel"];//读取op指令
-                            handHeldItemsWillNotFallIfInjured = basicProfile["Other_Settings"]["Added_hand-held_items_to_not_drop_commands_for_injuries"];//读取增加手持物品为受伤不掉落指令
-                            handHeldItemsAreGivenForService = basicProfile["Other_Settings"]["Set_the_item_in_hand_as_the_item_given_in_the_suit"];//读取设置手持物品为进服给予物品
-                            isTheSlainMonsterResurrectedRandomly = basicProfile["Other_Settings"]["Whether_the_killed_monster_is_randomly_resurrected"];//Whether_the_killed_monster_is_randomly_resurrected
-                            resurrectionProbabilityOfKilledMonster = basicProfile["Other_Settings"]["Chance_of_resurrection"];//被杀怪物复活几率
-                            //---------------死亡相关设置变量定义
-                            doesDeathDeductGoldCoins = basicProfile["Death_related_configuration"]["Does_death_deduct_gold_coins"];//死亡是否扣金币配置文件数据
-                            deductGoldCoinsForNonKillDeath = basicProfile["Death_related_configuration"]["Does_non-kill_death_deduct_gold_coins"];//非击杀死亡是否扣金币配置文件数据
-                            numberOfGoldCoinsDeductedFromDeath = basicProfile["Death_related_configuration"]["Gold_coin_limit"];//死亡是否扣金币配置文件数据
-                            //---------------跨世界相关设置变量定义
-                            deductMoneyForCrossingDimensions = basicProfile["Cross-world_related_configuration"]["Whether_to_deduct_gold_coins_across_the_world"];//跨纬度是否扣钱
-                            enterTheMainWorldRemovemoney = basicProfile["Cross-world_related_configuration"]["Overworld"];//Overworld扣钱数量
-                            intoHellRemovemoney = basicProfile["Cross-world_related_configuration"]["Hell"];//Hell扣钱数量
-                            enterTheDestinationRemovemoney = basicProfile["Cross-world_related_configuration"]["TheEnd"];//Hell扣钱数量
-                            //---------------Attack Related设置变量定义
-                            enableGoldCoinRestrictedWeapons = basicProfile["Attack_Related"]["Whether_to_enable_gold_limited_weapons"];//Whether_to_enable_gold_limited_weapons
-                            whetherToEnableInvalidAttackProbability = basicProfile["Attack_Related"]["Whether_to_enable_attack_chance_is_invalid"];//攻击无效配置文件
-                            attackInvalidProbability = basicProfile["Attack_Related"]["Invalid_chance"];//攻击Invalid chance
-                            whetherToEnableInjuredItems = basicProfile["Attack_Related"]["Whether_to_enable_damaged_items"];//是否启用受伤掉装备
-                            PVPDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVP"];//pvp受伤掉落物品几率
-                            PVEDropProbability = basicProfile["Attack_Related"]["Item_drop_chance_in_PVE"];//pve受伤掉落物品几率
-                            noObjectIsReallHurt = basicProfile["Attack_Related"]["Whether_there_is_no_real_injury_to_the_item"];//Whether_there_is_no_real_injury_to_the_item
-                            doesPVPDeductGoldCoins = basicProfile["Attack_Related"]["Does_PVP_deduct_gold_coins"];//Does_PVP_deduct_gold_coins
-                            PVPDeductionGoldCoinQuantity = basicProfile["Attack_Related"]["PVP_deduction_gold_coins_quantity"];//PVP_deduction_gold_coins_quantity
-                            IsThereAnUpperLimitForPVEPlusGold = basicProfile["Attack_Related"]["Is_there_a_cap_on_PVE_plus_gold_coins"];//Is_there_a_cap_on_PVE_plus_gold_coins
-                            PVEPlusGoldUpperLimit = basicProfile["Attack_Related"]["PVE_plus_gold_limit"];//PVE金币上限
-                            //---------------末影龙相关设置变量定义
-                            specificWeaponsHurtEnderDragon = basicProfile["Ender_dragon_related"]["Whether_to_limit_the_damage_of_specific_weapons_to_the_ender_dragon"];//是否特定武器伤害末影龙
-                            enderDragonRangedDamageAllow = basicProfile["Ender_dragon_related"]["Can_the_ender_dragon_take_ranged_damage"];//是否能远程伤害末影龙
-                            weaponIDCapableOfCausingDamage = basicProfile["Ender_dragon_related"]["Weapon_ID_that_can_deal_damage"];//能对末影龙造成伤害武器ID
-                            enderDragonInvalidAttackProbability = basicProfile["Ender_dragon_related"]["Whether_to_set_the_player's_ineffective_chance_of_attacking_the_ender_dragon"];//是否开启对末影龙攻击无效几率
-                            contendenderDragonDamageProbability = basicProfile["Ender_dragon_related"]["Attack_on_the_ender_dragon_ineffective_chance"];//对末影龙攻击无效几率
-                            enderDragonDoesDeathExplode = basicProfile["Ender_dragon_related"]["Does_the_death_of_the_ender_dragon_cause_an_explosion"];//末影龙死亡是否爆炸
-                            enderDragonExplodeRange = basicProfile["Ender_dragon_related"]["Blast_radius"];//末影龙死亡爆炸半径
-                            killEnderDragonAddMoney = basicProfile["Ender_dragon_related"]["How_much_gold_to_kill_the_ender_dragon"];//How_much_gold_to_kill_the_ender_dragon
-                            //---------------破坏加金币相关设置变量定义
-                            enableGoldLimitDestruction = basicProfile["Destruction_plus_gold_coins"]["Whether_to_enable_gold_limit_destruction"];//是否启用金币破坏
-                            resetDestructionAddMoneyTime = basicProfile["Destruction_plus_gold_coins"]["Reset_Time"];//重置破坏加金币限制配置文件数据
-                            limitDailyDamagePlusGold = basicProfile["Destruction_plus_gold_coins"]["Whether_to_limit_the_number_of_daily_destruction_plus_gold_coins"];//获取是否限制每日加金币数量
-                            limitTheAmountOfDamageAndGoldCoinsPerDay = basicProfile["Destruction_plus_gold_coins"]["Destruction_Cap"];//获取每日加金币数量
-                            //---------------抛射物相关设置变量定义
-                            enableArrowFishingRodTridentGoldCoinLimit = basicProfile["Projectile_related"]["Whether_to_enable_the_arrow_fishing_rod_trident_gold_limit"];//是否启用限制
-                            doYouDeductGoldCoinsForFishing = basicProfile["Projectile_related"]["Does_fishing_deduct_gold_coins"];//是否启钓鱼扣钱
-                            fishingRodGoldLimit = basicProfile["Projectile_related"]["Fishing_rod_unlocks_gold_coins"];//Fishing_rod_unlocks_gold_coins
-                            numberOfGoldCoinsDeductedForFishing = basicProfile["Projectile_related"]["Fishing_Buckle_Gold_Coins_quantity"];//Fishing_Buckle_Gold_Coins_quantity
-                            arrowUnlockGold = basicProfile["Projectile_related"]["Arrows_unlock_coins"];//Arrows_unlock_coins
-                            tridentThrowUnlockGoldCoin = basicProfile["Projectile_related"]["Trident_throw_to_unlock_gold_coins"];//Trident_throw_to_unlock_gold_coins
-                            //---------------玩家成长相关设置变量定义
-                            whetherEnablePlayerGrowth = basicProfile["Player_growth"]["Whether_to_enable_the_Player_growth_system"];//Whether_to_enable_the_Player_growth_system
-                            playerInitialHealth = basicProfile["Player_growth"]["Player's_initial_health"];//Player's_initial_health
-                            playerMoneyAddHealth = basicProfile["Player_growth"]["The_player_adds_a_bit_of_blood_for_every_gold_coin"];//The_player_adds_a_bit_of_blood_for_every_gold_coin
-                            playerMoneyAddAttack = basicProfile["Player_growth"]["The_player_adds_a_point_of_attack_for_every_gold_coin"];//The_player_adds_a_point_of_attack_for_every_gold_coin
-                            //--------------语言文件读取分辨
-                            pluginLanguage = {};
-                            plupluginLanguageFile = {};
-                            if (SystemLanguage == "en_US") {
-                                pluginLanguage = JSON.parse(File.readFrom(path3 + 'en_US.json'));//读取英文语言文件
-                            } else if (SystemLanguage == "zh_CN") {
-                                pluginLanguage = JSON.parse(File.readFrom(path3 + 'zh_CN.json'));//读取英文语言文件
-                                pluginLanguageFile = JSON.parse(File.readFrom(path3 + 'Item_zh_CN.json.json'));//读取中英对照语言文件
-                            }
-                            //---------------Tag读取
-                            TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.tag;
-                            BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.tag;
-                            MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.tag;
-                            HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.tag;
-                            //---------------附魔相关变量设定
-                            ConfigEnchantNameList = [];
-                            ConfigEnchantMoneyList = [];
-                            ConfigEnchantIDList = [];
-                            ii = 0;
-                            for (let i1 in itemEnchantListJson[SystemLanguage]) {
-                                ConfigEnchantNameList[ii] = i1;
-                                ConfigEnchantMoneyList[ii] = itemEnchantListJson[SystemLanguage][i1].Price;
-                                ConfigEnchantIDList[ii] = itemEnchantListJson[SystemLanguage][i1].ID;
-                                ii+=1;
-                            }
+                            GlobalVariableAssignment()
                         } else if (choiceId == 1) {
                             if (setIntervalId == 0) {
                                 setIntervalId = setInterval(sidebarDisplay, 1000);//每秒调用侧边栏函数
