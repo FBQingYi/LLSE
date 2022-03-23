@@ -69,6 +69,7 @@ if (!File.exists(path)) {
                            `=---='
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                  佛祖保佑       永无BUG
+                Buddha bless, never BUG
 */
 
 //----------------申明变量
@@ -1827,6 +1828,7 @@ mc.regPlayerCmd(newplugInOPSettingsPanel.split(' ')[0], `<${newplugInOPSettingsP
   `=---='
     .............................................
             佛曰：bug泛滥，我已瘫痪！
+Buddha said: BUG are rampant, I have been paralyzed!
 
 
 //------可自定义的内容------
