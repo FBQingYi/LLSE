@@ -61,6 +61,11 @@ function PlayerSelectMode(tag, player) {
     player.addTag(tag);
 }
 
+//玩家金币增加事件处理
+function LLMoneyPlayerAdd(xuid,money){
+    let player = GetPlayerObject(xuid);
+}
+
 //设置玩家相关属性函数
 //玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值，击退抗性,伤害吸收
 function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement, MinKnockback, absorption) {
@@ -93,7 +98,7 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
                     playerNbtAttributesObj.setFloat("Current", MaxMovement)//设置当前移速
                 }
             }
-            if (playerNbtAttributesObj.getTag("Name") == "minecraft:underwater_movement") {//判断是否是移速数据
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:underwater_movement") {//判断是否是水中移速数据
                 if (MaxUMovement != '' && MaxUMovement != undefined) {
                     playerNbtAttributesObj.setFloat("Base", MaxUMovement)//设置基础移速
                     playerNbtAttributesObj.setFloat("Current", MaxUMovement)//设置当前移速
@@ -129,13 +134,18 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
         return playerNbt;//返回新的nbt
     } catch (error) {
         colorLog("red", '设置玩家相关属性函数报错' + error);
-        return "err";
     }
 
 }
 
+//xuid/名称获取玩家对象
+function GetPlayerObject(XuidName){
+    return mc.getPlayer(XuidName);
+}
+
 //--------------监听接口注册--------------
 mc.listen("onJoin", LLSEPlayerOnJoin);//玩家进入游戏监听（完全进入）
+mc.listen("beforeMoneyAdd",LLMoneyPlayerAdd);//玩家金币增加监听;
 
 //--------------插件基础信息注册--------------
 ll.registerPlugin(pluginName, pluginDescribe, pluginVersion, pluginOther)
