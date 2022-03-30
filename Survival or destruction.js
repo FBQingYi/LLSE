@@ -62,8 +62,8 @@ function PlayerSelectMode(tag, player) {
 }
 
 //设置玩家相关属性数据
-//玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值
-function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement) {
+//玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值，击退抗性,伤害吸收
+function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement,MinKnockback,absorption) {
     let playerNbt = player.getNbt();//获取玩家nbt数据
     let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
     for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
@@ -102,6 +102,26 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
             if (MaxLMovement != '' && MaxLMovement != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxLMovement)//设置基础移速
                 playerNbtAttributesObj.setFloat("Current", MaxLMovement)//设置当前移速
+            }
+        }
+        if (playerNbtAttributesObj.getTag("Name") == "minecraft:knockback_resistance") {//判断是否是击退抗性数据
+            if (MinKnockback != '' && MinKnockback != undefined) {
+                playerNbtAttributesObj.setFloat("Base", MinKnockback);//设置击退抗性
+                playerNbtAttributesObj.setFloat("DefaultMax", MinKnockback);//设置默认击退抗性
+                playerNbtAttributesObj.setFloat("DefaultMin", MinKnockback);//设置默认击退抗性
+                playerNbtAttributesObj.setFloat("Max", MinKnockback);//设置击退抗性
+                playerNbtAttributesObj.setFloat("Current", MinKnockback);//设置当前击退抗性
+                playerNbtAttributesObj.setFloat("Min", MinKnockback);//设置最小击退抗性
+            }
+        }
+        if (playerNbtAttributesObj.getTag("Name") == "minecraft:absorption") {//判断是否是伤害吸收数据
+            if (absorption != '' && absorption != undefined) {
+                playerNbtAttributesObj.setFloat("Base", absorption);//设置伤害吸收
+                playerNbtAttributesObj.setFloat("DefaultMax", absorption);//设置默认伤害吸收
+                playerNbtAttributesObj.setFloat("DefaultMin", absorption);//设置默认伤害吸收
+                playerNbtAttributesObj.setFloat("Max", absorption);//设置伤害吸收
+                playerNbtAttributesObj.setFloat("Current", absorption);//设置当前伤害吸收
+                playerNbtAttributesObj.setFloat("Min", absorption);//设置最小伤害吸收
             }
         }
     }
