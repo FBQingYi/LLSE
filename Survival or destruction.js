@@ -52,9 +52,9 @@ function PlayerSelectMode(tag, player) {
     } else {
         player.tell(`你选择了：${tag}，即将进行基础数据修改！`);
         if (tag == '噩梦生存') {
-            player.setNbt(SetPlayerNbtAttributes(player, 4, 0, '', '', ''));
+            player.setNbt(SetPlayerNbtAttributes(player, 4, 0));
         } else if (tag == '困难生存') {
-            player.setNbt(SetPlayerNbtAttributes(player, 10, 1, '', '', ''));
+            player.setNbt(SetPlayerNbtAttributes(player, 10, 1));
         }
     }
     player.addTag(configTag);
@@ -69,7 +69,7 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
     for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
         let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
         if (playerNbtAttributesObj.getTag("Name") == "minecraft:health") {
-            if (MaxHealth != '') {
+            if (MaxHealth != '' && MaxHealth != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxHealth);//设置基础血量
                 playerNbtAttributesObj.setFloat("Current", MaxHealth);//设置当前血量
                 playerNbtAttributesObj.setFloat("DefaultMax", MaxHealth);//设置默认最大血量
@@ -77,7 +77,7 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
             }
         }
         if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
-            if (MaxAttack != '') {
+            if (MaxAttack != '' && MaxAttack != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxAttack);//设置基础攻击
                 playerNbtAttributesObj.setFloat("DefaultMax", MaxAttack);//设置默认最大攻击
                 playerNbtAttributesObj.setFloat("DefaultMin", MaxAttack);//设置默认最小攻击
@@ -87,19 +87,19 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
             }
         }
         if (playerNbtAttributesObj.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
-            if (MaxMovement != '') {
+            if (MaxMovement != '' && MaxMovement != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxMovement)//设置基础移速
                 playerNbtAttributesObj.setFloat("Current", MaxMovement)//设置当前移速
             }
         }
         if (playerNbtAttributesObj.getTag("Name") == "minecraft:underwater_movement") {//判断是否是移速数据
-            if (MaxUMovement != '') {
+            if (MaxUMovement != '' && MaxUMovement != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxUMovement)//设置基础移速
                 playerNbtAttributesObj.setFloat("Current", MaxUMovement)//设置当前移速
             }
         }
         if (playerNbtAttributesObj.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
-            if (MaxLMovement != '') {
+            if (MaxLMovement != '' && MaxLMovement != undefined) {
                 playerNbtAttributesObj.setFloat("Base", MaxLMovement)//设置基础移速
                 playerNbtAttributesObj.setFloat("Current", MaxLMovement)//设置当前移速
             }
