@@ -61,71 +61,77 @@ function PlayerSelectMode(tag, player) {
     player.addTag(tag);
 }
 
-//设置玩家相关属性数据
+//设置玩家相关属性函数
 //玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值，击退抗性,伤害吸收
-function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement,MinKnockback,absorption) {
-    let playerNbt = player.getNbt();//获取玩家nbt数据
-    let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
-    for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
-        let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:health") {
-            if (MaxHealth != '' && MaxHealth != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MaxHealth);//设置基础血量
-                playerNbtAttributesObj.setFloat("Current", MaxHealth);//设置当前血量
-                playerNbtAttributesObj.setFloat("DefaultMax", MaxHealth);//设置默认最大血量
-                playerNbtAttributesObj.setFloat("Max", MaxHealth);//设置最大血量
+function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement, MinKnockback, absorption) {
+    try {
+        let playerNbt = player.getNbt();//获取玩家nbt数据
+        let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
+        for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
+            let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:health") {
+                if (MaxHealth != '' && MaxHealth != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MaxHealth);//设置基础血量
+                    playerNbtAttributesObj.setFloat("Current", MaxHealth);//设置当前血量
+                    playerNbtAttributesObj.setFloat("DefaultMax", MaxHealth);//设置默认最大血量
+                    playerNbtAttributesObj.setFloat("Max", MaxHealth);//设置最大血量
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
+                if (MaxAttack != '' && MaxAttack != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MaxAttack);//设置基础攻击
+                    playerNbtAttributesObj.setFloat("DefaultMax", MaxAttack);//设置默认最大攻击
+                    playerNbtAttributesObj.setFloat("DefaultMin", MaxAttack);//设置默认最小攻击
+                    playerNbtAttributesObj.setFloat("Max", MaxAttack);//设置最大攻击
+                    playerNbtAttributesObj.setFloat("Current", MaxAttack);//设置当前攻击
+                    playerNbtAttributesObj.setFloat("Min", MaxAttack);//设置最小攻击
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
+                if (MaxMovement != '' && MaxMovement != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MaxMovement)//设置基础移速
+                    playerNbtAttributesObj.setFloat("Current", MaxMovement)//设置当前移速
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:underwater_movement") {//判断是否是移速数据
+                if (MaxUMovement != '' && MaxUMovement != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MaxUMovement)//设置基础移速
+                    playerNbtAttributesObj.setFloat("Current", MaxUMovement)//设置当前移速
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
+                if (MaxLMovement != '' && MaxLMovement != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MaxLMovement)//设置基础移速
+                    playerNbtAttributesObj.setFloat("Current", MaxLMovement)//设置当前移速
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:knockback_resistance") {//判断是否是击退抗性数据
+                if (MinKnockback != '' && MinKnockback != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", MinKnockback);//设置击退抗性
+                    playerNbtAttributesObj.setFloat("DefaultMax", MinKnockback);//设置默认击退抗性
+                    playerNbtAttributesObj.setFloat("DefaultMin", MinKnockback);//设置默认击退抗性
+                    playerNbtAttributesObj.setFloat("Max", MinKnockback);//设置击退抗性
+                    playerNbtAttributesObj.setFloat("Current", MinKnockback);//设置当前击退抗性
+                    playerNbtAttributesObj.setFloat("Min", MinKnockback);//设置最小击退抗性
+                }
+            }
+            if (playerNbtAttributesObj.getTag("Name") == "minecraft:absorption") {//判断是否是伤害吸收数据
+                if (absorption != '' && absorption != undefined) {
+                    playerNbtAttributesObj.setFloat("Base", absorption);//设置伤害吸收
+                    playerNbtAttributesObj.setFloat("DefaultMax", absorption);//设置默认伤害吸收
+                    playerNbtAttributesObj.setFloat("DefaultMin", absorption);//设置默认伤害吸收
+                    playerNbtAttributesObj.setFloat("Max", absorption);//设置伤害吸收
+                    playerNbtAttributesObj.setFloat("Current", absorption);//设置当前伤害吸收
+                    playerNbtAttributesObj.setFloat("Min", absorption);//设置最小伤害吸收
+                }
             }
         }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
-            if (MaxAttack != '' && MaxAttack != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MaxAttack);//设置基础攻击
-                playerNbtAttributesObj.setFloat("DefaultMax", MaxAttack);//设置默认最大攻击
-                playerNbtAttributesObj.setFloat("DefaultMin", MaxAttack);//设置默认最小攻击
-                playerNbtAttributesObj.setFloat("Max", MaxAttack);//设置最大攻击
-                playerNbtAttributesObj.setFloat("Current", MaxAttack);//设置当前攻击
-                playerNbtAttributesObj.setFloat("Min", MaxAttack);//设置最小攻击
-            }
-        }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
-            if (MaxMovement != '' && MaxMovement != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MaxMovement)//设置基础移速
-                playerNbtAttributesObj.setFloat("Current", MaxMovement)//设置当前移速
-            }
-        }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:underwater_movement") {//判断是否是移速数据
-            if (MaxUMovement != '' && MaxUMovement != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MaxUMovement)//设置基础移速
-                playerNbtAttributesObj.setFloat("Current", MaxUMovement)//设置当前移速
-            }
-        }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
-            if (MaxLMovement != '' && MaxLMovement != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MaxLMovement)//设置基础移速
-                playerNbtAttributesObj.setFloat("Current", MaxLMovement)//设置当前移速
-            }
-        }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:knockback_resistance") {//判断是否是击退抗性数据
-            if (MinKnockback != '' && MinKnockback != undefined) {
-                playerNbtAttributesObj.setFloat("Base", MinKnockback);//设置击退抗性
-                playerNbtAttributesObj.setFloat("DefaultMax", MinKnockback);//设置默认击退抗性
-                playerNbtAttributesObj.setFloat("DefaultMin", MinKnockback);//设置默认击退抗性
-                playerNbtAttributesObj.setFloat("Max", MinKnockback);//设置击退抗性
-                playerNbtAttributesObj.setFloat("Current", MinKnockback);//设置当前击退抗性
-                playerNbtAttributesObj.setFloat("Min", MinKnockback);//设置最小击退抗性
-            }
-        }
-        if (playerNbtAttributesObj.getTag("Name") == "minecraft:absorption") {//判断是否是伤害吸收数据
-            if (absorption != '' && absorption != undefined) {
-                playerNbtAttributesObj.setFloat("Base", absorption);//设置伤害吸收
-                playerNbtAttributesObj.setFloat("DefaultMax", absorption);//设置默认伤害吸收
-                playerNbtAttributesObj.setFloat("DefaultMin", absorption);//设置默认伤害吸收
-                playerNbtAttributesObj.setFloat("Max", absorption);//设置伤害吸收
-                playerNbtAttributesObj.setFloat("Current", absorption);//设置当前伤害吸收
-                playerNbtAttributesObj.setFloat("Min", absorption);//设置最小伤害吸收
-            }
-        }
+        return playerNbt;//返回新的nbt
+    } catch (error) {
+        colorLog("red", '设置玩家相关属性函数报错' + error);
+        return "err";
     }
-    return playerNbt;//返回新的nbt
+
 }
 
 //--------------监听接口注册--------------
