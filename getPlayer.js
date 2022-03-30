@@ -10,3 +10,4 @@ mc.listen("onServerStarted", () => {
     outp.success(playerListName);
     Command.setup();
 })
+//从
