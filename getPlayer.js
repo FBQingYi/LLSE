@@ -11,7 +11,4 @@ mc.listen("onServerStarted", () => {
     outp.success(playerListName);
     Command.setup();
 })
-<<<<<<< HEAD
-//从
-=======
->>>>>>> 898962f01bd7914fe3f0ec77eed2401ed5f00bd5
+
