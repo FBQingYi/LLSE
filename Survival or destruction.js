@@ -11,6 +11,7 @@ const configJson = { "JoinTag": "已选择" };
 //--------------写入基础配置文件--------------
 if (!File.exists(pluginConfigPath)) {//判断文件夹是否存在
     File.writeTo(pluginConfigPath + 'config.json', JSON.stringify(configJson, null, "\t"));//格式化写入基础配置文件
+    File.writeTo(pluginConfigPath + 'data/playerData.json', JSON.stringify({}, null, "\t"));//格式化写入基础配置文件
 }
 
 //--------------全局变量声明--------------
@@ -62,16 +63,19 @@ function PlayerSelectMode(tag, player) {
 }
 
 //玩家金币增加事件处理
-function LLMoneyPlayerAdd(xuid,money){
+function LLMoneyPlayerAdd(xuid, money) {
     let player = GetPlayerObject(xuid);
 }
 
 //设置玩家相关属性函数
-//玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值，击退抗性,伤害吸收
-function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement, MinKnockback, absorption) {
+//玩家对象，生命值，伤害值，移动值，水中移动值，岩浆中移动值，击退抗性,伤害吸收,氧气
+function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUMovement, MaxLMovement, MinKnockback, absorption, air) {
     try {
         let playerNbt = player.getNbt();//获取玩家nbt数据
         let playerNbtAttributes = playerNbt.getTag("Attributes");//获取Attributes内容
+        if (air != '' && air != undefined) {
+            playerNbt.setShort('Air', air);//设置玩家水中氧气
+        }
         for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
             let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
             if (playerNbtAttributesObj.getTag("Name") == "minecraft:health") {
@@ -139,13 +143,13 @@ function SetPlayerNbtAttributes(player, MaxHealth, MaxAttack, MaxMovement, MaxUM
 }
 
 //xuid/名称获取玩家对象
-function GetPlayerObject(XuidName){
+function GetPlayerObject(XuidName) {
     return mc.getPlayer(XuidName);
 }
 
 //--------------监听接口注册--------------
 mc.listen("onJoin", LLSEPlayerOnJoin);//玩家进入游戏监听（完全进入）
-mc.listen("beforeMoneyAdd",LLMoneyPlayerAdd);//玩家金币增加监听;
+mc.listen("beforeMoneyAdd", LLMoneyPlayerAdd);//玩家金币增加监听;
 
 //--------------插件基础信息注册--------------
 ll.registerPlugin(pluginName, pluginDescribe, pluginVersion, pluginOther)
