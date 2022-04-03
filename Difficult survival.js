@@ -247,7 +247,7 @@ function sidebarDisplay() {
 //每10分钟执行的循环任务
 function everyTenMinutes() {
     try {
-        let myDate = new Date();
+        let myDate = system.getTimeStr();
         let playerList = mc.getOnlinePlayers();
         if (JSON.stringify(playerList) != "[]") {
             for (let i in playerList) {
@@ -272,11 +272,11 @@ function everyTenMinutes() {
                 }
             }
         }
-        if (myDate.getHours() == resetDestructionAddMoneyTime && resetDamageRecordMonitoring == 0) {
+        if (myDate.h == resetDestructionAddMoneyTime && resetDamageRecordMonitoring == 0) {
             resetDamageRecordMonitoring = 1;//设置破坏加金币限制记录数据次数为1，避免重复清理
             playersDestroyRecords = {};//重置破坏记录
             playersKillEntityRecords = {};//重置玩家击杀记录
-        } else if (myDate.getHours() == resetDestructionAddMoneyTime + 1) {
+        } else if (myDate.h == resetDestructionAddMoneyTime + 1) {
             resetDamageRecordMonitoring = 0;//清零破坏加金币限制记录数据次数
         }
     } catch (err) {
