@@ -837,7 +837,7 @@ function serverServerStarted() {
             setIntervalId = setInterval(sidebarDisplay, 1000);//每秒调用侧边栏函数
         }
         setInterval(minebbsVersionMonitoring, 1000 * 60 * 60 * 3);//调用minebbs版本监测函数
-        everyTenMinutes();//调用欠款扣款函数
+        setInterval(everyTenMinutes, 1000 * 60 * 10);//调用欠款扣款函数
         minebbsVersionMonitoring();//启动进行一次版本检查
         log(pluginLanguage.Language_Loading_succeeded.replace(/{v}/g, version))
     } catch (err) {
