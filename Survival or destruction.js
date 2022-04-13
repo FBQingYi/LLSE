@@ -51,15 +51,22 @@ function PlayerSelectMode(tag, player) {
     if (tag == '普通生存') {
         player.tell(`你选择了：${tag}`);
     } else {
-        player.tell(`你选择了：${tag}，即将进行基础数据修改！`);
         if (tag == '噩梦生存') {
-            player.setNbt(SetPlayerNbtAttributes(player, 4, 0));
+
         } else if (tag == '困难生存') {
-            player.setNbt(SetPlayerNbtAttributes(player, 10, 1));
+
         }
     }
     player.addTag(configTag);
     player.addTag(tag);
+}
+
+//基础属性分配弹窗及处理
+function PlayerBasicPropertiesDistribution(Player, Modepoint) {
+    let HealthForm = mc.newCustomForm()
+        .setTitle('请进行基础数据加点')
+        .addLabel(`生存还是毁灭，这是一个问题！\n你一共有${Modepoint}点`)
+        .addSlider('生命', 1, Modepoint, 1, 1)
 }
 
 //玩家金币增加事件处理
