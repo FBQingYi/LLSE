@@ -68,25 +68,17 @@ function PlayerBasicPropertiesDistribution(player, Modepoint) {
         .addLabel(`生存还是毁灭，这是一个问题！\n你一共有${Modepoint}点`)
         .addLabel(`这是第一次加点，后面还有3个`)
         .addSlider('生命', 1, Modepoint, 1, 1)
-    player.sendForm(HealthForm, (player, data) => {
-        if (data == undefined) {
-            return false;
-        } else {
-            let RemainingPoints = Modepoint - data[2];
-            if (RemainingPoints > 0) {
-                let RepulsionResistanceForm = mc.newCustomForm()
-                    .setTitle('请进行基础数据加点')
-                    .addLabel(`生存还是毁灭，这是一个问题！\n你一共还有${RemainingPoints}点`)
-                    .addLabel(`这是第一次加点，后面还有2个`)
-                    .addSlider('击退抗性', 1, RemainingPoints, 1, 1)
+        player.sendForm(HealthForm, (player, data) => {
+        let RemainingPoints = Modepoint - data[2];
+        if (RemainingPoints > 0) {
+            let RepulsionResistanceForm = mc.newCustomForm()
+                .setTitle('请进行基础数据加点')
+                .addLabel(`生存还是毁灭，这是一个问题！\n你一共还有${RemainingPoints}点`)
+                .addLabel(`这是第一次加点，后面还有2个`)
+                .addSlider('击退抗性', 1, RemainingPoints, 1, 1)
                 player.sendForm(RepulsionResistanceForm, (player, data) => {
-                    if (data == undefined) {
-                        return false;
-                    } else {
-
-                    }
-                })
-            }
+                log(data)
+            })
         }
     })
 }
