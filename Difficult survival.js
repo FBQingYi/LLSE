@@ -1613,13 +1613,12 @@ function playerMoneyAddHandle(xuid, AddMoney) {
             for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
                 let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
                 if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
-                    let baseAttack = parseInt(playerNbtAttributesObj.getTag("DefaultMax").toString());//获取当前最大攻击
-                    playerNbtAttributesObj.setFloat("Base", baseAttack + DivisionResultAttack);//设置基础攻击
-                    playerNbtAttributesObj.setFloat("DefaultMax", baseAttack + DivisionResultAttack);//设置默认最大攻击
-                    playerNbtAttributesObj.setFloat("DefaultMin", baseAttack + DivisionResultAttack);//设置默认最小攻击
-                    playerNbtAttributesObj.setFloat("Max", baseAttack + DivisionResultAttack);//设置最大攻击
-                    playerNbtAttributesObj.setFloat("Current", baseAttack + DivisionResultAttack);//设置当前攻击
-                    playerNbtAttributesObj.setFloat("Min", baseAttack + DivisionResultAttack);//设置最小攻击
+                    playerNbtAttributesObj.setFloat("Base", 1 + DivisionResultAttack);//设置基础攻击
+                    playerNbtAttributesObj.setFloat("DefaultMax", 1 + DivisionResultAttack);//设置默认最大攻击
+                    playerNbtAttributesObj.setFloat("DefaultMin", 1 + DivisionResultAttack);//设置默认最小攻击
+                    playerNbtAttributesObj.setFloat("Max", 1 + DivisionResultAttack);//设置最大攻击
+                    playerNbtAttributesObj.setFloat("Current", 1 + DivisionResultAttack);//设置当前攻击
+                    playerNbtAttributesObj.setFloat("Min", 1 + DivisionResultAttack);//设置最小攻击
                     Modify = true;//设置为是
                 }
             }

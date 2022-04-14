@@ -67,6 +67,7 @@ function PlayerBasicPropertiesDistribution(Player, Modepoint) {
         .setTitle('请进行基础数据加点')
         .addLabel(`生存还是毁灭，这是一个问题！\n你一共有${Modepoint}点`)
         .addSlider('生命', 1, Modepoint, 1, 1)
+        log(HealthForm)
 }
 
 //玩家金币增加事件处理
