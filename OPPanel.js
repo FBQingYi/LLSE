@@ -1,7 +1,7 @@
 //--------------基础信息定义--------------
 const pluginName = 'OPPanel';
 const pluginDescribe = 'OP功能面板';
-const pluginVersion = [0, 0, 2];
+const pluginVersion = [0, 0, 3];
 const pluginOther = { "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/OPPanel.js" };
 const pluginConfigPath = './plugins/OPPanel/';
 
@@ -257,8 +257,32 @@ function PlayerInformation(player) {
                 .addLabel(`当前等级: ${PlNbt.PlayerLevel}`)
                 .addLabel(`当前移速: ${pl.speed.toFixed(2)}`)
                 .addLabel(`当前坐标: ${pos}`)
-                .addLabel(`玩家拥有TAG: ${JSON.stringify(PlNbt.Tags)}`);
-            player.sendForm(fm1, (player, data) => { return false; })
+                .addLabel(`玩家拥有TAG: ${JSON.stringify(PlNbt.Tags)}`)
+                .addInput('\n以他身份执行命令', '{p}代表这个玩家名称', "")
+                .addInput('以他身份发言', '', "");
+            player.sendForm(fm1, (player, data) => {
+                if (data == undefined) {
+                    return false;
+                } else {
+                    if (data[12] != "") {
+                        if (pl.runcmd(data[12].replace(/{p}/g, `"${pl.name}"`))) {
+                            player.tell('§l§4[系统] 执行成功！');
+                        } else {
+                            player.tell('§l§4[系统] 执行失败,请检查指令格式等！');
+                        }
+                    }
+                    if (data[13] != "") {
+                        if (pl.talkAs(data[13])) {
+                            player.tell('§l§4[系统] 执行成功！');
+                        } else {
+                            player.tell('§l§4[系统] 执行失败！');
+                        }
+                    }
+                    if(data[13] != "" || data[12] != ""){
+                        PlayerInformation(player);
+                    }
+                }
+            })
         }
     })
 }
