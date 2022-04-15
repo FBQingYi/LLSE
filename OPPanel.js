@@ -1,7 +1,7 @@
 //--------------基础信息定义--------------
 const pluginName = 'OPPanel';
 const pluginDescribe = 'OP功能面板';
-const pluginVersion = [0, 0, 1];
+const pluginVersion = [0, 0, 2];
 const pluginOther = { "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/OPPanel.js" };
 const pluginConfigPath = './plugins/OPPanel/';
 
@@ -123,7 +123,6 @@ function RemovePlayer(player) {
             return false;
         } else {
             if (player.isOP()) {
-                log(PlayerList[id])
                 let cmdOut = mc.runcmdEx(`allowlist remove "${PlayerList[id]}"`);
                 if (cmdOut.output.indexOf('Player removed from allowlist') != -1) {
                     player.tell(`${PlayerList[id]} 已被移除白名单！`);
@@ -168,12 +167,11 @@ function BanPlayerMsg(player) {
 //解除禁言
 function RelieveBanPlayerMsg(player) {
     let BanMsgPlayerXuid = [];
-    let i = -1;
     let fm = mc.newSimpleForm()
         .setTitle('OP功能面板-解除禁言')
         .setContent('请选择玩家');
     for (let PlayerXuid in BanPlayerMsgList) {
-        BanMsgPlayerXuid[i + 1] = PlayerXuid;
+        BanMsgPlayerXuid[BanMsgPlayerXuid.length] = PlayerXuid;
         fm.addButton(BanPlayerMsgList[PlayerXuid].name);
     }
     player.sendForm(fm, (player, id) => {
@@ -244,19 +242,22 @@ function PlayerInformation(player) {
             return false;
         } else {
             let pl = PlayerList[id];
+            let PlNbt = JSON.parse(pl.getNbt().toString());
             let pos = `${pl.pos.x.toFixed(2)} ${pl.pos.y.toFixed(2)} ${pl.pos.z.toFixed(2)}`;
             let fm1 = mc.newCustomForm()
                 .setTitle(pl.name)
                 .addLabel(`玩家ID: ${pl.name}`)
                 .addLabel(`玩家XUID: ${pl.xuid}`)
                 .addLabel(`玩家IP: ${pl.getDevice().ip}`)
-                .addLabel(`玩家延迟: ${pl.getDevice().avgPing}`)
+                .addLabel(`玩家延迟: ${pl.getDevice().avgPing} ms`)
                 .addLabel(`玩家设备: ${pl.getDevice().os}`)
                 .addLabel(`玩家模式: ${pl.gameMode}`)
                 .addLabel(`玩家权限: ${pl.permLevel}`)
                 .addLabel(`当前生命: ${pl.health}/${pl.maxHealth}`)
-                .addLabel(`当前移速: ${pl.speed}`)
-                .addLabel(`当前坐标: ${pos}`);
+                .addLabel(`当前等级: ${PlNbt.PlayerLevel}`)
+                .addLabel(`当前移速: ${pl.speed.toFixed(2)}`)
+                .addLabel(`当前坐标: ${pos}`)
+                .addLabel(`玩家拥有TAG: ${JSON.stringify(PlNbt.Tags)}`);
             player.sendForm(fm1, (player, data) => { return false; })
         }
     })
