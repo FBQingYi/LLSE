@@ -619,7 +619,7 @@ function playerDestroyBlockHandle(player, block) {
 function palyerJoinHandle(player) {
     try {
         if (PlayerMsgDataListJson[player.xuid] == undefined) {
-            PlayerMsgDataListJson[player.xuid] = {}
+            PlayerMsgDataListJson[player.xuid] = {};
             PlayerMsgDataListJson[player.xuid].MsgType1 = true;
             PlayerMsgDataListJson[player.xuid].MsgType2 = true;
             PlayerMsgDataListJson[player.xuid].MsgType3 = true;
@@ -727,9 +727,9 @@ function playerAttackHandle(player, entity) {
             }
             if (!noInterception) {//判断是否拦截
                 if (!noInterception1) {
-                    TellMsg(palyer, pluginLanguage.Language_Invalid_attack1, 'MsgType3');
+                    TellMsg(player, pluginLanguage.Language_Invalid_attack1, 'MsgType3');
                 } else {
-                    TellMsg(palyer, pluginLanguage.Language_Invalid_attack, 'MsgType3');
+                    TellMsg(player, pluginLanguage.Language_Invalid_attack, 'MsgType3');
                 }
                 return noInterception
             }
@@ -1302,7 +1302,7 @@ function playerFormFirstProcessing(player, choiceId) {
             TellMsg(player, "§l§6" + msg, 'MsgType1');//发送消息给玩家
         } else if (choiceId == 5) {//选择给书按钮处理
             player.giveItem(mc.newItem(NBT.parseSNBT(thePluginContentManualCannotBeEdited)));
-        } else if (choiceId == 5) {//选择消息通知设置
+        } else if (choiceId == 6) {//选择消息通知设置
             let fm = mc.newCustomForm()
                 .setTitle(pluginLanguage.Language_Form_title)
                 .addSwitch(pluginLanguage.Language_MsgType1, PlayerMsgDataListJson.MsgType1)
