@@ -883,7 +883,7 @@ function setBossBloodVolumeBarDisplay(mob, source, damage) {
     playerAttackEntityHealthDisplay[player.xuid] = 1;
     let bloodVolumeDisplayPercentage = 100 / entityMaxHealth;//取得百分比
     let remainingBloodVolume = mob.health
-    let currentBloodVolume = mob.health * bloodVolumeDisplayPercentage - damage * bloodVolumeDisplayPercentage;
+    let currentBloodVolume = mob.health * bloodVolumeDisplayPercentage - parseInt(damage) * bloodVolumeDisplayPercentage;
     let biologicalName = mob.name;
     if (currentBloodVolume < 0) {
         currentBloodVolume = 0
@@ -896,7 +896,7 @@ function setBossBloodVolumeBarDisplay(mob, source, damage) {
         remainingBloodVolume = 0
     }
     let bossDisplayText = `             ${biologicalName} \n\n${pluginLanguage.Language_Boss_Blood_strip[0]}${remainingBloodVolume}/${entityMaxHealth}       ${pluginLanguage.Language_Boss_Blood_strip[1]}${damage}`;
-    entityBossHealthMsg[player.xuid] = { "biologicalName": `${biologicalName}`, "damage": `${damage}` };
+    entityBossHealthMsg[player.xuid] = { "biologicalName": `${biologicalName}`, "damage": `${parseInt(damage)}` };
     player.setBossBar(bossDisplayText, currentBloodVolume)
     setTimeout(function () {
         if (playerAttackEntityHealthDisplay[player.xuid] == 0) {
@@ -956,8 +956,8 @@ function playerPVEUseSkills(mob, source, damage) {
                         let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
                         let skillHurt = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Harm;//获取技能伤害
                         attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
-                        mob.hurt(damage + skillHurt)//造成额外真实伤害
-                        TellMsg(player, pluginLanguage.Language_Real_injury.replace(/{d}/g, damage + skillHurt), 'MsgType1');
+                        mob.hurt(parseInt(damage + skillHurt))//造成额外真实伤害
+                        TellMsg(player, pluginLanguage.Language_Real_injury.replace(/{d}/g, parseInt(damage + skillHurt)), 'MsgType1');
                     } else if (skillName == pluginLanguage.Language_Blast_Attack && attackSkillCDCountdown[player.xuid][skillName] == 0) {
                         let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
                         let skillHurt = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Harm;//获取技能伤害
@@ -1040,14 +1040,14 @@ function entityMobHurtHandle_removeItem(player, damage) {
                 }
             } else {//背包为空处理
                 if (noObjectIsReallHurt) {//是否造成真伤
-                    player.hurt(damage)//对玩家照成伤害
-                    TellMsg(player, pluginLanguage.Language_Attack_drop_damage.replace(/{d}/g, damage), 'MsgType1');
+                    player.hurt(parseInt(damage))//对玩家照成伤害
+                    TellMsg(player, pluginLanguage.Language_Attack_drop_damage.replace(/{d}/g, parseInt(damage)), 'MsgType1');
                 }
             }
         } else {//背包为空处理
             if (noObjectIsReallHurt) {//是否造成真伤
-                player.hurt(damage)//对玩家照成伤害
-                TellMsg(player, pluginLanguage.Language_Attack_drop_damage.replace(/{d}/g, damage), 'MsgType1');
+                player.hurt(parseInt(damage))//对玩家照成伤害
+                TellMsg(player, pluginLanguage.Language_Attack_drop_damage.replace(/{d}/g, parseInt(damage)), 'MsgType1');
             }
         }
     } catch (err) {
