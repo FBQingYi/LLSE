@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival';
 const pluginDescribe = '强化生存';
-const pluginVersion = [1, 9, 6];
+const pluginVersion = [1, 9, 7];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '1.9.6';
+const version = '1.9.7';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -97,7 +97,7 @@ function GlobalVariableAssignment() {
     listOfRandomlyResurrectedCreatures = JSON.parse(File.readFrom(path1 + 'randomlyResurrectedCreatures.json'));//随机复活生物列表
     injuryDoesNotFallListJson = JSON.parse(File.readFrom(path1 + 'ListOfItemsNotDropped.json'));//读取受伤不掉落物品列表配置文件
     thePluginContentManualCannotBeEdited = File.readFrom(path2 + 'ServerGiveBooks.txt');//读取进服给玩家的书的snbt
-    PlayerMsgDataListJson = File.readFrom(path1 + 'PlayerMsgData.json');//读取玩家提示内容等相关设置
+    PlayerMsgDataListJson = JSON.parse(File.readFrom(path1 + 'PlayerMsgData.json'));//读取玩家提示内容等相关设置
     //---------------其他设置相关配置变量定义
     repairEquipmentDurabilityPrice = basicProfile["Other_Settings"]["Repair_equipment_durability_price"];//耐久修复价格数据读取
     nameOfArrearsScoreboard = basicProfile["Other_Settings"]["Debt_record_scoreboard_name"];//欠款计分板配置文件设置名称
@@ -1304,11 +1304,11 @@ function playerFormFirstProcessing(player, choiceId) {
             player.giveItem(mc.newItem(NBT.parseSNBT(thePluginContentManualCannotBeEdited)));
         } else if (choiceId == 6) {//选择消息通知设置
             let fm = mc.newCustomForm()
-                .setTitle(pluginLanguage.Language_Form_title)
-                .addSwitch(pluginLanguage.Language_MsgType1, PlayerMsgDataListJson.MsgType1)
-                .addSwitch(pluginLanguage.Language_MsgType2, PlayerMsgDataListJson.MsgType2)
-                .addSwitch(pluginLanguage.Language_MsgType3, PlayerMsgDataListJson.MsgType3)
-                .addDropdown(pluginLanguage.Language_MsgType4, pluginLanguage.Language_MsgType4Data);
+            fm.setTitle(pluginLanguage.Language_Form_title);
+            fm.addSwitch(pluginLanguage.Language_MsgType1, PlayerMsgDataListJson[player.xuid].MsgType1);
+            fm.addSwitch(pluginLanguage.Language_MsgType2, PlayerMsgDataListJson[player.xuid].MsgType2);
+            fm.addSwitch(pluginLanguage.Language_MsgType3, PlayerMsgDataListJson[player.xuid].MsgType3);
+            fm.addDropdown(pluginLanguage.Language_MsgType4, pluginLanguage.Language_MsgType4Data);
             player.sendForm(fm, (player, data) => {
                 if (data == undefined) {
                     return false;
@@ -1842,8 +1842,8 @@ function localup(newVersion, downloadUrl) {
 
 //发送玩家消息函数
 function TellMsg(player, msg, msgType) {
-    if (PlayerMsgDataListJson[msgType]) {
-        player.tell(msg, PlayerMsgDataListJson.MsgType4)
+    if (PlayerMsgDataListJson[player.xuid][msgType]) {
+        player.tell(msg, PlayerMsgDataListJson[player.xuid].MsgType4)
     }
 }
 
