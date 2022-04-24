@@ -1,6 +1,6 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
-const PluginsVersion = [0, 1, 6];
+const PluginsVersion = [0, 1, 7];
 const PluginsOtherInformation = { "插件作者": "清漪花开" ,"开源地址":"https://github.com/FBQingYi/LLSE/blob/main/gives.js"};
 
 
@@ -56,10 +56,10 @@ function NewItemNbt(item, itemDIsplayName, itemEnch, itemCount) {
     }
     if (itemEnch != "") {
         if (itemEnch.Enchantments != undefined) {
-            for (let i = 0; i < itemEnch.length; i++) {
+            for (let i = 0; i < itemEnch.Enchantments.length; i++) {
                 let nbt2 = new NbtCompound({
-                    "id": new NbtShort(parseInt(itemEnch[i].n)),
-                    "lvl": new NbtShort(parseInt(itemEnch[i].l))
+                    "id": new NbtShort(parseInt(itemEnch.Enchantments[i].n)),
+                    "lvl": new NbtShort(parseInt(itemEnch.Enchantments[i].l))
                 })
                 let ench = nbt1.getTag("ench");
                 ench.addTag(nbt2);
