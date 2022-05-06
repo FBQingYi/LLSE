@@ -1,5 +1,5 @@
 //--------------基础信息定义--------------
-const pluginName = 'Difficult_survival';
+const pluginName = 'Difficult_survival_debug';
 const pluginDescribe = '强化生存';
 const pluginVersion = [1, 9, 8];
 const pluginOther = { "作者": "清漪花开" };
@@ -39,8 +39,11 @@ if (!File.exists(path)) {
     //随机复活的生物列表
     let randomlyResurrectedCreatures = ["minecraft:skeleton", "minecraft:zombie", "minecraft:spider", "minecraft:creeper", "minecraft:zombie_villager"];
     File.writeTo(path1 + 'randomlyResurrectedCreatures.json', JSON.stringify(randomlyResurrectedCreatures, null, "\t"));
+    //实体强化数据列表
+    let StrengthenEntityDefaultJson = { "minecraft:zombie": { "health": 50, "movement": 0.45, "underwater_movement": 0.23, "lava_movement": 0.23, "attack_damage": 5, "knockback_resistance": 6 }, "minecraft:skeleton": { "health": 50, "movement": 0.45, "underwater_movement": 0.23, "lava_movement": 0.23, "attack_damage": 5, "knockback_resistance": 6 } }
+    File.writeTo(path1 + 'StrengthenEntity.json', JSON.stringify(StrengthenEntityDefaultJson, null, "\t"));
     //基础配置文件列表
-    let BasicProfile = { "language": "zh_CN", "Death_related_configuration": { "Does_death_deduct_gold_coins": true, "Does_non-kill_death_deduct_gold_coins": true, "Gold_coin_limit": 0 }, "Cross-world_related_configuration": { "Whether_to_deduct_gold_coins_across_the_world": true, "Overworld": 100, "Hell": 200, "TheEnd": 300 }, "Destruction_plus_gold_coins": { "Whether_to_enable_gold_limit_destruction": true, "Whether_to_limit_the_number_of_daily_destruction_plus_gold_coins": true, "Destruction_Cap": 500, "Reset_Time": 4 }, "Attack_Related": { "Whether_to_enable_gold_limited_weapons": true, "Whether_to_enable_attack_chance_is_invalid": true, "Invalid_chance": 25, "Whether_to_enable_damaged_items": true, "Item_drop_chance_in_PVE": 25, "Item_drop_chance_in_PVP": 100, "Whether_there_is_no_real_injury_to_the_item": true, "Does_PVP_deduct_gold_coins": true, "PVP_deduction_gold_coins_quantity": 10, "Is_there_a_cap_on_PVE_plus_gold_coins": true, "PVE_plus_gold_limit": 500 }, "Ender_dragon_related": { "Whether_to_limit_the_damage_of_specific_weapons_to_the_ender_dragon": true, "Weapon_ID_that_can_deal_damage": "minecraft:netherite_sword", "Whether_to_set_the_player's_ineffective_chance_of_attacking_the_ender_dragon": true, "Attack_on_the_ender_dragon_ineffective_chance": 25, "Does_the_death_of_the_ender_dragon_cause_an_explosion": true, "Blast_radius": 100, "Can_the_ender_dragon_take_ranged_damage": false, "How_much_gold_to_kill_the_ender_dragon": 10000 }, "Projectile_related": { "Whether_to_enable_the_arrow_fishing_rod_trident_gold_limit": true, "Does_fishing_deduct_gold_coins": true, "Trident_throw_to_unlock_gold_coins": 3000, "Fishing_rod_unlocks_gold_coins": 2000, "Arrows_unlock_coins": 1000, "Fishing_Buckle_Gold_Coins_quantity": 2 }, "Player_growth": { "Whether_to_enable_the_Player_growth_system": true, "Player's_initial_health": 10, "The_player_adds_a_bit_of_blood_for_every_gold_coin": 1000, "The_player_adds_a_point_of_attack_for_every_gold_coin": 5000 }, "Other_Settings": { "Repair_equipment_durability_price": 200, "Whether_to_show_the_sidebar": true, "Whether_to_intercept_the_bed_explosion": true, "Whether_to_intercept_respawn_anchor_explosions": true, "Whether_to_show_health_bar_when_attacking": true, "Whether_the_killed_monster_is_randomly_resurrected": true, "Chance_of_resurrection": 75, "Plugin_Directive": "/gt", "Plugin_OP_Settings_Panel": "/gtop gui", "Added_hand-held_items_to_not_drop_commands_for_injuries": "/gtop hold", "Set_the_item_in_hand_as_the_item_given_in_the_suit": "/gtop set", "Item_default_enchantment_level": 5, "Debt_record_scoreboard_name": "arrears", "Enable_fracture": true, "Fracture_probability": 60 } };
+    let BasicProfile = { "language": "zh_CN", "Death_related_configuration": { "Does_death_deduct_gold_coins": true, "Does_non-kill_death_deduct_gold_coins": true, "Gold_coin_limit": 0 }, "Cross-world_related_configuration": { "Whether_to_deduct_gold_coins_across_the_world": true, "Overworld": 100, "Hell": 200, "TheEnd": 300 }, "Destruction_plus_gold_coins": { "Whether_to_enable_gold_limit_destruction": true, "Whether_to_limit_the_number_of_daily_destruction_plus_gold_coins": true, "Destruction_Cap": 500, "Reset_Time": 4 }, "Attack_Related": { "Whether_to_enable_gold_limited_weapons": true, "Whether_to_enable_attack_chance_is_invalid": true, "Invalid_chance": 25, "Whether_to_enable_damaged_items": true, "Item_drop_chance_in_PVE": 25, "Item_drop_chance_in_PVP": 100, "Whether_there_is_no_real_injury_to_the_item": true, "Does_PVP_deduct_gold_coins": true, "PVP_deduction_gold_coins_quantity": 10, "Is_there_a_cap_on_PVE_plus_gold_coins": true, "PVE_plus_gold_limit": 500 }, "Ender_dragon_related": { "Whether_to_limit_the_damage_of_specific_weapons_to_the_ender_dragon": true, "Weapon_ID_that_can_deal_damage": "minecraft:netherite_sword", "Whether_to_set_the_player's_ineffective_chance_of_attacking_the_ender_dragon": true, "Attack_on_the_ender_dragon_ineffective_chance": 25, "Does_the_death_of_the_ender_dragon_cause_an_explosion": true, "Blast_radius": 100, "Can_the_ender_dragon_take_ranged_damage": false, "How_much_gold_to_kill_the_ender_dragon": 10000 }, "Projectile_related": { "Whether_to_enable_the_arrow_fishing_rod_trident_gold_limit": true, "Does_fishing_deduct_gold_coins": true, "Trident_throw_to_unlock_gold_coins": 3000, "Fishing_rod_unlocks_gold_coins": 2000, "Arrows_unlock_coins": 1000, "Fishing_Buckle_Gold_Coins_quantity": 2 }, "Player_growth": { "Whether_to_enable_the_Player_growth_system": true, "Player's_initial_health": 10, "The_player_adds_a_bit_of_blood_for_every_gold_coin": 1000, "The_player_adds_a_point_of_attack_for_every_gold_coin": 5000 }, "Other_Settings": { "Repair_equipment_durability_price": 200, "Whether_to_show_the_sidebar": true, "Whether_to_intercept_the_bed_explosion": true, "Whether_to_intercept_respawn_anchor_explosions": true, "Whether_to_show_health_bar_when_attacking": true, "Whether_the_killed_monster_is_randomly_resurrected": true, "Chance_of_resurrection": 75, "Plugin_Directive": "/gt", "Plugin_OP_Settings_Panel": "/gtop gui", "Added_hand-held_items_to_not_drop_commands_for_injuries": "/gtop hold", "Set_the_item_in_hand_as_the_item_given_in_the_suit": "/gtop set", "Item_default_enchantment_level": 5, "Debt_record_scoreboard_name": "arrears", "Enable_fracture": true, "Fracture_probability": 60, "Strengthen_entity": true } };
     File.writeTo(path + 'config.json', JSON.stringify(BasicProfile, null, "\t"));
     //介绍书原始内容
     let IntroductionBookOriginal = '{"Count":1b,"Damage":0s,"Name":"minecraft:writable_book","WasPickedUp":0b,"tag":{"pages":[{"photoname":"","text":"    欢迎来到这个全新的世界，请详细阅读此书，可能会对你之后在这个世界生存有一定的帮助！\n    公元2087年，以风云为首的重启党在腐竹出巡时造反，期间成功夺得服务器部分权限，但是没想到腐竹早就有所准备，在重启党即将成功完全占领服务器时，服务器发生了翻天覆地的变化，自此，服务器来到了一个全新的纪元，肝帝纪元！\n    在这个纪元中，一切都变得异常困难，你的背包和末影箱不再安全。希望你能坚持到最后！"},{"photoname":"","text":"肝帝纪元规则介绍：\n1，你只能通过手/和相关武器工具进行攻击和破坏。\n2，你受到伤害有50%的几率掉落背包物品，如果这个伤害来自玩家，那么几率将会变为100%。\n3，你要小心不能死亡，不然会随机掉落你的金币。\n4，吃食物的时候如果你的金币大于等于5，那么将会自动扣款并给你一个随机的buff/debuff。\n5，在你对生物进行攻击时，有几率攻击无效，请小心。\n————————>请翻页——————>>>"},{"photoname":"","text":"6,如果你的金币不够，那么你将不 能使用武器/工具以及钓鱼。\n7，使用钓竿每次会消耗1金币，不管你是钓鱼还是干啥。\n8，如果你攻击了村民或者铁傀儡，那么将会扣除你20金币并警告你不要恶意攻击。\n9，pvp攻击每次扣除5金币，如果金币不足那么你的攻击将会无效。\n10，你可以通过指令/jineng来购买武器的技能，1个玩家只能购买一次，请谨慎选择。\n11，玩家只有使用下界合金剑才能攻击末影龙且伤害有几率无效"},{"photoname":"","text":"12，跨世界时会扣除金币，如果余额不足那么将会计入欠账模式，后期逐步扣款。\n13，末影龙死亡后，将在击杀他的玩家为中心引发一个半径100的球形区域的爆炸。\n14，击杀末影龙的玩家将会获得屠龙者的称号，玩家可使用/jineng指令实时查询他的位置。\n15.击杀屠龙者后，你将会获得一次死亡免掉金币的机会，并且会获得解脱者称号。你还能获得屠龙者末影箱的随机物品一个， 如果末影箱没有物品你将会获得他"},{"photoname":"","text":"的全部金币。\n16，末影龙会根据玩家数量进行强化，当末地多进入一 个玩家时，属性会在当前状态下*2，离开时会/2，以此类推。\n17，当末地没有玩家时，末影龙的属性将会恢复到默认状态。"},{"photoname":"","text":"武器技能介绍：\n真实伤害：\n此技能分为3个等级，分别在原始的伤害上增加1/2/3点伤害，此技能造成的伤害无视 任何防御，CD时间为60/50/40秒。\n爆炸攻击：\n此技能会在被攻击的生物处造成爆炸，分为3个等级，伤害分别是1/2/3，范围是2/3/4 为半径的球形，CD时间为80/70/60.（此技能无法在末地使用）。\n\n------>请翻页---->>"},{"photoname":"","text":"神圣守护：\n 此技能会使被你的攻击的对象回血，分为3个等级，分别恢复2/3/4滴血，CD时间为190/180/170（可超过血量上限）。\n取你装备：\n此 技能分为4个等级，分别能取1/2/3/4件装备，如果你只有一级，但是他有4件装备，那么你只能获得1件但是他会失去全部。CD时间为240/230/220/210秒"},{"photoname":"","text":"金币来源介绍：\n击杀：\n骷髅 1金币\n僵尸 1金币\n蜘蛛 1金币\n苦力怕 2金币\n破坏：\n原木 1金币（每天200个上限）\n草方块 1金币\n煤炭 1金币\n石头 1金币\n铁矿石 2金币\n金矿石 2金币\n钻石矿石 3金币"},{"photoname":"","text":"近战武器/工具解锁：\n100金币\n木剑/斧/稿/锄/铲\n1000金币\n石剑/斧/稿/锄/铲\n3200金币\n铁剑/斧/镐/锄/铲\n3500金币\n金剑/斧/稿/锄/铲\n6000金币\n钻石剑/斧/稿/锄/铲\n10000金币\n下界合金剑/斧/稿/锄/铲\n三叉戟"},{"photoname":"","text":"远程武器解锁：\n1000金币\n钓鱼\n2000金币\n弓箭/弩箭\n3000金币\n三叉戟"}]}}';
@@ -80,7 +83,7 @@ if (!File.exists(path)) {
 */
 
 //----------------申明变量
-let basicProfile, PlayerMsgDataListJson, SystemLanguage, moneyUnlockListJson, destructionAddMoneyListJson, killEntityAddMoneyListJson, purchaseSkillsMoneyListJson, eatFoodGiveBuffListJson, foodBuffTypeMoneyListJson, itemEnchantListJson, listOfRandomlyResurrectedCreatures, injuryDoesNotFallListJson, thePluginContentManualCannotBeEdited, repairEquipmentDurabilityPrice, nameOfArrearsScoreboard, showsidebar, whetherToInterceptBedExplosion, whetherToInterceptTheRebirthAnchorExplosion, whetherToDisplayBloodBarDuringAttack, nweDiddicultSurvivalPlayerCmd, itemDefaultEnchantLevel, newplugInOPSettingsPanel, handHeldItemsWillNotFallIfInjured, handHeldItemsAreGivenForService, isTheSlainMonsterResurrectedRandomly, resurrectionProbabilityOfKilledMonster, doesDeathDeductGoldCoins, numberOfGoldCoinsDeductedFromDeath, deductMoneyForCrossingDimensions, enterTheMainWorldRemovemoney, intoHellRemovemoney, enterTheDestinationRemovemoney, enableGoldCoinRestrictedWeapons, whetherToEnableInvalidAttackProbability, deductGoldCoinsForNonKillDeath, attackInvalidProbability, whetherToEnableInjuredItems, PVPDropProbability, PVEDropProbability, noObjectIsReallHurt, doesPVPDeductGoldCoins, PVPDeductionGoldCoinQuantity, IsThereAnUpperLimitForPVEPlusGold, PVEPlusGoldUpperLimit, specificWeaponsHurtEnderDragon, enderDragonRangedDamageAllow, weaponIDCapableOfCausingDamage, enderDragonInvalidAttackProbability, contendenderDragonDamageProbability, enderDragonDoesDeathExplode, killEnderDragonAddMoney, enableGoldLimitDestruction, resetDestructionAddMoneyTime, limitDailyDamagePlusGold, limitTheAmountOfDamageAndGoldCoinsPerDay, enableArrowFishingRodTridentGoldCoinLimit, doYouDeductGoldCoinsForFishing, numberOfGoldCoinsDeductedForFishing, tridentThrowUnlockGoldCoin, whetherEnablePlayerGrowth, playerInitialHealth, playerMoneyAddHealth, playerMoneyAddAttack, pluginLanguage, pluginLanguageFile, TrueDamageTag, BlastAttackTag, MonsterGiftTag, HolyGuardianTag, ConfigEnchantNameList, ConfigEnchantMoneyList, ConfigEnchantIDList, ii;
+let basicProfile, StrengthenEntityListJson, StrengthenEntity, PlayerMsgDataListJson, SystemLanguage, moneyUnlockListJson, destructionAddMoneyListJson, killEntityAddMoneyListJson, purchaseSkillsMoneyListJson, eatFoodGiveBuffListJson, foodBuffTypeMoneyListJson, itemEnchantListJson, listOfRandomlyResurrectedCreatures, injuryDoesNotFallListJson, thePluginContentManualCannotBeEdited, repairEquipmentDurabilityPrice, nameOfArrearsScoreboard, showsidebar, whetherToInterceptBedExplosion, whetherToInterceptTheRebirthAnchorExplosion, whetherToDisplayBloodBarDuringAttack, nweDiddicultSurvivalPlayerCmd, itemDefaultEnchantLevel, newplugInOPSettingsPanel, handHeldItemsWillNotFallIfInjured, handHeldItemsAreGivenForService, isTheSlainMonsterResurrectedRandomly, resurrectionProbabilityOfKilledMonster, doesDeathDeductGoldCoins, numberOfGoldCoinsDeductedFromDeath, deductMoneyForCrossingDimensions, enterTheMainWorldRemovemoney, intoHellRemovemoney, enterTheDestinationRemovemoney, enableGoldCoinRestrictedWeapons, whetherToEnableInvalidAttackProbability, deductGoldCoinsForNonKillDeath, attackInvalidProbability, whetherToEnableInjuredItems, PVPDropProbability, PVEDropProbability, noObjectIsReallHurt, doesPVPDeductGoldCoins, PVPDeductionGoldCoinQuantity, IsThereAnUpperLimitForPVEPlusGold, PVEPlusGoldUpperLimit, specificWeaponsHurtEnderDragon, enderDragonRangedDamageAllow, weaponIDCapableOfCausingDamage, enderDragonInvalidAttackProbability, contendenderDragonDamageProbability, enderDragonDoesDeathExplode, killEnderDragonAddMoney, enableGoldLimitDestruction, resetDestructionAddMoneyTime, limitDailyDamagePlusGold, limitTheAmountOfDamageAndGoldCoinsPerDay, enableArrowFishingRodTridentGoldCoinLimit, doYouDeductGoldCoinsForFishing, numberOfGoldCoinsDeductedForFishing, tridentThrowUnlockGoldCoin, whetherEnablePlayerGrowth, playerInitialHealth, playerMoneyAddHealth, playerMoneyAddAttack, pluginLanguage, pluginLanguageFile, TrueDamageTag, BlastAttackTag, MonsterGiftTag, HolyGuardianTag, ConfigEnchantNameList, ConfigEnchantMoneyList, ConfigEnchantIDList, ii;
 
 GlobalVariableAssignment()
 function GlobalVariableAssignment() {
@@ -98,6 +101,7 @@ function GlobalVariableAssignment() {
     injuryDoesNotFallListJson = JSON.parse(File.readFrom(path1 + 'ListOfItemsNotDropped.json'));//读取受伤不掉落物品列表配置文件
     thePluginContentManualCannotBeEdited = File.readFrom(path2 + 'ServerGiveBooks.txt');//读取进服给玩家的书的snbt
     PlayerMsgDataListJson = JSON.parse(File.readFrom(path1 + 'PlayerMsgData.json'));//读取玩家提示内容等相关设置
+    StrengthenEntityListJson = JSON.parse(File.readFrom(path1 + 'StrengthenEntity.json'));//读取实体强化等相关设置
     //---------------其他设置相关配置变量定义
     repairEquipmentDurabilityPrice = basicProfile["Other_Settings"]["Repair_equipment_durability_price"];//耐久修复价格数据读取
     nameOfArrearsScoreboard = basicProfile["Other_Settings"]["Debt_record_scoreboard_name"];//欠款计分板配置文件设置名称
@@ -114,6 +118,7 @@ function GlobalVariableAssignment() {
     resurrectionProbabilityOfKilledMonster = basicProfile["Other_Settings"]["Chance_of_resurrection"];//被杀怪物复活几率
     EnableFractureConfig = basicProfile["Other_Settings"]["Enable_fracture"];//启用骨折事件
     FractureProbabilityConfig = basicProfile["Other_Settings"]["Fracture_probability"];//骨折几率
+    StrengthenEntity = basicProfile["Other_Settings"]["Strengthen_entity"];//实体强化是否启用
     //---------------死亡相关设置变量定义
     doesDeathDeductGoldCoins = basicProfile["Death_related_configuration"]["Does_death_deduct_gold_coins"];//死亡是否扣金币配置文件数据
     deductGoldCoinsForNonKillDeath = basicProfile["Death_related_configuration"]["Does_non-kill_death_deduct_gold_coins"];//非击杀死亡是否扣金币配置文件数据
@@ -1092,66 +1097,103 @@ function playerChangeDimHandle_removeMoney(player, deductionAmount) {
 //生成实体并强化操作
 function generateEntitiesAndEnforceOperations(entityType, entityPos, player) {
     try {
+        let EntityConfig, health, movement, underwater_movement, lava_movement, attack_damage, knockback_resistance, follow_range;
+        if (StrengthenEntityListJson[entityType] != undefined) {
+            EntityConfig = StrengthenEntityListJson[entityType];
+            health = EntityConfig.health;
+            movement = EntityConfig.movement;
+            underwater_movement = EntityConfig.underwater_movement;
+            lava_movement = EntityConfig.lava_movement;
+            attack_damage = EntityConfig.attack_damage;
+            knockback_resistance = EntityConfig.knockback_resistance;
+            follow_range = 10;
+        } else {
+            health = 20;
+            movement = 0.45;
+            underwater_movement = 0.25;
+            lava_movement = 0.25;
+            attack_damage = 6;
+            knockback_resistance = 10;
+            follow_range = 10;
+        }
         let newEntity = mc.spawnMob(entityType, entityPos);//生成生物
         if (newEntity != undefined) {//判断是否生成成功
             let newEntityNbt = newEntity.getNbt();//获取生物Nbt数据
-            let newEntityNbtJson = newEntityNbt.toString()//获取生物NbtJson格式数据
-            if (newEntityNbtJson.indexOf("minecraft:health") != -1) {//判断生物是否有生命数据
-                let newEntityAttributes = newEntityNbt.getTag("Attributes");//获取实体属性
-                let getEntityDisplayName = newEntityNbt.getTag("CustomName");//获取实体属性
-                if (newEntityAttributes != undefined) {//判断属性NBT是否获取成功
-                    let newEntityAttributesListLength = newEntityAttributes.getSize();//获取实体属性Nbt列表长度
-                    for (let i = 0; i < newEntityAttributesListLength; i++) {//循环读取
-                        let currentLocationObject = newEntityAttributes.getTag(i)//获取当前位置的nbt内容
-                        if (currentLocationObject.getTag("Name") == "minecraft:health") {//判断是否获取到生物生命内容
-                            let baseHealth = parseInt(currentLocationObject.getTag("Base").toString());//获取基础血量
-                            let currentHealth = parseInt(currentLocationObject.getTag("Current").toString());//获取当前血量
-                            let healthDefaultMax = parseInt(currentLocationObject.getTag("DefaultMax").toString());//获取默认最大血量
-                            currentLocationObject.setFloat("Base", baseHealth + 20);//设置生物基础血量增加20
-                            currentLocationObject.setFloat("Current", currentHealth + 20);//设置生物当前血量增加20
-                            currentLocationObject.setFloat("DefaultMax", healthDefaultMax + 20);//设置默认最大血量增加20
-                            currentLocationObject.setFloat("Max", healthDefaultMax + 20);//设置最大血量增加20
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
-                            currentLocationObject.setFloat("Base", 0.45)//设置基础移速为0.45
-                            currentLocationObject.setFloat("Current", 0.45)//设置当前移速为0.45
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:underwater_movement") {//判断是否是水中移速数据
-                            currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
-                            currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
-                            currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
-                            currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:follow_range") {//判断是否是跟随数据
-                            let basefollow = parseInt(currentLocationObject.getTag("Base").toString());//获取基础跟随范围
-                            let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
-                            currentLocationObject.setFloat("Base", basefollow + 10)//设置基础跟随范围增加10
-                            currentLocationObject.setFloat("Current", currentfollow + 10)//设置当前跟随范围增加10
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
-                            let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
-                            //-----------伤害全面提升6
-                            currentLocationObject.setFloat("Base", baseattack + 6);
-                            currentLocationObject.setFloat("Current", baseattack + 6);
-                            currentLocationObject.setFloat("DefaultMax", baseattack + 6);
-                            currentLocationObject.setFloat("Max", baseattack + 6);
-                            currentLocationObject.setFloat("DefaultMin", baseattack + 6);
-                            currentLocationObject.setFloat("Min", baseattack + 6);
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
-                            currentLocationObject.setFloat("Base", 6);//修改基础击退抗性为6
-                            currentLocationObject.setFloat("DefaultMax", 6);//修改最大击退抗性为6
-                            currentLocationObject.setFloat("Max", 6);
-                            currentLocationObject.setFloat("DefaultMin", 3);//修改最小击退抗性为3
-                            currentLocationObject.setFloat("Min", 3);
-                        }
+            //let newEntityNbtJson = newEntityNbt.toString()//获取生物NbtJson格式数据
+            //if (newEntityNbtJson.indexOf("minecraft:health") != -1) {//判断生物是否有生命数据
+            let newEntityAttributes = newEntityNbt.getTag("Attributes");//获取实体属性
+            let getEntityDisplayName = newEntityNbt.getTag("CustomName");//获取实体属性
+            if (newEntityAttributes != undefined) {//判断属性NBT是否获取成功
+                let newEntityAttributesListLength = newEntityAttributes.getSize();//获取实体属性Nbt列表长度
+                for (let i = 0; i < newEntityAttributesListLength; i++) {//循环读取
+                    let currentLocationObject = newEntityAttributes.getTag(i)//获取当前位置的nbt内容
+                    if (currentLocationObject.getTag("Name") == "minecraft:health") {//判断是否获取到生物生命内容
+                        let baseHealth = parseInt(currentLocationObject.getTag("Base").toString());//获取基础血量
+                        let currentHealth = parseInt(currentLocationObject.getTag("Current").toString());//获取当前血量
+                        let healthDefaultMax = parseInt(currentLocationObject.getTag("DefaultMax").toString());//获取默认最大血量
+                        currentLocationObject.setFloat("Base", baseHealth + health);//设置生物基础血量增加20
+                        currentLocationObject.setFloat("Current", currentHealth + health);//设置生物当前血量增加20
+                        currentLocationObject.setFloat("DefaultMax", healthDefaultMax + health);//设置默认最大血量增加20
+                        currentLocationObject.setFloat("Max", healthDefaultMax + health);//设置最大血量增加20
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
+                        currentLocationObject.setFloat("Base", movement)//设置基础移速为0.45
+                        currentLocationObject.setFloat("Current", movement)//设置当前移速为0.45
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:underwater_movement") {//判断是否是水中移速数据
+                        currentLocationObject.setFloat("Base", underwater_movement)//设置基础移速为0.23
+                        currentLocationObject.setFloat("Current", underwater_movement)//设置当前移速为0.23
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
+                        currentLocationObject.setFloat("Base", lava_movement)//设置基础移速为0.23
+                        currentLocationObject.setFloat("Current", lava_movement)//设置当前移速为0.23
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:follow_range") {//判断是否是跟随数据
+                        let basefollow = parseInt(currentLocationObject.getTag("Base").toString());//获取基础跟随范围
+                        let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
+                        currentLocationObject.setFloat("Base", basefollow + follow_range)//设置基础跟随范围增加10
+                        currentLocationObject.setFloat("Current", currentfollow + follow_range)//设置当前跟随范围增加10
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
+                        let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
+                        //-----------伤害全面提升6
+                        currentLocationObject.setFloat("Base", baseattack + attack_damage);
+                        currentLocationObject.setFloat("Current", baseattack + attack_damage);
+                        currentLocationObject.setFloat("DefaultMax", baseattack + attack_damage);
+                        currentLocationObject.setFloat("Max", baseattack + attack_damage);
+                        currentLocationObject.setFloat("DefaultMin", baseattack + attack_damage);
+                        currentLocationObject.setFloat("Min", baseattack + attack_damage);
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
+                        currentLocationObject.setFloat("Base", knockback_resistance);//修改基础击退抗性为6
+                        currentLocationObject.setFloat("DefaultMax", knockback_resistance);//修改最大击退抗性为6
+                        currentLocationObject.setFloat("Max", knockback_resistance);
+                        currentLocationObject.setFloat("DefaultMin", knockback_resistance - 3);//修改最小击退抗性为3
+                        currentLocationObject.setFloat("Min", knockback_resistance - 3);
                     }
                 }
-                if (getEntityDisplayName == undefined) {//判断是否有名称
-                    newEntityNbt.setString("CustomName", `§l§6[${pluginLanguage.Language_Form_title}] ${player.name}`);//设置名称
-                    newEntityNbt.setFloat("CustomNameVisible", 1);//设置为显示
-                }
             }
+            if (getEntityDisplayName == undefined && player != undefined) {//判断是否有名称
+                newEntityNbt.setString("CustomName", `§l§6[${pluginLanguage.Language_Form_title}] ${player.name}`);//设置名称
+                newEntityNbt.setFloat("CustomNameVisible", 1);//设置为显示
+            }
+            //}
             newEntity.setNbt(newEntityNbt);//写入新的nbt数据
         }
     } catch (err) {
         log(`生成实体并强化操作报错：${err}`);
+    }
+}
+
+let clao = {}
+
+//实体生成时强化设置
+function entityMobSpawn(typeName, pos) {
+    try {
+        if (StrengthenEntity) {//检查是否启用
+            if (StrengthenEntityListJson[typeName] != undefined && clao[`${pos.x},${pos.y},${pos.z},${pos.dimid}`] != typeName) {
+                clao[`${pos.x},${pos.y},${pos.z},${pos.dimid}`] = typeName;
+                generateEntitiesAndEnforceOperations(typeName, pos, undefined);
+                setTimeout(function () { clao[`${pos.x},${pos.y},${pos.z},${pos.dimid}`] = "" }, 1000);
+                return false;
+            }
+        }
+    } catch (err) {
+        log(`实体生成时强化设置：${err}`);
     }
 }
 
@@ -1555,7 +1597,7 @@ function enchantFormProcessing(player, choiceId) {
                     player.refreshItems();//刷新玩家背包
                 }
             } else {
-                TellMsg(player, pluginLanguage.Language_Enchant_failure.replace(/{m}/g, parseInt(ConfigEnchantMoneyList[choiceId[2]]) - playerMoney), 'MsgType2');
+                TellMsg(palyer, pluginLanguage.Language_Enchant_failure.replace(/{m}/g, parseInt(ConfigEnchantMoneyList[choiceId[2]]) - playerMoney), 'MsgType2');
             }
         }
     } catch (err) {
@@ -1850,7 +1892,8 @@ function TellMsg(player, msg, msgType) {
 /*-----------监听注册，函数调用专区-----------*/
 mc.listen("onRespawnAnchorExplode", blockRespawnAnchorExplode);//重生锚爆炸监听注册
 mc.listen("onBedExplode", blockBedExplodeHandle);//床爆炸监听注册
-mc.listen("onSpawnProjectile", entitySpawnProjectileHandle)//抛射物创建监听注册
+mc.listen("onSpawnProjectile", entitySpawnProjectileHandle);//抛射物创建监听注册
+mc.listen("onMobSpawn", entityMobSpawn);//实体生成监听
 mc.listen("onMobDie", entityMobDieHandle);//实体死亡监听注册
 mc.listen("onMobHurt", entityMobHurtHandle);//实体受伤监听注册
 mc.listen("onRespawn", playerRespawnHandle);//玩家复活监听
@@ -1890,6 +1933,8 @@ ll.registerPlugin(pluginName, pluginDescribe, pluginVersion, pluginOther)
     .............................................
             佛曰：bug泛滥，我已瘫痪！
 Buddha said: BUG are rampant, I have been paralyzed!
+
+
 //------可自定义的内容------
 1，自定义玩家破坏是否有每日限制，限制上限以及重置时间
 2，自定义玩家吃物品获得的buff类型和扣款情况
@@ -1917,6 +1962,7 @@ Buddha said: BUG are rampant, I have been paralyzed!
 8,玩家属性成长系统。
 //------本次更新主要内容------
 1，修复部分bug
+
 待办功能：
 1，生物强化。
 */
