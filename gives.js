@@ -30,8 +30,8 @@ function CommandRegistration() {
                 player.giveItem(it);
                 playerName += `${player.name} `;
             }
-            output.success(`给予玩家 ${playerName} ${results.item.name} ${results.amount} 个。`)
         }, 2)
+        output.success(`ok`)
     });
     Command.setup();
 }
@@ -74,6 +74,12 @@ function NewItemNbt(item, itemDIsplayName, itemEnch, itemCount) {
 }
 
 mc.listen("onPlayerCmd", (player, cmd) => {
+    if (cmd.split(' ')[0] == 'gives') {
+        itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
+    }
+})
+
+mc.listen("onCmdBlockExecute",(cmd,pos,isMinecart)=>{
     if (cmd.split(' ')[0] == 'gives') {
         itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
     }
