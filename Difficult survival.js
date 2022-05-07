@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival';
 const pluginDescribe = '强化生存';
-const pluginVersion = [1, 9, 8];
+const pluginVersion = [1, 9, 9];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '1.9.8';
+const version = '1.9.9';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -375,7 +375,7 @@ function entityMobDieHandle(mob, source, cause) {
                         if (isTheSlainMonsterResurrectedRandomly) {//判断是否复活
                             if (isTheCreatureOnTheResurrectionList(entityType)) {
                                 let randomNumber = specifiedRangeRandomNumber(0, 100);//取随机数
-                                if (randomNumber < attackInvalidProbability) {//判断随机数是否在几率范围内
+                                if (randomNumber < resurrectionProbabilityOfKilledMonster) {//判断随机数是否在几率范围内
                                     TellMsg(player, pluginLanguage.Language_Biological_Resurrection, 'MsgType1');
                                     setTimeout(function () { generateEntitiesAndEnforceOperations(entityType, entityPos, player) }, 3000);//调用生成并强化函数
                                 }
@@ -1095,59 +1095,59 @@ function generateEntitiesAndEnforceOperations(entityType, entityPos, player) {
         let newEntity = mc.spawnMob(entityType, entityPos);//生成生物
         if (newEntity != undefined) {//判断是否生成成功
             let newEntityNbt = newEntity.getNbt();//获取生物Nbt数据
-            let newEntityNbtJson = newEntityNbt.toString()//获取生物NbtJson格式数据
-            if (newEntityNbtJson.indexOf("minecraft:health") != -1) {//判断生物是否有生命数据
-                let newEntityAttributes = newEntityNbt.getTag("Attributes");//获取实体属性
-                let getEntityDisplayName = newEntityNbt.getTag("CustomName");//获取实体属性
-                if (newEntityAttributes != undefined) {//判断属性NBT是否获取成功
-                    let newEntityAttributesListLength = newEntityAttributes.getSize();//获取实体属性Nbt列表长度
-                    for (let i = 0; i < newEntityAttributesListLength; i++) {//循环读取
-                        let currentLocationObject = newEntityAttributes.getTag(i)//获取当前位置的nbt内容
-                        if (currentLocationObject.getTag("Name") == "minecraft:health") {//判断是否获取到生物生命内容
-                            let baseHealth = parseInt(currentLocationObject.getTag("Base").toString());//获取基础血量
-                            let currentHealth = parseInt(currentLocationObject.getTag("Current").toString());//获取当前血量
-                            let healthDefaultMax = parseInt(currentLocationObject.getTag("DefaultMax").toString());//获取默认最大血量
-                            currentLocationObject.setFloat("Base", baseHealth + 20);//设置生物基础血量增加20
-                            currentLocationObject.setFloat("Current", currentHealth + 20);//设置生物当前血量增加20
-                            currentLocationObject.setFloat("DefaultMax", healthDefaultMax + 20);//设置默认最大血量增加20
-                            currentLocationObject.setFloat("Max", healthDefaultMax + 20);//设置最大血量增加20
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
-                            currentLocationObject.setFloat("Base", 0.45)//设置基础移速为0.45
-                            currentLocationObject.setFloat("Current", 0.45)//设置当前移速为0.45
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:underwater_movement") {//判断是否是水中移速数据
-                            currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
-                            currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
-                            currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
-                            currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:follow_range") {//判断是否是跟随数据
-                            let basefollow = parseInt(currentLocationObject.getTag("Base").toString());//获取基础跟随范围
-                            let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
-                            currentLocationObject.setFloat("Base", basefollow + 10)//设置基础跟随范围增加10
-                            currentLocationObject.setFloat("Current", currentfollow + 10)//设置当前跟随范围增加10
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
-                            let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
-                            //-----------伤害全面提升6
-                            currentLocationObject.setFloat("Base", baseattack + 6);
-                            currentLocationObject.setFloat("Current", baseattack + 6);
-                            currentLocationObject.setFloat("DefaultMax", baseattack + 6);
-                            currentLocationObject.setFloat("Max", baseattack + 6);
-                            currentLocationObject.setFloat("DefaultMin", baseattack + 6);
-                            currentLocationObject.setFloat("Min", baseattack + 6);
-                        } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
-                            currentLocationObject.setFloat("Base", 6);//修改基础击退抗性为6
-                            currentLocationObject.setFloat("DefaultMax", 6);//修改最大击退抗性为6
-                            currentLocationObject.setFloat("Max", 6);
-                            currentLocationObject.setFloat("DefaultMin", 3);//修改最小击退抗性为3
-                            currentLocationObject.setFloat("Min", 3);
-                        }
+            //let newEntityNbtJson = newEntityNbt.toString()//获取生物NbtJson格式数据
+            //if (newEntityNbtJson.indexOf("minecraft:health") != -1) {//判断生物是否有生命数据
+            let newEntityAttributes = newEntityNbt.getTag("Attributes");//获取实体属性
+            let getEntityDisplayName = newEntityNbt.getTag("CustomName");//获取实体属性
+            if (newEntityAttributes != undefined) {//判断属性NBT是否获取成功
+                let newEntityAttributesListLength = newEntityAttributes.getSize();//获取实体属性Nbt列表长度
+                for (let i = 0; i < newEntityAttributesListLength; i++) {//循环读取
+                    let currentLocationObject = newEntityAttributes.getTag(i)//获取当前位置的nbt内容
+                    if (currentLocationObject.getTag("Name") == "minecraft:health") {//判断是否获取到生物生命内容
+                        let baseHealth = parseInt(currentLocationObject.getTag("Base").toString());//获取基础血量
+                        let currentHealth = parseInt(currentLocationObject.getTag("Current").toString());//获取当前血量
+                        let healthDefaultMax = parseInt(currentLocationObject.getTag("DefaultMax").toString());//获取默认最大血量
+                        currentLocationObject.setFloat("Base", baseHealth + 20);//设置生物基础血量增加20
+                        currentLocationObject.setFloat("Current", currentHealth + 20);//设置生物当前血量增加20
+                        currentLocationObject.setFloat("DefaultMax", healthDefaultMax + 20);//设置默认最大血量增加20
+                        currentLocationObject.setFloat("Max", healthDefaultMax + 20);//设置最大血量增加20
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:movement") {//判断是否是移速数据
+                        currentLocationObject.setFloat("Base", 0.45)//设置基础移速为0.45
+                        currentLocationObject.setFloat("Current", 0.45)//设置当前移速为0.45
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:underwater_movement") {//判断是否是水中移速数据
+                        currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
+                        currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:lava_movement") {//判断是否是岩浆中移速数据
+                        currentLocationObject.setFloat("Base", 0.23)//设置基础移速为0.23
+                        currentLocationObject.setFloat("Current", 0.23)//设置当前移速为0.23
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:follow_range") {//判断是否是跟随数据
+                        let basefollow = parseInt(currentLocationObject.getTag("Base").toString());//获取基础跟随范围
+                        let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
+                        currentLocationObject.setFloat("Base", basefollow + 10)//设置基础跟随范围增加10
+                        currentLocationObject.setFloat("Current", currentfollow + 10)//设置当前跟随范围增加10
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
+                        let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
+                        //-----------伤害全面提升6
+                        currentLocationObject.setFloat("Base", baseattack + 6);
+                        currentLocationObject.setFloat("Current", baseattack + 6);
+                        currentLocationObject.setFloat("DefaultMax", baseattack + 6);
+                        currentLocationObject.setFloat("Max", baseattack + 6);
+                        currentLocationObject.setFloat("DefaultMin", baseattack + 6);
+                        currentLocationObject.setFloat("Min", baseattack + 6);
+                    } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
+                        currentLocationObject.setFloat("Base", 6);//修改基础击退抗性为6
+                        currentLocationObject.setFloat("DefaultMax", 6);//修改最大击退抗性为6
+                        currentLocationObject.setFloat("Max", 6);
+                        currentLocationObject.setFloat("DefaultMin", 3);//修改最小击退抗性为3
+                        currentLocationObject.setFloat("Min", 3);
                     }
                 }
-                if (getEntityDisplayName == undefined) {//判断是否有名称
-                    newEntityNbt.setString("CustomName", `§l§6[${pluginLanguage.Language_Form_title}] ${player.name}`);//设置名称
-                    newEntityNbt.setFloat("CustomNameVisible", 1);//设置为显示
-                }
             }
+            if (getEntityDisplayName == undefined) {//判断是否有名称
+                newEntityNbt.setString("CustomName", `§l§6[${pluginLanguage.Language_Form_title}] ${player.name}`);//设置名称
+                newEntityNbt.setFloat("CustomNameVisible", 1);//设置为显示
+            }
+            //}
             newEntity.setNbt(newEntityNbt);//写入新的nbt数据
         }
     } catch (err) {
