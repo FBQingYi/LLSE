@@ -1,5 +1,5 @@
 //--------------基础信息定义--------------
-const pluginName = 'Difficult_survival_Cn';
+const pluginName = 'Difficult_survival_En';
 const pluginDescribe = '强化生存';
 const pluginVersion = [2, 0, 0];
 const pluginOther = { "作者": "清漪花开" };
@@ -953,7 +953,7 @@ function playerPVEUseSkills(mob, source, damage) {
             if (playerItemLore != undefined && playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断物品是否拥有技能
                 let skillName = playerItemLore[1];//获得技能名称
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
-                    let currentSkillLevel = playerItemLore[2].split("：")[1];//切割字符串获得等级
+                    let currentSkillLevel = playerItemLore[2].split(": ")[1];//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_True_Damage && attackSkillCDCountdown[player.xuid][skillName] == 0) {//判断技能名称和CD情况
                         let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
                         let skillHurt = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Harm;//获取技能伤害
