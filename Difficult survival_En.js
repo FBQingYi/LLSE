@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival_En';
 const pluginDescribe = '强化生存';
-const pluginVersion = [2, 0, 0];
+const pluginVersion = [2, 0, 2];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '2.0.0';
+const version = '2.0.2';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -812,7 +812,7 @@ function playerDieHandle(player, source) {
                         }
                         if (JSON.stringify(newDiePlayerEnderChestList) != "[]") {
                             let randomNumber = newDiePlayerEnderChestList[specifiedRangeRandomNumber(0, newDiePlayerEnderChestList.length)];//取随机数
-                            let containerItem = containerObject.getItem(randomNumber);//获取格子的物品对象
+                            let containerItem = diePlayerEnderChest.getItem(randomNumber);//获取格子的物品对象
                             if (player2.giveItem(containerItem)) {//给击杀者物品
                                 diePlayerEnderChest.removeItem(randomNumber, containerItem.count);//删除末影箱容器内的物品
                                 mc.broadcast(pluginLanguage.Language_Kill_Dragon_palyer_1.replace(/{p}/g, player2.name));
@@ -916,10 +916,8 @@ function playerPVPUseSkills(mob, source, damage) {
             if (playerItemLore != undefined && playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断物品是否拥有技能
                 let skillName = playerItemLore[1];//获得技能名称
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
-                    let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                    let currentSkillLevel = parseInt(playerItemLore[2].split(': ')[1]);//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        log(currentSkillLevel)
-                        log(purchaseSkillsMoneyListJson[skillName].Damage)
                         let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
                         let skillTreatment = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
                         let playerNbtData = player.getNbt();//获得玩家自己Nbt数据
@@ -1405,7 +1403,7 @@ function sendSkillListAfterStrengtheningWeapons(player, choiceId) {
                 let playerItemLore = playerHandItemJson.tag.display.Lore;//获取lore对象
                 if (playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断是否是技能Lore
                     let skillName = playerItemLore[1];//获得技能名称
-                    let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                    let currentSkillLevel = parseInt(playerItemLore[2].split(': ')[1]);//切割字符串获得等级
                     if (currentSkillLevel < purchaseSkillsMoneyListJson[skillName].SkillLevel) {//判断物品技能等级是否还能强化
                         let upgradePrice = purchaseSkillsMoneyListJson[skillName].Upgrade[currentSkillLevel + 1];//获取升级需要的价格
                         playerUpgradeSkillMoney[player.xuid] = upgradePrice;
@@ -1439,7 +1437,7 @@ function upgradeSkillsSelectSkills(player, choiceId) {
                 let playerHandItemJson = JSON.parse(weaponObjectSelectedByThePlayer.getNbt().toString());//获取玩家选择物品的json数据
                 let playerItemLore = playerHandItemJson.tag.display.Lore;//获取lore对象
                 let skillName = playerItemLore[1];//获得技能名称
-                let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                let currentSkillLevel = parseInt(playerItemLore[2].split(': ')[1]);//切割字符串获得等级
                 weaponObjectSelectedByThePlayer.setLore([pluginLanguage.Language_Strengthen_success1[0], skillName, pluginLanguage.Language_Strengthen_success1[2].replace(/{l}/g, String(currentSkillLevel + 1))]);//写入lore数据
                 player.giveItem(weaponObjectSelectedByThePlayer);//给玩家物品
                 player.refreshItems();//刷新玩家物品栏
