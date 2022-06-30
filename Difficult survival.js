@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival_Cn';
 const pluginDescribe = '强化生存';
-const pluginVersion = [2, 0, 0];
+const pluginVersion = [2, 0, 2];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '2.0.0';
+const version = '2.0.2';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -676,7 +676,7 @@ function palyerJoinHandle(player) {
                         playerNbtAttributesObj.setFloat("DefaultMax", 20);//设置默认最大血量
                         playerNbtAttributesObj.setFloat("Max", 20);//设置最大血量
                     }
-                    if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
+                    /*if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
                         let baseAttack = parseInt(playerNbtAttributesObj.getTag("DefaultMax").toString());//获取当前最大攻击
                         if (baseAttack != 1) {
                             playerNbtAttributesObj.setFloat("Base", 1);//设置基础攻击
@@ -686,7 +686,7 @@ function palyerJoinHandle(player) {
                             playerNbtAttributesObj.setFloat("Current", 1);//设置当前攻击
                             playerNbtAttributesObj.setFloat("Min", 1);//设置最小攻击
                         }
-                    }
+                    }*/
                 }
                 player.setNbt(playerNbt);//写入新的nbt数据
                 player.removeTag('Growth_system');//设置tag标签
@@ -812,7 +812,7 @@ function playerDieHandle(player, source) {
                         }
                         if (JSON.stringify(newDiePlayerEnderChestList) != "[]") {
                             let randomNumber = newDiePlayerEnderChestList[specifiedRangeRandomNumber(0, newDiePlayerEnderChestList.length)];//取随机数
-                            let containerItem = containerObject.getItem(randomNumber);//获取格子的物品对象
+                            let containerItem = diePlayerEnderChest.getItem(randomNumber);//获取格子的物品对象
                             if (player2.giveItem(containerItem)) {//给击杀者物品
                                 diePlayerEnderChest.removeItem(randomNumber, containerItem.count);//删除末影箱容器内的物品
                                 mc.broadcast(pluginLanguage.Language_Kill_Dragon_palyer_1.replace(/{p}/g, player2.name));
@@ -918,8 +918,6 @@ function playerPVPUseSkills(mob, source, damage) {
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
                     let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        log(currentSkillLevel)
-                        log(purchaseSkillsMoneyListJson[skillName].Damage)
                         let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
                         let skillTreatment = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
                         let playerNbtData = player.getNbt();//获得玩家自己Nbt数据
@@ -1127,7 +1125,7 @@ function generateEntitiesAndEnforceOperations(entityType, entityPos, player) {
                         let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
                         currentLocationObject.setFloat("Base", basefollow + 10)//设置基础跟随范围增加10
                         currentLocationObject.setFloat("Current", currentfollow + 10)//设置当前跟随范围增加10
-                    } else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
+                    /*} else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
                         let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
                         //-----------伤害全面提升6
                         currentLocationObject.setFloat("Base", baseattack + 6);
@@ -1135,7 +1133,7 @@ function generateEntitiesAndEnforceOperations(entityType, entityPos, player) {
                         currentLocationObject.setFloat("DefaultMax", baseattack + 6);
                         currentLocationObject.setFloat("Max", baseattack + 6);
                         currentLocationObject.setFloat("DefaultMin", baseattack + 6);
-                        currentLocationObject.setFloat("Min", baseattack + 6);
+                        currentLocationObject.setFloat("Min", baseattack + 6);*/
                     } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
                         currentLocationObject.setFloat("Base", 6);//修改基础击退抗性为6
                         currentLocationObject.setFloat("DefaultMax", 6);//修改最大击退抗性为6
@@ -1665,7 +1663,7 @@ function playerMoneyAddHandle(xuid, AddMoney) {
                 }
             }
         }
-        if (playerMoney >= playerMoneyAddAttack) {//判断玩家金币是否大于加攻击的数值
+        /*if (playerMoney >= playerMoneyAddAttack) {//判断玩家金币是否大于加攻击的数值
             let DivisionResultAttack = Math.floor(playerMoney / playerMoneyAddAttack);//相除并向下取整
             for (let i = 0; i < playerNbtAttributes.getSize(); i++) {
                 let playerNbtAttributesObj = playerNbtAttributes.getTag(i);//获取当前位置的数据
@@ -1679,7 +1677,7 @@ function playerMoneyAddHandle(xuid, AddMoney) {
                     Modify = true;//设置为是
                 }
             }
-        }
+        }*/
         if (Modify) {
             player.setNbt(playerNbt);//写入新的nbt数据
         } else {
@@ -1709,7 +1707,7 @@ function playerMoneyReduceHandle(xuid, ReMoney) {
                     Modify = true;//设置为是
                 }
             }
-            if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
+            /*if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
                 let baseAttack = parseInt(playerNbtAttributesObj.getTag("DefaultMax").toString());//获取当前最大攻击
                 if (baseAttack != 1 + DivisionResultAttack) {
                     playerNbtAttributesObj.setFloat("Base", 1 + DivisionResultAttack);//设置基础攻击
@@ -1720,7 +1718,7 @@ function playerMoneyReduceHandle(xuid, ReMoney) {
                     playerNbtAttributesObj.setFloat("Min", 1 + DivisionResultAttack);//设置最小攻击
                     Modify = true;//设置为是
                 }
-            }
+            }*/
         }
         if (Modify) {
             player.setNbt(playerNbt);//写入新的nbt数据
@@ -1750,7 +1748,7 @@ function playerRespawnHandle(player) {
                     Modify = true;//设置为是
                 }
             }
-            if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
+            /*if (playerNbtAttributesObj.getTag("Name") == "minecraft:attack_damage") {
                 let baseAttack = parseInt(playerNbtAttributesObj.getTag("DefaultMax").toString());//获取当前最大攻击
                 if (baseAttack != 1 + DivisionResultAttack) {
                     playerNbtAttributesObj.setFloat("Base", 1 + DivisionResultAttack);//设置基础攻击
@@ -1761,7 +1759,7 @@ function playerRespawnHandle(player) {
                     playerNbtAttributesObj.setFloat("Min", 1 + DivisionResultAttack);//设置最小攻击
                     Modify = true;//设置为是
                 }
-            }
+            }*/
         }
         if (Modify) {
             player.setNbt(playerNbt);//写入新的nbt数据
