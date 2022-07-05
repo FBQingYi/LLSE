@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival_Cn';
 const pluginDescribe = '强化生存';
-const pluginVersion = [2, 0, 2];
+const pluginVersion = [2, 1, 3];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '2.0.2';
+const version = '2.1.3';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -22,7 +22,7 @@ if (!File.exists(path)) {
     let KillPlusGoldList = { "minecraft:skeleton": 1, "minecraft:zombie": 1, "minecraft:spider": 1, "minecraft:creeper": 2, "minecraft:zombie_villager": 1 };
     File.writeTo(path1 + 'KillPlusGold.json', JSON.stringify(KillPlusGoldList, null, "\t"));
     //技能相关配置文件
-    let WeaponSkillsMoneyList = { "True_Damage": { "buy": 1000, "SkillLevel": 3, "tag": "True_Damage", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e7cadbcf80cab7f9.png", "Upgrade": { "2": 5000, "3": 10000 }, "Damage": { "1": { "Harm": 1, "CD": 60 }, "2": { "Harm": 2, "CD": 50 }, "3": { "Harm": 3, "CD": 40 } } }, "Blast_Attack": { "buy": 1500, "SkillLevel": 3, "tag": "Blast_Attack", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/c43e957897b3de91.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Harm": 1, "Scope": 2, "CD": 80 }, "2": { "Harm": 2, "Scope": 3, "CD": 70 }, "3": { "Harm": 3, "Scope": 4, "CD": 60 } } }, "Monster_Gift": { "buy": 2000, "SkillLevel": 4, "tag": "Monster_Gift", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e0d9bbfe35abed45.png", "Upgrade": { "2": 15000, "3": 30000, "4": 50000 }, "Damage": { "1": { "CD": 240 }, "2": { "CD": 230 }, "3": { "CD": 220 }, "4": { "CD": 210 } } }, "Holy_Guardian": { "buy": 2500, "SkillLevel": 3, "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/27c6bebd486eb69a.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Healing amount": 2, "CD": 190 }, "2": { "Healing amount": 3, "CD": 180 }, "3": { "Healing amount": 4, "CD": 170 } } } };
+    let WeaponSkillsMoneyList = { "True_Damage": { "buy": 1000, "SkillLevel": 3, "tag": "True_Damage", "CNName": "真实伤害", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e7cadbcf80cab7f9.png", "Upgrade": { "2": 5000, "3": 10000 }, "Damage": { "1": { "Harm": 1, "CD": 60 }, "2": { "Harm": 2, "CD": 50 }, "3": { "Harm": 3, "CD": 40 } } }, "Blast_Attack": { "buy": 1500, "SkillLevel": 3, "tag": "Blast_Attack", "CNName": "爆炸攻击", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/c43e957897b3de91.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Harm": 1, "Scope": 2, "CD": 80 }, "2": { "Harm": 2, "Scope": 3, "CD": 70 }, "3": { "Harm": 3, "Scope": 4, "CD": 60 } } }, "Monster_Gift": { "buy": 2000, "SkillLevel": 4, "tag": "Monster_Gift", "CNName": "取你装备", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/e0d9bbfe35abed45.png", "Upgrade": { "2": 15000, "3": 30000, "4": 50000 }, "Damage": { "1": { "CD": 240 }, "2": { "CD": 230 }, "3": { "CD": 220 }, "4": { "CD": 210 } } }, "Holy_Guardian": { "buy": 2500, "SkillLevel": 3, "CNName": "神圣守护", "PictureURL": "https://s3.bmp.ovh/imgs/2021/09/27c6bebd486eb69a.png", "Upgrade": { "2": 10000, "3": 15000 }, "Damage": { "1": { "Healing amount": 2, "CD": 190 }, "2": { "Healing amount": 3, "CD": 180 }, "3": { "Healing amount": 4, "CD": 170 } } } };
     File.writeTo(path1 + 'WeaponSkillsMoneyList.json', JSON.stringify(WeaponSkillsMoneyList, null, "\t"));
     //吃食物获得buff列表
     let EatFoodBuffList = { "debuff": ["slowness", "mining_fatigue", "instant_damage", "nausea", "blindness", "hunger", "weakness", "poison", "wither", "unluck", "bad_omen", "darkness"], "buff": ["speed", "haste", "strength", "instant_health", "jump_boost", "regeneration", "resistance", "fire_resistance", "water_breathing", "invisibility", "night_vision", "health_boost", "absorption", "saturation", "glowing", "levitation", "luck", "slow_falling", "conduit_power", "dolphins_grace", "hero_of_the_village"] };
@@ -48,8 +48,8 @@ if (!File.exists(path)) {
     File.writeTo(path2 + 'ServerGiveBooks.txt', IntroductionBookOriginal);
     //语言json数据
     let articlesInChineseAndEnglish = { "badOmen": "凶兆", "villageHero": "村庄英雄", "arrowDamage": "力量", "arrowFire": "火矢", "arrowInfinite": "无限", "arrowKnockback": "冲击", "crossbowMultishot": "多重箭", "crossbowPiercing": "穿透", "crossbowQuickCharge": "快速装填", "digging": "效率", "durability": "耐久", "fishingSpeed": "饵钓", "frostwalker": "冰霜行者", "knockback": "击退", "lootBonus": "抢夺", "lootBonusDigger": "时运", "lootBonusFishing": "海之眷顾", "mending": "经验修补", "oxygen": "水下呼吸", "all": "保护", "explosion": "爆炸保护", "fall": "摔落保护", "projectile": "弹射物保护", "soul_speed": "灵魂疾行", "thorns": "荆棘", "untouching": "精准采集", "waterWalker": "深海探索者", "waterWorker": "水下速掘", "tridentChanneling": "引雷", "tridentLoyalty": "忠诚", "tridentRiptide": "激流", "tridentImpaling": "穿刺", "area_effect_cloud": "区域效果云雾", "armor_stand": "盔甲架", "bat": "蝙蝠", "bee": "蜜蜂", "blaze": "烈焰人", "cat": "猫", "cave_spider": "洞穴蜘蛛", "chicken": "鸡", "cow": "牛", "creeper": "爬行者", "dolphin": "海豚", "goat": "山羊", "panda": "熊猫", "donkey": "驴", "dragon_fireball": "末影龙火球", "drowned": "溺尸", "egg": "鸡蛋", "elder_guardian": "远古守卫者", "ender_crystal": "末影水晶", "ender_dragon": "末影龙", "enderman": "末影人", "endermite": "末影螨", "ender_pearl": "末影珍珠", "evocation_illager": "唤魔者", "evocation_fang": "唤魔者尖牙", "eye_of_ender_signal": "末影之眼", "falling_block": "下落的方块", "fireball": "火球", "fireworks_rocket": "焰火火箭", "fishing_hook": "鱼钩", "fox": "狐狸", "cod": "鳕鱼", "pufferfish": "河豚", "salmon": "鲑鱼", "tropicalfish": "热带鱼", "axolotl": "美西螈", "ghast": "恶魂", "glow_squid": "发光鱿鱼", "piglin_brute": "残暴猪灵", "guardian": "守卫者", "hoglin": "疣猪兽", "horse": "马", "husk": "尸壳", "ravager": "劫掠兽", "iron_golem": "铁傀儡", "item": "物品", "leash_knot": "拴绳结", "lightning_bolt": "闪电", "lingering_potion": "滞留药水", "llama": "羊驼", "llama_spit": "羊驼口水", "magma_cube": "岩浆怪", "chest_minecart": "运输矿车", "command_block_minecart": "命令方块矿车", "furnace_minecart": "动力矿车", "hopper_minecart": "漏斗矿车", "tnt_minecart": "TNT 矿车", "mule": "骡子", "mooshroom": "哞菇", "moving_block": "移动中的方块", "ocelot": "豹猫", "painting": "画", "parrot": "鹦鹉", "phantom": "幻翼", "pig": "猪", "piglin": "猪灵", "pillager": "掠夺者", "polar_bear": "北极熊", "rabbit": "兔子", "sheep": "羊", "shulker": "潜影贝", "shulker_bullet": "潜影贝子弹", "silverfish": "蠹虫", "skeleton": "骷髅", "skeleton_horse": "骷髅马", "stray": "流浪者", "small_fireball": "小火球", "snowball": "雪球", "snow_golem": "雪傀儡", "spider": "蜘蛛", "splash_potion": "药水", "squid": "鱿鱼", "strider": "炽足兽", "thrown_trident": "三叉戟", "tripod_camera": "三脚架摄像机", "turtle": "海龟", "vex": "恼鬼", "villager": "村民", "armor": "盔甲匠", "butcher": "屠夫", "cartographer": "制图师", "cleric": "牧师", "farmer": "农民", "fisherman": "渔夫", "fletcher": "制箭师", "leather": "皮匠", "librarian": "图书管理员", "shepherd": "牧羊人", "tool": "工具匠", "weapon": "武器匠", "mason": "石匠", "unskilled": "不熟练的村民", "villager_v2": "村民", "vindicator": "卫道士", "wandering_trader": "流浪商人", "witch": "女巫", "wither_skeleton": "凋灵骷髅", "wither_skull": "凋灵头颅", "wither_skull_dangerous": "凋灵头颅", "wolf": "狼", "xp_orb": "经验球", "xp_bottle": "附魔之瓶", "zoglin": "僵尸疣猪兽", "zombie": "僵尸", "zombie_horse": "僵尸马", "zombie_pigman": "僵尸猪灵", "zombie_villager": "僵尸村民", "zombie_villager_v2": "怪人村民", "endcity": "末地之城", "fortress": "下界要塞", "mansion": "林地宅邸", "mineshaft": "废弃矿井", "missingno": "未知功能", "monument": "海底遗迹", "stronghold": "要塞", "temple": "神庙", "village": "村庄", "shipwreck": "沉船", "buriedtreasure": "埋藏的宝藏", "ruins": "海洋废墟", "pillageroutpost": "掠夺者前哨", "bastionremnant": "堡垒遗迹", "ruinedportal": "破坏的传送门", "apple": "苹果", "axolotlAdultBodySingle": "成年 %1$s 美西螈", "axolotlBabyBodySingle": "幼年 %1$s 美西螈", "axolotlColorLucy": "白化", "axolotlColorCyan": "青色", "axolotlColorGold": "金色", "axolotlColorWild": "棕色", "axolotlColorBlue": "蓝色", "golden_apple": "金苹果", "appleEnchanted": "附魔苹果", "tipped_arrow": "药箭", "black": "黑色旗帜", "blue": "蓝色旗帜", "brown": "棕色旗帜", "cyan": "青色旗帜", "gray": "灰色旗帜", "green": "绿色旗帜", "illager_captain": "灾厄村民旗帜", "lightBlue": "淡蓝色旗帜", "lime": "黄绿色旗帜", "magenta": "品红色旗帜", "pink": "粉红色旗帜", "purple": "紫色旗帜", "red": "红色旗帜", "white": "白色旗帜", "yellow": "黄色旗帜", "steak": "牛排", "beef": "生牛肉", "beetroot_soup": "甜菜根汤", "blaze_powder": "烈焰粉", "blaze_rod": "烈焰棒", "bone": "骨头", "book": "书", "chainmail_boots": "锁链靴子", "leather_boots": "皮革靴子", "diamond_boots": "钻石靴子", "golden_boots": "金靴子", "iron_boots": "铁靴子", "bow": "弓", "bowl": "碗", "bread": "面包", "brewing_stand": "酿造台", "brick": "砖", "bucket": "桶", "bucketLava": "熔岩桶", "bucketWater": "水桶", "bucketFish": "桶装鳕鱼", "bucketSalmon": "桶装鲑鱼", "bucketTropical": "桶装热带鱼", "bucketPuffer": "桶装河豚", "bucketCustomFish": "桶装 ", "bucketAxolotl": "美西螈桶", "tropicalColorWhite": "白色", "tropicalColorOrange": "橙色", "tropicalColorMagenta": "品红色", "tropicalColorSky": "天蓝色", "tropicalColorYellow": "黄色", "tropicalColorLime": "黄绿色", "tropicalColorRose": "玫瑰色", "tropicalColorGray": "灰色", "tropicalColorSilver": "银色", "tropicalColorTeal": "水鸭色", "tropicalColorPlum": "紫红色", "tropicalColorBlue": "蓝色", "tropicalColorBrown": "棕色", "tropicalColorGreen": "绿色", "tropicalColorRed": "红色", "tropicalSchoolAnemone": "海葵鱼", "tropicalSchoolBlackTang": "黑刺尾鲷", "tropicalSchoolBlueDory": "拟刺尾鲷", "tropicalSchoolButterflyFish": "蝶鱼", "tropicalSchoolCichlid": "慈鲷", "tropicalSchoolClownfish": "海葵鱼", "tropicalSchoolCottonCandyBetta": "五彩搏鱼", "tropicalSchoolDottyback": "拟雀鲷", "tropicalSchoolEmperorRedSnapper": "川纹笛鲷", "tropicalSchoolGoatfish": "拟羊鱼", "tropicalSchoolMoorishIdol": "镰鱼", "tropicalSchoolOrnateButterfly": "华丽蝴蝶鱼", "tropicalSchoolParrotfish": "鹦嘴鱼", "tropicalSchoolQueenAngelFish": "额斑刺蝶鱼", "tropicalSchoolRedCichlid": "红慈鲷", "tropicalSchoolRedLippedBlenny": "红唇鳚鱼", "tropicalSchoolRedSnapper": "红边笛鲷", "tropicalSchoolThreadfin": "马鲅", "tropicalSchoolTomatoClown": "白条双锯鱼", "tropicalSchoolTriggerfish": "鳞鲀", "tropicalSchoolYellowTang": "黄刺尾鲷", "tropicalSchoolYellowtailParrot": "黄尾鹦嘴鱼", "canBreak": "会损坏：", "canPlace": "可以放在：", "golden_carrot": "金胡萝卜", "carrotOnAStick": "胡萝卜钓竿", "warped_fungus_on_a_stick": "诡异真菌钓竿", "charcoal": "木炭", "chainmail_chestplate": "锁链胸甲", "leather_chestplate": "皮革胸甲", "diamond_chestplate": "钻石胸甲", "golden_chestplate": "金胸甲", "iron_chestplate": "铁胸甲", "chorus_fruit": "紫颂果", "chorus_fruit_popped": "爆裂紫颂果", "cooked_beef": "熟牛肉", "cooked_chicken": "熟鸡肉", "cooked_porkchop": "熟猪排", "clay_ball": "粘土", "clock": "钟", "coal": "煤炭", "comparator": "红石比较器", "compass": "指南针", "lodestonecompass": "磁石指南针", "cookie": "曲奇", "crossbow": "弩", "diamond": "钻石", "repeater": "红石中继器", "acacia_door": "金合欢木门", "birch_door": "桦木门", "dark_oak_door": "深色橡木门", "jungle_door": "丛林木门", "wooden_door": "橡木门", "spruce_door": "云杉木门", "dragon_breath": "龙息", "glow_ink_sac": "发光墨囊", "glow_frame": "发光物品展示框", "elytra": "鞘翅", "emerald": "绿宝石", "emptyMap": "空白地图", "emptyLocatorMap": "空的定位器地图", "enchanted_book": "附魔书", "end_crystal": "末地水晶", "end_rod": "末地烛", "ender_eye": "末影之眼", "experience_bottle": "附魔之瓶", "feather": "羽毛", "fermented_spider_eye": "发酵蛛眼", "fireworks": "焰火火箭", "clownfish": "热带鱼", "cooked_fish": "熟鳕鱼", "fish": "生鳕鱼", "photo": "照片", "cooked_salmon": "熟鲑鱼", "fishing_rod": "钓鱼竿", "flint": "燧石", "flint_and_steel": "打火石", "flower_pot": "花盆", "frame": "物品展示框", "ghast_tear": "恶魂之泪", "glass_bottle": "玻璃瓶", "gold_nugget": "金粒", "iron_nugget": "铁粒", "diamond_axe": "钻石斧", "golden_axe": "金斧", "iron_axe": "铁斧", "stone_axe": "石斧", "wooden_axe": "木斧", "chainmail_helmet": "锁链头盔", "leather_helmet": "皮革帽子", "diamond_helmet": "钻石头盔", "golden_helmet": "金头盔", "iron_helmet": "铁头盔", "diamond_hoe": "钻石锄", "golden_hoe": "金锄", "iron_hoe": "铁锄", "stone_hoe": "石锄", "wooden_hoe": "木锄", "honey_bottle": "蜂蜜瓶", "honeycomb": "蜜脾", "horsearmordiamond": "钻石马铠", "horsearmorgold": "黄金马铠", "horsearmoriron": "铁马铠", "horsearmorleather": "皮革马铠", "gold_ingot": "金锭", "iron_ingot": "铁锭", "netherite_ingot": "下界合金锭", "netherite_scrap": "下界合金碎片", "netherite_sword": "下界合金剑", "netherite_pickaxe": "下界合金镐", "netherite_axe": "下界合金斧头", "netherite_shovel": "下界合金锹", "netherite_hoe": "下界合金锄头", "netherite_boots": "下界合金靴子", "netherite_leggings": "下界合金护腿", "netherite_chestplate": "下界合金胸甲", "netherite_helmet": "下界合金头盔", "lead": "拴绳", "chainmail_leggings": "锁链护腿", "leather_leggings": "皮革裤子", "diamond_leggings": "钻石护腿", "golden_leggings": "金护腿", "iron_leggings": "铁护腿", "nautilus_shell": "鹦鹉螺壳", "heart_of_the_sea": "海洋之心", "magma_cream": "岩浆膏", "map": "地图", "melon": "西瓜片", "milk": "牛奶", "minecartFurnace": "动力矿车", "trident": "三叉戟", "mushroom_stew": "蘑菇煲", "muttonCooked": "熟羊肉", "muttonRaw": "生羊肉", "name_tag": "命名牌", "netherbrick": "下界砖", "quartz": "下界石英", "netherStar": "下界之星", "paper": "纸", "diamond_pickaxe": "钻石镐", "golden_pickaxe": "金镐", "iron_pickaxe": "铁镐", "stone_pickaxe": "石镐", "wooden_pickaxe": "木镐", "porkchop_cooked": "熟猪排", "porkchop": "生猪排", "portfolio": "相片簿", "potato": "马铃薯", "baked_potato": "烤马铃薯", "poisonous_potato": "毒马铃薯", "prismarine_crystals": "海晶砂粒", "prismarine_shard": "海晶碎片", "pumpkin_pie": "南瓜派", "cooked_rabbit": "熟兔肉", "rabbit_foot": "兔子脚", "rabbit_hide": "兔子皮", "rabbit_stew": "兔肉煲", "redstone": "红石粉", "kelp": "海带", "dried_kelp": "干海带", "rotten_flesh": "腐肉", "ruby": "红宝石", "saddle": "鞍", "wheat_seeds": "种子", "beetroot_seeds": "甜菜根种子", "melon_seeds": "西瓜种子", "pumpkin_seeds": "南瓜种子", "shears": "剪刀", "diamond_shovel": "钻石锹", "golden_shovel": "金锹", "iron_shovel": "铁锹", "stone_shovel": "石锹", "wooden_shovel": "木锹", "spruce_sign": "云杉木告示牌", "birch_sign": "桦木告示牌", "jungle_sign": "丛林木告示牌", "acacia_sign": "金合欢木告示牌", "darkoak_sign": "深色橡木告示牌", "crimson_sign": "绯红告示牌", "warped_sign": "诡异木告示牌", "slime_ball": "粘液球", "speckled_melon": "闪烁的西瓜片", "spider_eye": "蜘蛛眼", "stick": "木棍", "string": "线", "sugar": "糖", "gunpowder": "火药", "diamond_sword": "钻石剑", "golden_sword": "金剑", "iron_sword": "铁剑", "stone_sword": "石剑", "wooden_sword": "木剑", "unbreakable": "无法破坏", "writable_book": "书和羽毛笔", "written_book": "成书", "glowstone_dust": "荧石粉", "shield": "护盾", "shulker_shell": "潜影壳", "totem": "不死图腾", "turtle_helmet": "海龟壳", "turtle_shell_piece": "鳞甲", "phantom_membrane": "幻翼膜", "sweet_berries": "甜浆果", "suspicious_stew": "迷之炖菜", "bucketPowderSnow": "粉状雪桶", "planks": "木板", "walls": "墙", "fenceGate": "栅栏门", "stairs": "阶梯", "door": "门", "glassPane": "玻璃板", "permission": "权限块", "slab": "台阶", "stoneBrick": "装饰石头", "woolCarpet": "羊毛地毯", "concretePowder": "混凝土粉末", "concrete": "混凝土", "stainedClay": "陶瓦", "glazedTerracotta": "带釉陶瓦", "dye": "染料", "ore": "矿石", "stone": "石头", "sapling": "树苗", "seed": "种子", "crop": "农作物", "flower": "花", "rawFood": "生食", "cookedFood": "熟食", "miscFood": "其他食物", "monsterStoneEgg": "被虫蚀的石头", "mobEgg": "生物蛋", "helmet": "头盔", "chestplate": "胸甲", "leggings": "护腿", "boots": "靴子", "horseArmor": "马铠", "sword": "剑", "axe": "斧头", "pickaxe": "镐", "shovel": "锹", "hoe": "锄头", "arrow": "箭", "potion": "药水", "splashPotion": "喷溅药水", "lingeringPotion": "滞留药水", "chalkboard": "黑板", "anvil": "铁砧", "chest": "箱子", "shulkerBox": "潜影盒", "record": "唱片", "skull": "生物头颅", "boat": "船", "rail": "铁轨", "minecart": "矿车", "pressurePlate": "压力板", "trapdoor": "活板门", "enchantedBook": "附魔书", "banner": "旗帜", "firework": "焰火", "fireworkStars": "焰火炸药", "coral": "珊瑚块", "coral_decorations": "珊瑚装饰", "buttons": "按钮", "sign": "告示牌", "wood": "树木", "banner_pattern": "旗帜图案", "netherWartBlock": "下界疣", "candles": "蜡烛", "absorption": "伤害吸收", "blindness": "失明", "conduitPower": "潮涌能量", "confusion": "反胃", "digSlowDown": "开采疲劳", "digSpeed": "急速", "empty": "无效果", "emptyPotion": "水瓶", "healthBoost": "生命提升", "hunger": "饥饿", "awkward": "粗制药水", "mundane": "平凡药水", "thick": "浓稠药水", "resistance": "抗性", "saturation": "饱和", "turtleMaster": "缓慢", "turtleMaster2": "抗性", "acaciaFence": "金合欢木栅栏", "acacia_fence_gate": "金合欢木栅栏门", "activator_rail": "激活铁轨", "allow": "允许方块", "air": "空气", "unknown": "未知", "deny": "拒绝方块", "border_block": "边界方块", "barrier": "屏障", "beacon": "信标", "beehive": "蜂箱", "bee_nest": "蜂巢", "target": "标靶", "bed": "床", "bedrock": "基岩", "bell": "钟", "camera": "摄像机", "conduit": "潮涌核心", "invisibleBedrock": "隐形基岩", "beetroot": "甜菜根", "big_dripleaf": "大型垂滴叶", "small_dripleaf_block": "小型垂滴叶", "hanging_roots": "垂根", "dirt_with_roots": "带根泥土", "spore_blossom": "孢子花", "azalea_leaves": "杜鹃花叶", "azalea_leaves_flowered": "盛开杜鹃花叶", "azalea": "杜鹃花", "flowering_azalea": "发光杜鹃花", "cave_vines": "洞穴藤蔓", "cave_vines_body_with_berries": "洞穴藤蔓", "cave_vines_head_with_berries": "洞穴藤蔓", "glow_berries": "发光浆果", "moss_block": "苔藓块", "moss_carpet": "苔藓地毯", "birchFence": "桦木栅栏", "birch_fence_gate": "桦木栅栏门", "blast_furnace": "高炉", "bone_block": "骨头方块", "coal_block": "煤炭块", "diamond_block": "钻石块", "emerald_block": "绿宝石块", "gold_block": "金块", "iron_block": "铁块", "lapis_block": "青金石块", "redstone_block": "红石块", "bookshelf": "书架", "brick_block": "砖块", "brown_mushroom": "棕色蘑菇", "wooden_button": "橡木按钮", "acacia_button": "金合欢木按钮", "birch_button": "桦木按钮", "dark_oak_button": "深色橡木按钮", "jungle_button": "丛林木按钮", "spruce_button": "云杉按钮", "stone_button": "石头按钮", "cactus": "仙人掌", "cake": "蛋糕", "dried_kelp_block": "干海带方块", "carrot": "胡萝卜", "carved_pumpkin": "雕刻南瓜", "cauldron": "炼药锅", "ender_chest": "末影箱", "jigsaw": "拼图方块", "honey_block": "蜂蜜方块", "honeycomb_block": "蜜脾块", "lodestone": "磁石", "nether_sprouts": "下界芽", "crimson_stem": "绯红菌柄", "warped_stem": "诡异菌柄", "stripped_crimson_stem": "去皮绯红菌柄", "stripped_warped_stem": "去皮诡异菌柄", "crimson_hyphae": "绯红菌丝", "warped_hyphae": "诡异菌丝", "stripped_crimson_hyphae": "去皮绯红菌丝", "stripped_warped_hyphae": "去皮诡异菌丝", "crimson_planks": "绯红木板", "warped_planks": "诡异木板", "crimson_door": "绯红门", "warped_door": "诡异门", "crimson_trapdoor": "绯红活板门", "warped_trapdoor": "诡异木活板门", "crimson_standing_sign": "绯红告示牌", "warped_standing_sign": "诡异木告示牌", "crimson_wall_sign": "绯红告示牌", "warped_wall_sign": "诡异木告示牌", "crimson_stairs": "绯红阶梯", "warped_stairs": "诡异阶梯", "crimson_fence": "绯红栅栏", "warped_fence": "诡异木栅栏", "crimson_fence_gate": "绯红栅栏门", "warped_fence_gate": "诡异木栅栏门", "crimson_button": "绯红按钮", "warped_button": "诡异木按钮", "crimson_pressure_plate": "绯红压力板", "warped_pressure_plate": "诡异木压力板", "crimson_slab": "绯红台阶", "warped_slab": "诡异木台阶", "crimson_double_slab": "绯红台阶", "warped_double_slab": "诡异木台阶", "shroomlight": "菌光体", "crimson_nylium": "绯红菌岩", "warped_nylium": "诡异菌岩", "basalt": "玄武岩", "polished_basalt": "磨制玄武岩", "blackstone": "黑石", "polished_blackstone_bricks": "磨制黑石砖", "cracked_polished_blackstone_bricks": "裂纹磨制黑石砖", "polished_blackstone_brick_stairs": "磨制黑石砖阶梯", "blackstone_stairs": "黑石阶梯", "blackstone_wall": "黑石墙", "polished_blackstone_brick_wall": "磨制黑石砖墙", "chiseled_polished_blackstone": "錾制磨制黑石", "gilded_blackstone": "镀金黑石", "blackstone_slab": "黑石台阶", "polished_blackstone_brick_slab": "磨制黑石砖台阶", "chain": "锁链", "soul_soil": "灵魂土", "soul_fire": "灵魂火", "polished_blackstone": "磨制黑石", "polished_blackstone_stairs": "磨制黑石阶梯", "polished_blackstone_slab": "磨制黑石台阶", "polished_blackstone_pressure_plate": "磨制黑石压力板", "polished_blackstone_button": "磨制黑石按钮", "polished_blackstone_wall": "磨制黑石墙", "soul_campfire": "灵魂营火", "chiseled_nether_bricks": "錾制下界砖", "cracked_nether_bricks": "裂纹下界砖", "quartz_bricks": "石英砖", "trapped_chest": "陷阱箱", "shulkerBoxWhite": "白色潜影盒", "shulkerBoxOrange": "橙色潜影盒", "shulkerBoxMagenta": "品红色潜影盒", "shulkerBoxLightBlue": "淡蓝色潜影盒", "shulkerBoxYellow": "黄色潜影盒", "shulkerBoxLime": "黄绿色潜影盒", "shulkerBoxPink": "粉红色潜影盒", "shulkerBoxGray": "灰色潜影盒", "shulkerBoxSilver": "淡灰色潜影盒", "shulkerBoxCyan": "青色潜影盒", "shulkerBoxPurple": "紫色潜影盒", "shulkerBoxBlue": "蓝色潜影盒", "shulkerBoxBrown": "棕色潜影盒", "shulkerBoxGreen": "绿色潜影盒", "shulkerBoxRed": "红色潜影盒", "shulkerBoxBlack": "黑色潜影盒", "chorus_flower": "紫颂花", "chorus_plant": "紫颂植物", "clay": "粘土块", "hardened_clay": "陶瓦", "stained_hardened_clay": "陶瓦", "structure_block": "结构方块", "structure_void": "结构空位", "wool": "羊毛", "cocoa": "可可", "command_block": "命令方块", "composter": "堆肥箱", "light_block": "光源方块", "repeating_command_block": "重复命令方块", "chain_command_block": "连锁命令方块", "wheat": "农作物", "darkOakFence": "深色橡木栅栏", "dark_oak_fence_gate": "深色橡木栅栏门", "daylight_detector": "阳光传感器", "deadbush": "枯萎的灌木", "detector_rail": "探测铁轨", "dirt": "泥土", "podzol": "灰化土", "dispenser": "发射器", "iron_door": "铁门", "doorWood": "木门", "double_plant": "植物", "dragon_egg": "龙蛋", "dropper": "投掷器", "enchanting_table": "附魔台", "enderChest": "末影箱", "end_portal_frame": "末地传送门", "farmland": "农地", "fletching_table": "制箭台", "fence": "橡木栅栏", "fence_gate": "橡木栅栏门", "iron_bars": "铁栏杆", "fire": "火", "yellow_flower": "花", "red_flower": "花", "wither_rose": "凋零玫瑰", "furnace": "熔炉", "glass": "玻璃", "golden_rail": "动力铁轨", "grass": "草方块", "grass_path": "泥土小径", "gravel": "砂砾", "hay_block": "干草捆", "netherrack": "下界岩", "soul_sand": "灵魂沙", "hopper": "漏斗", "ice": "冰", "packed_ice": "浮冰", "blue_ice": "蓝冰", "frosted_ice": "冰霜", "iron_trapdoor": "铁活板门", "jukebox": "唱片机", "jungleFence": "丛林木栅栏", "jungle_fence_gate": "丛林木栅栏门", "ladder": "梯子", "flowing_lava": "熔岩", "leaves": "树叶", "lever": "拉杆", "glowstone": "荧石", "glow_lichen": "发光地衣", "lightning_rod": "雷霆之杖", "lit_pumpkin": "南瓜灯", "lockedchest": "上锁的箱子", "log": "原木", "magma": "岩浆方块", "melon_block": "西瓜", "mob_spawner": "刷怪箱", "monster_egg": "被虫蚀的石头", "mushroom": "蘑菇", "noteblock": "音符盒", "mycelium": "菌丝", "nether_brick": "下界砖块", "red_nether_brick": "红色下界砖", "nether_brick_fence": "下界砖栅栏", "quartz_ore": "下界石英矿石", "netherreactor": "下界反应核", "nether_wart": "下界疣", "nether_wart_block": "下界疣方块", "warped_wart_block": "诡异疣方块", "unlit_redstone_torch": "红石火把", "redstone_torch": "红石火把", "soul_torch": "灵魂火把", "obsidian": "黑曜石", "coal_ore": "煤矿石", "diamond_ore": "钻石矿石", "emerald_ore": "绿宝石矿石", "gold_ore": "金矿石", "iron_ore": "铁矿石", "copper_ore": "铜矿石", "lapis_ore": "青金石矿石", "redstone_ore": "红石矿石", "oreRuby": "红宝石矿石", "observer": "侦测器", "piston": "活塞", "sticky_piston": "粘性活塞", "portal": "传送门", "potatoes": "马铃薯", "stone_pressure_plate": "石质压力板", "wooden_pressure_plate": "橡木压力板", "acacia_pressure_plate": "金合欢木压力板", "birch_pressure_plate": "桦木压力板", "dark_oak_pressure_plate": "深色橡木压力板", "jungle_pressure_plate": "丛林木压力板", "spruce_pressure_plate": "云杉压力板", "pumpkin": "南瓜", "pumpkin_stem": "南瓜茎", "quartz_block": "石英块", "red_mushroom": "红蘑菇", "crimson_fungus": "绯红真菌", "warped_fungus": "诡异真菌", "red_mushroom_block": "红蘑菇方块", "red_sandstone": "红沙石", "redstone_wire": "红石粉", "redstone_lamp": "红石灯", "reeds": "甘蔗", "sand": "沙子", "sandstone": "沙石", "seaLantern": "海晶灯", "standing_sign": "告示牌", "spruce_standing_sign": "云杉木告示牌", "birch_standing_sign": "桦木告示牌", "jungle_standing_sign": "丛林木告示牌", "acacia_standing_sign": "金合欢木告示牌", "darkoak_standing_sign": "深色橡木告示牌", "slime": "粘液块", "snow": "雪", "spruceFence": "云杉栅栏", "spruce_fence_gate": "云杉栅栏门", "brick_stairs": "砖阶梯", "nether_brick_stairs": "下界砖阶梯", "quartz_stairs": "石英阶梯", "smooth_quartz_stairs": "平滑石英阶梯", "red_sandstone_stairs": "红沙石阶梯", "sandstone_stairs": "沙石阶梯", "stone_stairs": "圆石阶梯", "normal_stone_stairs": "石质阶梯", "stone_brick_stairs": "石砖阶梯", "oak_stairs": "橡木阶梯", "acacia_stairs": "金合欢木阶梯", "birch_stairs": "桦木阶梯", "dark_oak_stairs": "深色橡木阶梯", "jungle_stairs": "丛林木阶梯", "spruce_stairs": "云杉木阶梯", "purpur_stairs": "紫珀阶梯", "prismarine_stairs": "海晶石阶梯", "dark_prismarine_stairs": "暗海晶石阶梯", "prismarine_bricks_stairs": "海晶石砖阶梯", "granite_stairs": "花岗岩阶梯", "diorite_stairs": "闪长岩阶梯", "andesite_stairs": "安山岩阶梯", "polished_granite_stairs": "磨制花岗岩阶梯", "polished_diorite_stairs": "磨制闪长岩阶梯", "polished_andesite_stairs": "磨制安山岩阶梯", "mossy_stone_brick_stairs": "苔石砖阶梯", "smooth_red_sandstone_stairs": "平滑红沙石阶梯", "smooth_sandstone_stairs": "平滑沙石阶梯", "end_brick_stairs": "末地石砖阶梯", "mossy_cobblestone_stairs": "苔圆石阶梯", "red_nether_brick_stairs": "红色下界砖阶梯", "smooth_stone": "平滑石", "standing_banner": "旗帜", "cobblestone": "圆石", "stonebrick": "石砖", "stonecutter": "切石机", "stonecutter_block": "切石机", "mossy_cobblestone": "苔圆石", "double_stone_slab": "石台阶", "stone_slab": "石台阶", "tallgrass": "草", "sea_pickle": "海泡菜", "turtle_egg": "海龟蛋", "glass_pane": "玻璃板", "tnt": "TNT", "snow_layer": "顶层雪", "torch": "火把", "acacia_trapdoor": "金合欢木活板门", "birch_trapdoor": "桦木活板门", "dark_oak_trapdoor": "深色橡木活板门", "jungle_trapdoor": "丛林木活板门", "spruce_trapdoor": "云杉木活板门", "tripWire": "绊线", "tripwire_hook": "绊线钩", "vine": "藤蔓", "weeping_vines": "垂泪藤", "twisting_vines": "缠怨藤", "flowing_water": "水", "water": "水", "waterlily": "睡莲", "web": "蜘蛛网", "heavy_weighted_pressure_plate": "测重压力板（重型）", "light_weighted_pressure_plate": "测重压力板（轻型）", "end_stone": "末地石", "end_bricks": "末地石砖", "wooden_slab": "木台阶", "carpet": "地毯", "crafting_table": "工作台", "glazedTerracottaWhite": "白色带釉陶瓦", "glazedTerracottaOrange": "橙色带釉陶瓦", "glazedTerracottaMagenta": "品红色带釉陶瓦", "glazedTerracottaLightBlue": "淡蓝色带釉陶瓦", "glazedTerracottaYellow": "黄色带釉陶瓦", "glazedTerracottaLime": "黄绿色带釉陶瓦", "glazedTerracottaPink": "粉红色带釉陶瓦", "glazedTerracottaGray": "灰色带釉陶瓦", "glazedTerracottaSilver": "淡灰色带釉陶瓦", "glazedTerracottaCyan": "青色带釉陶瓦", "glazedTerracottaPurple": "紫色带釉陶瓦", "glazedTerracottaBlue": "蓝色带釉陶瓦", "glazedTerracottaBrown": "棕色带釉陶瓦", "glazedTerracottaGreen": "绿色带釉陶瓦", "glazedTerracottaRed": "红色带釉陶瓦", "glazedTerracottaBlack": "黑色带釉陶瓦", "stripped_spruce_log": "去皮云杉原木", "stripped_dark_oak_log": "去皮深色橡树原木", "stripped_birch_log": "去皮桦树原木", "stripped_jungle_log": "去皮丛林原木", "stripped_oak_log": "去皮橡树原木", "stripped_acacia_log": "去皮金合欢原木", "bamboo": "竹子", "scaffolding": "脚手架", "grindstone": "磨石", "cartography_table": "制图台", "lantern": "灯", "soul_lantern": "灵魂灯", "smoker": "火炉", "smithing_table": "锻造台", "barrel": "木桶", "campfire": "营火", "loom": "织布机", "lectern": "讲台", "sweet_berry_bush": "甜浆果灌木丛", "oak": "橡木", "spruce": "云杉木", "birch": "桦木", "jungle": "丛林木", "acacia": "金合欢木", "dark_oak": "深色橡木", "netherite_block": "下界合金块", "ancient_debris": "远古残骸", "nether_gold_ore": "下界金矿石", "respawn_anchor": "重生锚", "crying_obsidian": "哭泣的黑曜石", "powder_snow": "粉状雪", "deepslate": "深板岩", "infested_deepslate": "被虫蚀的深板岩", "cobbled_deepslate": "深板岩圆石", "dripstone_block": "滴水石方块", "pointed_dripstone": "滴水石锥", "cobbled_deepslate_slab": "深板岩圆石台阶", "cobbled_deepslate_stairs": "深板岩圆石阶梯", "cobbled_deepslate_wall": "深板岩圆石墙", "polished_deepslate": "磨制深板岩", "polished_deepslate_slab": "磨制深板岩台阶", "polished_deepslate_stairs": "磨制深板岩阶梯", "polished_deepslate_wall": "磨制深板岩墙", "deepslate_tiles": "深板岩瓦", "deepslate_tile_slab": "深板岩瓦台阶", "deepslate_tile_stairs": "深板岩瓦阶梯", "deepslate_tile_wall": "深板岩瓦墙", "deepslate_bricks": "深板岩砖", "deepslate_brick_slab": "深板岩砖台阶", "deepslate_brick_stairs": "深板岩砖阶梯", "deepslate_brick_wall": "深板岩砖墙", "chiseled_deepslate": "錾制深板岩", "cobbled_deepslate_double_slab": "深板岩圆石双台阶", "polished_deepslate_double_slab": "磨制深板岩双台阶", "deepslate_tile_double_slab": "深板岩瓦双台阶", "deepslate_brick_double_slab": "深板岩砖双台阶", "deepslate_lapis_ore": "深板岩青金石矿石", "deepslate_iron_ore": "深层铁矿石", "deepslate_gold_ore": "深层金矿石", "deepslate_redstone_ore": "深层红石矿石", "deepslate_diamond_ore": "深层钻石矿石", "deepslate_coal_ore": "深层煤矿石", "deepslate_emerald_ore": "深层绿宝石矿石", "deepslate_copper_ore": "深层铜矿石", "cracked_deepslate_tiles": "裂纹深板岩瓦", "cracked_deepslate_bricks": "裂纹深板岩砖", "copper_ingot": "铜锭", "raw_copper": "粗铜", "raw_iron": "粗铁", "raw_gold": "粗金", "copper_block": "铜方块", "exposed_copper": "外露铜", "weathered_copper": "风化铜", "oxidized_copper": "氧化铜", "waxed_copper": "涂蜡铜方块", "waxed_exposed_copper": "涂蜡外露铜", "waxed_weathered_copper": "涂蜡风化铜", "waxed_oxidized_copper": "涂蜡氧化铜", "cut_copper": "切制铜", "exposed_cut_copper": "外露切制铜", "weathered_cut_copper": "风化切制铜", "oxidized_cut_copper": "氧化切制铜", "waxed_cut_copper": "涂蜡切制铜", "waxed_exposed_cut_copper": "涂蜡外露切制铜", "waxed_weathered_cut_copper": "涂蜡风化切制铜", "waxed_oxidized_cut_copper": "涂蜡氧化切制铜", "cut_copper_stairs": "切制铜阶梯", "exposed_cut_copper_stairs": "外露切制铜阶梯", "weathered_cut_copper_stairs": "风化切制铜阶梯", "oxidized_cut_copper_stairs": "氧化切制铜阶梯", "waxed_cut_copper_stairs": "涂蜡切制铜阶梯", "waxed_exposed_cut_copper_stairs": "涂蜡外露切制铜阶梯", "waxed_weathered_cut_copper_stairs": "涂蜡风化切制铜阶梯", "waxed_oxidized_cut_copper_stairs": "涂蜡氧化切制铜阶梯", "cut_copper_slab": "切制铜台阶", "exposed_cut_copper_slab": "外露切制铜台阶", "weathered_cut_copper_slab": "风化切制铜台阶", "oxidized_cut_copper_slab": "氧化切制铜台阶", "waxed_cut_copper_slab": "涂蜡切制铜台阶", "waxed_exposed_cut_copper_slab": "涂蜡外露切制铜台阶", "waxed_weathered_cut_copper_slab": "涂蜡风化切制铜台阶", "waxed_oxidized_cut_copper_slab": "涂蜡氧化切制铜台阶", "raw_copper_block": "粗铜块", "raw_iron_block": "粗铁块", "raw_gold_block": "粗金块", "copper": "铜", "candle": "蜡烛", "white_candle": "白色蜡烛", "orange_candle": "橙色蜡烛", "magenta_candle": "品红色蜡烛", "light_blue_candle": "淡蓝色蜡烛", "yellow_candle": "黄色蜡烛", "lime_candle": "黄绿色蜡烛", "pink_candle": "粉红色蜡烛", "gray_candle": "灰色蜡烛", "light_gray_candle": "淡灰色蜡烛", "cyan_candle": "青色蜡烛", "purple_candle": "紫色蜡烛", "blue_candle": "蓝色蜡烛", "brown_candle": "棕色蜡烛", "green_candle": "绿色蜡烛", "red_candle": "红色蜡烛", "black_candle": "黑色蜡烛", "candle_cake": "带蜡烛的蛋糕", "white_candle_cake": "带白色蜡烛的蛋糕", "orange_candle_cake": "带橙色蜡烛的蛋糕", "magenta_candle_cake": "带品红色蜡烛的蛋糕", "light_blue_candle_cake": "带淡蓝色蜡烛的蛋糕", "yellow_candle_cake": "带黄色蜡烛的蛋糕", "lime_candle_cake": "带黄绿色蜡烛的蛋糕", "pink_candle_cake": "带粉红色蜡烛的蛋糕", "gray_candle_cake": "带灰色蜡烛的蛋糕", "light_gray_candle_cake": "带淡灰色蜡烛的蛋糕", "cyan_candle_cake": "带青色蜡烛的蛋糕", "purple_candle_cake": "带紫色蜡烛的蛋糕", "blue_candle_cake": "带蓝色蜡烛的蛋糕", "brown_candle_cake": "带棕色蜡烛的蛋糕", "green_candle_cake": "带绿色蜡烛的蛋糕", "red_candle_cake": "带红色蜡烛的蛋糕", "black_candle_cake": "带黑色蜡烛的蛋糕", "spyglass": "望远镜", "amethyst_shard": "紫水晶碎片", "amethyst_block": "紫水晶方块", "budding_amethyst": "发芽紫水晶", "amethyst_cluster": "紫水晶簇", "large_amethyst_bud": "大型紫水晶芽", "medium_amethyst_bud": "中型紫水晶芽", "small_amethyst_bud": "小型紫水晶芽", "tuff": "凝灰岩", "calcite": "方解石", "tinted_glass": "染色玻璃", "smooth_basalt": "平滑玄武岩" };//中英对照
-    let languageZhCN = { "Language_Enable_Fracture": "你因为从高处摔下来导致骨折！", "Language_sidebar_avgPing": "§l§5平均延迟", "Language_sidebar_money": "§l§6金币余额", "Language_sidebar_title": "§l§3--肝帝纪元--", "Language_Settlement_of_arrears": "§l§6扣除欠款成功，欠款金额已清零。恭喜！", "Language_Partial_settlement": "§l§6扣除部分欠款金额成功，共扣除：{m}", "Language_Fishing_failed": "余额不足，无法钓鱼", "Language_Failed_use": "余额不足，无法使用", "Language_Player_Get_gold_coins": "§l§6你获得了：{m} 个金币！", "Language_Biological_Resurrection": "§l§4受到神龙影响生物将在3秒后复活并强化，请注意！", "Language_Kill_Dragon": "§l§6玩家：{p} 成功击杀末影龙，获得{m} 金币", "Language_Kill_Dragon_blast": "§l§4玩家：{p} 成功击杀末影龙，因受到神龙的诅咒，将在3秒后发生爆炸！！请注意躲避！", "Language_Deduct_gold_coins": "§l§3扣除{m} 金币成功！", "Language_Attack_failed": "§l§4余额不足，无法进行PVP", "Language_Boss_Blood_strip": ["剩余血量:", "本次伤害:"], "Language_Lore_1": "技能列表：", "Language_Throw_out_interception": "§l§4技能物品无法丢出！", "Language_Sabotage_interception": "§l§4你的破坏被神龙之力阻挡，破坏无效！", "Language_Dragon_Slayer_notification": "§l§2屠龙者：{p} 上线了！\n§l§2当前所在坐标：{pos}\n§l§2当前血量：${h}", "Language_Invalid_attack": "§l§4你的攻击被神龙之力阻挡，攻击无效！", "Language_Death_deduction": "§l§3你因死亡扣除 {m} 金币！", "Language_Kill_Dragon_palyer_1": "§l§3玩家: {p} 成功击杀了屠龙者，获得其末影箱随机物品", "Language_Kill_Dragon_palyer_2": "§l§4玩家：{p} 成功击杀了屠龙者，但因其背包满了无法获得物品", "Language_Kill_Dragon_palyer_3": "§l§6玩家：{p} 成功击杀了屠龙者，因屠龙者末影箱无物品，其将获得屠龙者的所有金币！", "Language_edible": "§l§3你食用了： {i} 获得了 {buff} 秒 {buffLvl} 级 {buffName} 效果，扣除 {m} 金币！", "Language_Loading_succeeded": "[New 强化生存] 插件加载成功，当前版本：{v}", "Language_Divine_Guardian": "§l§3你使用技能，恢复{h}血量，对方减少{h}血量！", "Language_Real_injury": "§l§3你使用技能，额外造成{d}点真实伤害！", "Language_Attack_drop": "§l§2你因被攻击导致 {i} 掉落", "Language_Attack_drop_damage": "§l§2你因无可掉落物品额外收到{d}点真实伤害！", "Language_Transmission_cost": "§l§3你已扣除传送费用 {m} 金币！", "Language_Transmission_cost_arrears": "§l§3除传送费用 {m} 金币失败，已计入欠款额度！", "Language_Form_title": "§l§6强化生存", "Language_Form_Content": "§l§3提示：请选择购买还是强化\n§l§4请注意要手持需要购买技能的武器打开此窗口！", "Language_Form_Button1": ["§l§3购买武器技能", "https://s3.bmp.ovh/imgs/2021/09/070c7d5cf30904a4.png"], "Language_Form_Button2": ["§l§3强化武器技能", "https://s3.bmp.ovh/imgs/2021/09/253edbaac602f3cd.png"], "Language_Form_Button3": ["§l§3打开附魔界面", "https://s3.bmp.ovh/imgs/2021/09/290476a112a76340.png"], "Language_Form_Button4": ["§l§3修复物品耐久", "https://s3.bmp.ovh/imgs/2021/12/9309741d68695519.png"], "Language_Form_Button5": ["§l§3查屠龙者坐标", "https://s3.bmp.ovh/imgs/2021/09/290476a112a76340.png"], "Language_Form_Button6": ["§l§3获取新手引导书", "https://s3.bmp.ovh/imgs/2021/09/118b8910b2a261db.png"], "Language_Form_Button7": ["§l§3相关通知设置", "textures/items/end_crystal"], "Language_Form_choice": "§l§3提示：请选择！", "Language_Purchase_failed1": "§l§4你已购买过武器技能，无法再次购买！", "Language_Reinforcement_failure1": "§l§4你尚未购买过技能，无法强化！", "Language_Item_repair": "§l§3提示：请选择物品！当前修复价格{m}", "Language_View_dragon_slaughtering1": "玩家不在线或未完成屠龙任务", "Language_View_dragon_slaughtering2": "玩家：{p} 在 {dim} {x} {y} {z}", "Language_Repair_successful": "§l§3修复成功！", "Language_Deduction_failed": "§l§4扣款失败！", "Language_credit": "§l§4余额不足！", "Language_Cannot_repair": "§l§4此物品不能修复！", "Language_enchanting_Form_title": "附魔选择界面", "Language_balance": "你的余额为：{m}", "Language_Enchant_Level": "附魔等级默认为{l}级", "Language_Select_Properties": "选择属性", "Language_SkillStrengthening_Form_title": "§l§6武器技能强化界面", "Language_SkillStrengthening_Form_Content": "§l§3提示：价高不一定最好！", "Language_Upgrade_requires_gold_coins": "§l§3{sn} ${m}金", "Language_Reinforcement_failure2": "§l§4此武器技能已达到满级，无法强化！", "Language_Reinforcement_failure3": "此物品无法升级技能，原因：他没有技能！", "Language_Strengthen_success1": ["技能列表：", "{sn}", "技能等级：{l}"], "Language_Strengthen_success2": "§l§5成功！", "Language_Reinforcement_failure4": "§l§4扣款失败", "Language_Reinforcement_failure5": "§l§4余额不足", "Language_Purchase_interface": "§l§6武器技能购买界面", "Language_Purchase_interface_Content": "§l§3提示：以下三个技能只能购买一个", "Language_Purchase_success1": ["技能列表：", "{sn}", "技能等级：1"], "Language_Purchase_failed2": "§l§4此武器已无法购买！", "Language_Enchant_failure": "§l§4你的余额不足，你还需要 {m} 金币", "Language_Enchant_successfully": "§l§3附魔成功！", "Language_OP_Form_Button1": "重载配置文件", "Language_OP_Form_Button2": "启用侧边栏", "Language_OP_Form_Button3": "关闭侧边栏", "Language_OP_Form_Button4": "给自己1万金币", "Language_Do_not_fall_success": "§l§3添加成功！", "Language_Invalid_attack1": "§l§4你的攻击因为你运气差，导致攻击无效！", "Language_Do_not_fall_fail": "§l§4添加失败，已存在！", "Language_Service_items_success": "§l§3设置成功!", "Language_High_version_tips": "[强化生存] 你目前正在使用内测版本，请勿外泄！", "Language_Low_version_prompt": "[强化生存] 发现新版本，版本号为：{v},请更新！", "Language_Instruction_description": "打开武器强化面板", "Language_Instruction_description_op": "打开gui界面|设置手持物品为受伤不掉落|设置手持物品为进服给予物品", "Language_MsgType1": "普通消息", "Language_MsgType2": "失败消息", "Language_MsgType3": "警告消息", "Language_MsgType4": "消息显示位置", "Language_MsgType4Data": ["聊天栏", "物品栏上方"], "Language_True_Damage": "真实伤害", "Language_Blast_Attack": "爆炸攻击", "Language_Take_Your_Equipment": "取你装备", "Language_Holy_Guardian": "神圣守护", "Language_Amount_owed": "欠款金额" };
-    let languageEnUS = { "Language_Enable_Fracture": "You broke your bone because you fell from a high place!", "Language_sidebar_avgPing": "§l§5Ping Delay", "Language_sidebar_money": "§l§6Gold Balance", "Language_sidebar_title": "§l§3--The Era of the Emperor--", "Language_Settlement_of_arrears": "§l§6The arrears have been successfully deducted, and the arrears have been cleared. Congratulations!", "Language_Partial_settlement": "§l§6Successfully deducted part of the arrears, total deduction: {m}", "Language_Fishing_failed": "Insufficient balance to fish", "Language_Failed_use": "Insufficient balance to use", "Language_Player_Get_gold_coins": "§l§6You got: {m} coins!", "Language_Biological_Resurrection": "§l§4Creatures affected by Shenlong will be resurrected and strengthened after 3 seconds, please pay attention!", "Language_Kill_Dragon": "§l§6Player: {p} successfully kills the ender dragon and gets {m} gold coins", "Language_Kill_Dragon_blast": "§l§4Player: {p} successfully killed the ender dragon. Due to the curse of the dragon, it will explode after 3 seconds! ! Be careful to avoid!", "Language_Deduct_gold_coins": "§l§3Successfully deducted {m} coins!", "Language_Attack_failed": "§l§4Insufficient balance for PVP", "Language_Boss_Blood_strip": ["Blood: ", "Injury: "], "Language_Lore_1": "Skill List: ", "Language_Throw_out_interception": "§l§4Skill items cannot be thrown!", "Language_Sabotage_interception": "§l§4Your destruction is blocked by the power of the dragon, the destruction is invalid!", "Language_Dragon_Slayer_notification": "§l§2Dragon Slayer: {p} is online!\n§l§2Current coordinates: {pos}\n§l§2Current HP: ${h}", "Language_Invalid_attack": "§l§4Your attack is blocked by the power of the dragon, and the attack is invalid!", "Language_Death_deduction": "§l§3You deduct {m} gold for your death!", "Language_Kill_Dragon_palyer_1": "§l§3Player: {p} successfully killed the Dragon Slayer to get a random item from its ender chest", "Language_Kill_Dragon_palyer_2": "§l§4Player: {p} successfully killed the Dragon Slayer, but couldn't get the item because his backpack was full", "Language_Kill_Dragon_palyer_3": "§l§6Player: {p} successfully killed the dragon slayer, since there is no item in the dragon slayer ender chest, he will get all the dragon slayer's gold coins!", "Language_edible": "§l§3You ate: {i} gained {buff} second {buffLvl} level {buffName} effect, deducting {m} gold!", "Language_Loading_succeeded": "[New Enhanced Survival] plugin loaded successfully, current version: {v}", "Language_Invalid_attack1": "§l§4Your attack is invalid because of your bad luck!", "Language_Divine_Guardian": "§l§3You use a skill to restore {h} HP, and the opponent reduces {h} HP!", "Language_Real_injury": "§l§3You use a skill, dealing an additional {d} true damage!", "Language_Attack_drop": "§l§2You dropped {i} due to being attacked", "Language_Attack_drop_damage": "§l§2You take an additional {d} true damage for having no items to drop!", "Language_Transmission_cost": "§l§3You have deducted the delivery fee of {m} gold!", "Language_Transmission_cost_arrears": "§l§3In addition to the failure of the delivery fee {m} gold coins, it has been included in the arrears!", "Language_Form_title": "§l§6Strengthen Survival", "Language_Form_Content": "§l§3Tip: Please choose to buy or strengthen\n§l§4Be careful to open this window with a weapon that requires a skill to be purchased!", "Language_Form_Button1": ["§l§3Buy Weapon Skills", "textures/items/fish_raw"], "Language_Form_Button2": ["§l§3Enhance Weapon Skills", "textures/items/fish_salmon_cooked"], "Language_Form_Button3": ["§l§3Open The Enchanting Interface", "textures/items/fishing_rod_cast"], "Language_Form_Button4": ["§l§3Repair Item Durability", "textures/items/flint"], "Language_Form_Button5": ["§l§3Check The Coordinates of The Dragon Slayer", "textures/items/flint_and_steel"], "Language_Form_Button6": ["§l§3Get the Beginner's Guide", "textures/blocks/flower_pot"], "Language_Form_Button7": ["§l§3Notification related settings", "textures/items/end_crystal"], "Language_Form_choice": "§l§3Tip: Please choose!", "Language_Purchase_failed1": "§l§4You have already purchased weapon skills, you cannot buy them again!", "Language_Reinforcement_failure1": "§l§4You haven't purchased skills yet, so you can't strengthen them!", "Language_Item_repair": "§l§3Tip: Please select an item! Current repair price {m}", "Language_View_dragon_slaughtering1": "The player is offline or has not completed the dragon slaying quest", "Language_View_dragon_slaughtering2": "Player: {p} at {dim} {x} {y} {z}", "Language_Repair_successful": "§l§3Repaired successfully!", "Language_Deduction_failed": "§l§4Deduction failed!", "Language_credit": "§l§4Insufficient balance!", "Language_Cannot_repair": "§l§4This item cannot be repaired!", "Language_enchanting_Form_title": "Enchantment selection interface", "Language_balance": "Your balance is: {m}", "Language_Enchant_Level": "The enchantment level defaults to level {l}", "Language_Select_Properties": "Select Properties", "Language_SkillStrengthening_Form_title": "§l§6Weapon skill enhancement interface", "Language_SkillStrengthening_Form_Content": "§l§3Tip: high price is not necessarily the best!", "Language_Upgrade_requires_gold_coins": "§l§3{sn} ${m} gold", "Language_Reinforcement_failure2": "§l§4This weapon skill has reached full level and cannot be strengthened!", "Language_Reinforcement_failure3": "This item cannot upgrade skills, reason: he has no skills!", "Language_Strengthen_success1": ["Skill List:", "{sn}", "Skill Level: {l}"], "Language_Strengthen_success2": "§l§5Update Successed!", "Language_Reinforcement_failure4": "§l§4Deduction failed", "Language_Reinforcement_failure5": "§l§4Insufficient balance", "Language_Purchase_interface": "§l§6Weapon skill purchase interface", "Language_Purchase_interface_Content": "§l§3Tip: Only one of the following three skills can be purchased", "Language_Purchase_success1": ["Skill List:", "{sn}", "Skill Level: 1"], "Language_Purchase_failed2": "§l§4This weapon is no longer available for purchase!", "Language_Enchant_failure": "§l§4Your balance is insufficient, you still need {m} coins", "Language_Enchant_successfully": "§l§3Enchanting success!", "Language_OP_Form_Button1": "Reload Configuration File", "Language_OP_Form_Button2": "Enable Sidebar", "Language_OP_Form_Button3": "Close Sidebar", "Language_OP_Form_Button4": "Give yourself 10,000 gold coins", "Language_Do_not_fall_success": "§l§3Added successfully!", "Language_Do_not_fall_fail": "§l§4Add failed, already exists!", "Language_Service_items_success": "§l§3Set up successfully!", "Language_High_version_tips": "[Enhanced Survival] You are currently using the beta version, please do not leak!", "Language_Low_version_prompt": "[Enhanced Survival] Found a new version, the version number is: {v}, please update!", "Language_Instruction_description": "Open the weapon enhancement panel", "Language_Instruction_description_op": "Open the gui interface | set the hand-held item to be injured and not drop | set the hand-held item to give items to the suit", "Language_MsgType1": "General message", "Language_MsgType2": "Failure message", "Language_MsgType3": "Warning message", "Language_MsgType4": "Message display location", "Language_MsgType4Data": ["Chat bar", "Above item bar"], "Language_True_Damage": "True_Damage", "Language_Blast_Attack": "Blast_Attack", "Language_Take_Your_Equipment": "Monster_Gift", "Language_Holy_Guardian": "Holy_Guardian", "Language_Amount_owed": "Amount owed" };
+    let languageZhCN = { "Language_Enable_Fracture": "你因为从高处摔下来导致骨折！", "Language_sidebar_avgPing": "§l§5平均延迟", "Language_sidebar_money": "§l§6金币余额", "Language_sidebar_title": "§l§3--肝帝纪元--", "Language_Settlement_of_arrears": "§l§6扣除欠款成功，欠款金额已清零。恭喜！", "Language_Partial_settlement": "§l§6扣除部分欠款金额成功，共扣除：{m}", "Language_Fishing_failed": "余额不足，无法钓鱼", "Language_Failed_use": "余额不足，无法使用", "Language_Player_Get_gold_coins": "§l§6你获得了：{m} 个金币！", "Language_Biological_Resurrection": "§l§4受到神龙影响生物将在3秒后复活并强化，请注意！", "Language_Kill_Dragon": "§l§6玩家：{p} 成功击杀末影龙，获得{m} 金币", "Language_Kill_Dragon_blast": "§l§4玩家：{p} 成功击杀末影龙，因受到神龙的诅咒，将在3秒后发生爆炸！！请注意躲避！", "Language_Deduct_gold_coins": "§l§3扣除{m} 金币成功！", "Language_Attack_failed": "§l§4余额不足，无法进行PVP", "Language_Boss_Blood_strip": ["剩余血量:", "本次伤害:"], "Language_Lore_1": "技能列表：", "Language_Throw_out_interception": "§l§4技能物品无法丢出！", "Language_Sabotage_interception": "§l§4你的破坏被神龙之力阻挡，破坏无效！", "Language_Dragon_Slayer_notification": "§l§2屠龙者：{p} 上线了！\n§l§2当前所在坐标：{pos}\n§l§2当前血量：${h}", "Language_Invalid_attack": "§l§4你的攻击被神龙之力阻挡，攻击无效！", "Language_Death_deduction": "§l§3你因死亡扣除 {m} 金币！", "Language_Kill_Dragon_palyer_1": "§l§3玩家: {p} 成功击杀了屠龙者，获得其末影箱随机物品", "Language_Kill_Dragon_palyer_2": "§l§4玩家：{p} 成功击杀了屠龙者，但因其背包满了无法获得物品", "Language_Kill_Dragon_palyer_3": "§l§6玩家：{p} 成功击杀了屠龙者，因屠龙者末影箱无物品，其将获得屠龙者的所有金币！", "Language_edible": "§l§3你食用了： {i} 获得了 {buff} 秒 {buffLvl} 级 {buffName} 效果，扣除 {m} 金币！", "Language_Loading_succeeded": "[New 强化生存] 插件加载成功，当前版本：{v}", "Language_Divine_Guardian": "§l§3你使用技能，恢复{h}血量，对方减少{h}血量！", "Language_Real_injury": "§l§3你使用技能，额外造成{d}点真实伤害！", "Language_Attack_drop": "§l§2你因被攻击导致 {i} 掉落", "Language_Attack_drop_damage": "§l§2你因无可掉落物品额外收到{d}点真实伤害！", "Language_Transmission_cost": "§l§3你已扣除传送费用 {m} 金币！", "Language_Transmission_cost_arrears": "§l§3除传送费用 {m} 金币失败，已计入欠款额度！", "Language_Form_title": "§l§6强化生存", "Language_Form_Content": "§l§3提示：请选择购买还是强化\n§l§4请注意要手持需要购买技能的武器打开此窗口！", "Language_Form_Button1": ["§l§3购买武器技能", "https://s3.bmp.ovh/imgs/2021/09/070c7d5cf30904a4.png"], "Language_Form_Button2": ["§l§3强化武器技能", "https://s3.bmp.ovh/imgs/2021/09/253edbaac602f3cd.png"], "Language_Form_Button3": ["§l§3打开附魔界面", "https://s3.bmp.ovh/imgs/2021/09/290476a112a76340.png"], "Language_Form_Button4": ["§l§3修复物品耐久", "https://s3.bmp.ovh/imgs/2021/12/9309741d68695519.png"], "Language_Form_Button5": ["§l§3查屠龙者坐标", "https://s3.bmp.ovh/imgs/2021/09/290476a112a76340.png"], "Language_Form_Button6": ["§l§3获取新手引导书", "https://s3.bmp.ovh/imgs/2021/09/118b8910b2a261db.png"], "Language_Form_Button7": ["§l§3相关通知设置", "textures/items/end_crystal"], "Language_Form_choice": "§l§3提示：请选择！", "Language_Purchase_failed1": "§l§4你已购买过武器技能，无法再次购买！", "Language_Reinforcement_failure1": "§l§4你尚未购买过技能，无法强化！", "Language_Item_repair": "§l§3提示：请选择物品！当前修复价格{m}", "Language_View_dragon_slaughtering1": "玩家不在线或未完成屠龙任务", "Language_View_dragon_slaughtering2": "玩家：{p} 在 {dim} {x} {y} {z}", "Language_Repair_successful": "§l§3修复成功！", "Language_Deduction_failed": "§l§4扣款失败！", "Language_credit": "§l§4余额不足！", "Language_Cannot_repair": "§l§4此物品不能修复！", "Language_enchanting_Form_title": "附魔选择界面", "Language_balance": "你的余额为：{m}", "Language_Enchant_Level": "附魔等级默认为{l}级", "Language_Select_Properties": "选择属性", "Language_SkillStrengthening_Form_title": "§l§6武器技能强化界面", "Language_SkillStrengthening_Form_Content": "§l§3提示：价高不一定最好！", "Language_Upgrade_requires_gold_coins": "§l§3{sn} ${m}金", "Language_Reinforcement_failure2": "§l§4此武器技能已达到满级，无法强化！", "Language_Reinforcement_failure3": "此物品无法升级技能，原因：他没有技能！", "Language_Strengthen_success1": ["技能列表:", "{sn}", "技能等级:{l}"], "Language_Strengthen_success2": "§l§5成功！", "Language_Reinforcement_failure4": "§l§4扣款失败", "Language_Reinforcement_failure5": "§l§4余额不足", "Language_Purchase_interface": "§l§6武器技能购买界面", "Language_Purchase_interface_Content": "§l§3提示：以下三个技能只能购买一个", "Language_Purchase_success1": ["技能列表:", "{sn}", "技能等级:1"], "Language_Purchase_failed2": "§l§4此武器已无法购买！", "Language_Enchant_failure": "§l§4你的余额不足，你还需要 {m} 金币", "Language_Enchant_successfully": "§l§3附魔成功！", "Language_OP_Form_Button1": "重载配置文件", "Language_OP_Form_Button2": "启用侧边栏", "Language_OP_Form_Button3": "关闭侧边栏", "Language_OP_Form_Button4": "给自己1万金币", "Language_Do_not_fall_success": "§l§3添加成功！", "Language_Invalid_attack1": "§l§4你的攻击因为你运气差，导致攻击无效！", "Language_Do_not_fall_fail": "§l§4添加失败，已存在！", "Language_Service_items_success": "§l§3设置成功!", "Language_High_version_tips": "[强化生存] 你目前正在使用内测版本，请勿外泄！", "Language_Low_version_prompt": "[强化生存] 发现新版本，版本号为：{v},请更新！", "Language_Instruction_description": "打开武器强化面板", "Language_Instruction_description_op": "打开gui界面|设置手持物品为受伤不掉落|设置手持物品为进服给予物品", "Language_MsgType1": "普通消息", "Language_MsgType2": "失败消息", "Language_MsgType3": "警告消息", "Language_MsgType4": "消息显示位置", "Language_MsgType4Data": ["聊天栏", "物品栏上方"], "Language_True_Damage": "真实伤害", "Language_Blast_Attack": "爆炸攻击", "Language_Take_Your_Equipment": "取你装备", "Language_Holy_Guardian": "神圣守护", "Language_Amount_owed": "欠款金额" };
+    let languageEnUS = { "Language_Enable_Fracture": "You broke your bone because you fell from a high place!", "Language_sidebar_avgPing": "§l§5Ping Delay", "Language_sidebar_money": "§l§6Gold Balance", "Language_sidebar_title": "§l§3--The Era of the Emperor--", "Language_Settlement_of_arrears": "§l§6The arrears have been successfully deducted, and the arrears have been cleared. Congratulations!", "Language_Partial_settlement": "§l§6Successfully deducted part of the arrears, total deduction: {m}", "Language_Fishing_failed": "Insufficient balance to fish", "Language_Failed_use": "Insufficient balance to use", "Language_Player_Get_gold_coins": "§l§6You got: {m} coins!", "Language_Biological_Resurrection": "§l§4Creatures affected by Shenlong will be resurrected and strengthened after 3 seconds, please pay attention!", "Language_Kill_Dragon": "§l§6Player: {p} successfully kills the ender dragon and gets {m} gold coins", "Language_Kill_Dragon_blast": "§l§4Player: {p} successfully killed the ender dragon. Due to the curse of the dragon, it will explode after 3 seconds! ! Be careful to avoid!", "Language_Deduct_gold_coins": "§l§3Successfully deducted {m} coins!", "Language_Attack_failed": "§l§4Insufficient balance for PVP", "Language_Boss_Blood_strip": ["Blood: ", "Injury: "], "Language_Lore_1": "Skill List: ", "Language_Throw_out_interception": "§l§4Skill items cannot be thrown!", "Language_Sabotage_interception": "§l§4Your destruction is blocked by the power of the dragon, the destruction is invalid!", "Language_Dragon_Slayer_notification": "§l§2Dragon Slayer: {p} is online!\n§l§2Current coordinates: {pos}\n§l§2Current HP: ${h}", "Language_Invalid_attack": "§l§4Your attack is blocked by the power of the dragon, and the attack is invalid!", "Language_Death_deduction": "§l§3You deduct {m} gold for your death!", "Language_Kill_Dragon_palyer_1": "§l§3Player: {p} successfully killed the Dragon Slayer to get a random item from its ender chest", "Language_Kill_Dragon_palyer_2": "§l§4Player: {p} successfully killed the Dragon Slayer, but couldn't get the item because his backpack was full", "Language_Kill_Dragon_palyer_3": "§l§6Player: {p} successfully killed the dragon slayer, since there is no item in the dragon slayer ender chest, he will get all the dragon slayer's gold coins!", "Language_edible": "§l§3You ate: {i} gained {buff} second {buffLvl} level {buffName} effect, deducting {m} gold!", "Language_Loading_succeeded": "[New Enhanced Survival] plugin loaded successfully, current version: {v}", "Language_Invalid_attack1": "§l§4Your attack is invalid because of your bad luck!", "Language_Divine_Guardian": "§l§3You use a skill to restore {h} HP, and the opponent reduces {h} HP!", "Language_Real_injury": "§l§3You use a skill, dealing an additional {d} true damage!", "Language_Attack_drop": "§l§2You dropped {i} due to being attacked", "Language_Attack_drop_damage": "§l§2You take an additional {d} true damage for having no items to drop!", "Language_Transmission_cost": "§l§3You have deducted the delivery fee of {m} gold!", "Language_Transmission_cost_arrears": "§l§3In addition to the failure of the delivery fee {m} gold coins, it has been included in the arrears!", "Language_Form_title": "§l§6Strengthen Survival", "Language_Form_Content": "§l§3Tip: Please choose to buy or strengthen\n§l§4Be careful to open this window with a weapon that requires a skill to be purchased!", "Language_Form_Button1": ["§l§3Buy Weapon Skills", "textures/items/fish_raw"], "Language_Form_Button2": ["§l§3Enhance Weapon Skills", "textures/items/fish_salmon_cooked"], "Language_Form_Button3": ["§l§3Open The Enchanting Interface", "textures/items/fishing_rod_cast"], "Language_Form_Button4": ["§l§3Repair Item Durability", "textures/items/flint"], "Language_Form_Button5": ["§l§3Check The Coordinates of The Dragon Slayer", "textures/items/flint_and_steel"], "Language_Form_Button6": ["§l§3Get the Beginner's Guide", "textures/blocks/flower_pot"], "Language_Form_Button7": ["§l§3Notification related settings", "textures/items/end_crystal"], "Language_Form_choice": "§l§3Tip: Please choose!", "Language_Purchase_failed1": "§l§4You have already purchased weapon skills, you cannot buy them again!", "Language_Reinforcement_failure1": "§l§4You haven't purchased skills yet, so you can't strengthen them!", "Language_Item_repair": "§l§3Tip: Please select an item! Current repair price {m}", "Language_View_dragon_slaughtering1": "The player is offline or has not completed the dragon slaying quest", "Language_View_dragon_slaughtering2": "Player: {p} at {dim} {x} {y} {z}", "Language_Repair_successful": "§l§3Repaired successfully!", "Language_Deduction_failed": "§l§4Deduction failed!", "Language_credit": "§l§4Insufficient balance!", "Language_Cannot_repair": "§l§4This item cannot be repaired!", "Language_enchanting_Form_title": "Enchantment selection interface", "Language_balance": "Your balance is: {m}", "Language_Enchant_Level": "The enchantment level defaults to level {l}", "Language_Select_Properties": "Select Properties", "Language_SkillStrengthening_Form_title": "§l§6Weapon skill enhancement interface", "Language_SkillStrengthening_Form_Content": "§l§3Tip: high price is not necessarily the best!", "Language_Upgrade_requires_gold_coins": "§l§3{sn} ${m} gold", "Language_Reinforcement_failure2": "§l§4This weapon skill has reached full level and cannot be strengthened!", "Language_Reinforcement_failure3": "This item cannot upgrade skills, reason: he has no skills!", "Language_Strengthen_success1": ["Skill List:", "{sn}", "Skill Level:{l}"], "Language_Strengthen_success2": "§l§5Update Successed!", "Language_Reinforcement_failure4": "§l§4Deduction failed", "Language_Reinforcement_failure5": "§l§4Insufficient balance", "Language_Purchase_interface": "§l§6Weapon skill purchase interface", "Language_Purchase_interface_Content": "§l§3Tip: Only one of the following three skills can be purchased", "Language_Purchase_success1": ["Skill List:", "{sn}", "Skill Level:1"], "Language_Purchase_failed2": "§l§4This weapon is no longer available for purchase!", "Language_Enchant_failure": "§l§4Your balance is insufficient, you still need {m} coins", "Language_Enchant_successfully": "§l§3Enchanting success!", "Language_OP_Form_Button1": "Reload Configuration File", "Language_OP_Form_Button2": "Enable Sidebar", "Language_OP_Form_Button3": "Close Sidebar", "Language_OP_Form_Button4": "Give yourself 10,000 gold coins", "Language_Do_not_fall_success": "§l§3Added successfully!", "Language_Do_not_fall_fail": "§l§4Add failed, already exists!", "Language_Service_items_success": "§l§3Set up successfully!", "Language_High_version_tips": "[Enhanced Survival] You are currently using the beta version, please do not leak!", "Language_Low_version_prompt": "[Enhanced Survival] Found a new version, the version number is: {v}, please update!", "Language_Instruction_description": "Open the weapon enhancement panel", "Language_Instruction_description_op": "Open the gui interface | set the hand-held item to be injured and not drop | set the hand-held item to give items to the suit", "Language_MsgType1": "General message", "Language_MsgType2": "Failure message", "Language_MsgType3": "Warning message", "Language_MsgType4": "Message display location", "Language_MsgType4Data": ["Chat bar", "Above item bar"], "Language_True_Damage": "True_Damage", "Language_Blast_Attack": "Blast_Attack", "Language_Take_Your_Equipment": "Monster_Gift", "Language_Holy_Guardian": "Holy_Guardian", "Language_Amount_owed": "Amount owed" };
     File.writeTo(path3 + 'Item_zh_CN.json', JSON.stringify(articlesInChineseAndEnglish, null, "\t"));
     File.writeTo(path3 + 'zh_CN.json', JSON.stringify(languageZhCN, null, "\t"));
     File.writeTo(path3 + 'en_US.json', JSON.stringify(languageEnUS, null, "\t"));
@@ -166,15 +166,18 @@ function GlobalVariableAssignment() {
     pluginLanguageFile = {};
     if (SystemLanguage == "en_US") {
         pluginLanguage = JSON.parse(File.readFrom(path3 + 'en_US.json'));//读取英文语言文件
+        TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.tag;
+        BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.tag;
+        MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.tag;
+        HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.tag;
     } else if (SystemLanguage == "zh_CN") {
         pluginLanguage = JSON.parse(File.readFrom(path3 + 'zh_CN.json'));//读取英文语言文件
         pluginLanguageFile = JSON.parse(File.readFrom(path3 + 'item_zh_CN.json'));//读取中英对照语言文件
+        TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.CNName;
+        BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.CNName;
+        MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.CNName;
+        HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.CNName;
     }
-    //---------------Tag读取
-    TrueDamageTag = purchaseSkillsMoneyListJson.True_Damage.tag;
-    BlastAttackTag = purchaseSkillsMoneyListJson.Blast_Attack.tag;
-    MonsterGiftTag = purchaseSkillsMoneyListJson.Monster_Gift.tag;
-    HolyGuardianTag = purchaseSkillsMoneyListJson.Holy_Guardian.tag;
     //---------------附魔相关变量设定
     ConfigEnchantNameList = [];
     ConfigEnchantMoneyList = [];
@@ -205,7 +208,9 @@ let repairDurableSelectionItems = {};//修复耐久选择的物品
 let playerAttackEntityHealthDisplay = {};//玩家攻击实体记录相关数据
 let playerAttackEntityUniqueId = {};//玩家攻击实体记录相关数据
 let entityBossHealthMsg = {};//
+let uid = {};
 
+const SkillNamesChineseToEnglish = {"True_Damage":"真实伤害","真实伤害":"True_Damage","Blast_Attack":"爆炸攻击","爆炸攻击":"Blast_Attack","Monster_Gift":"取你装备","取你装备":"Monster_Gift","Holy_Guardian":"神圣守护","神圣守护":"Holy_Guardian"};
 const enderDragonAttribute = '{"Armor":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"AttackTime":0s,"Attributes":[{"Base":0f,"Current":0f,"DefaultMax":1024f,"DefaultMin":-1024f,"Max":1024f,"Min":-1024f,"Name":"minecraft:luck"},{"Base":200f,"Current":200f,"DefaultMax":200f,"DefaultMin":0f,"Max":200f,"Min":0f,"Name":"minecraft:health"},{"Base":0f,"Current":0f,"DefaultMax":16f,"DefaultMin":0f,"Max":16f,"Min":0f,"Name":"minecraft:absorption"},{"Base":100f,"Current":100f,"DefaultMax":100f,"DefaultMin":0f,"Max":100f,"Min":0f,"Name":"minecraft:knockback_resistance"},{"Base":0.3f,"Current":0.3f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:movement"},{"Base":0.02f,"Current":0.02f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:underwater_movement"},{"Base":0.02f,"Current":0.02f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:lava_movement"},{"Base":16f,"Current":16f,"DefaultMax":2048f,"DefaultMin":0f,"Max":2048f,"Min":0f,"Name":"minecraft:follow_range"},{"Base":3f,"Current":3f,"DefaultMax":3f,"DefaultMin":3f,"Max":3f,"Min":3f,"Name":"minecraft:attack_damage"}],"BodyRot":89.6083f,"Chested":0b,"Color":0b,"Color2":0b,"Dead":0b,"DeathTime":0s,"FallDistance":0f,"Fire":0s,"HurtTime":0s,"Invulnerable":0b,"IsAngry":0b,"IsAutonomous":1b,"IsBaby":0b,"IsEating":0b,"IsGliding":0b,"IsGlobal":1b,"IsIllagerCaptain":0b,"IsOrphaned":0b,"IsOutOfControl":0b,"IsPregnant":0b,"IsRoaring":0b,"IsScared":0b,"IsStunned":0b,"IsSwimming":0b,"IsTamed":0b,"IsTrusting":0b,"LastDimensionId":2,"LeasherID":-1l,"LootDropped":0b,"Mainhand":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"MarkVariant":0,"Motion":[0.41062f,-0.0801882f,0.0189916f],"NaturalSpawn":0b,"Offhand":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"OnGround":0b,"OwnerNew":-1l,"Persistent":1b,"PortalCooldown":0,"Pos":[-3.61875f,72.6525f,0.525409f],"Rotation":[89.6083f,0f],"Saddled":0b,"Sheared":0b,"ShowBottom":0b,"Sitting":0b,"SkinID":0,"SpawnedByNight":0b,"Strength":0,"StrengthMax":0,"Surface":0b,"Tags":[],"TargetID":-1l,"TradeExperience":0,"TradeTier":0,"UniqueID":-197568495580l,"Variant":0,"boundX":0,"boundY":0,"boundZ":0,"canPickupItems":0b,"definitions":["+minecraft:ender_dragon","+","-dragon_flying","+dragon_sitting"],"hasBoundOrigin":0b,"hasSetCanPickupItems":1b,"identifier":"minecraft:ender_dragon"}';//末影龙原始属性
 const weaponStandardTypeName = ["minecraft:wooden_sword", "minecraft:stone_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:golden_sword", "minecraft:netherite_sword"];
 const minebbsApiUrl = ["http://49.235.118.203/resource-info?resource_id=2970", "http://124.222.132.223/resource-info?resource_id=2970"];
@@ -219,33 +224,64 @@ function sidebarDisplay() {
                 let sidebarDisplayjson = {}
                 sidebarDisplayjson[pluginLanguage.Language_sidebar_avgPing] = playerList[i].getDevice().avgPing;
                 sidebarDisplayjson[pluginLanguage.Language_sidebar_money] = money.get(playerList[i].xuid);
-                if (playerList[i].hasTag(`${TrueDamageTag}`)) {
-                    sidebarDisplayjson[pluginLanguage.Language_True_Damage] = attackSkillCDCountdown[playerList[i].xuid]["True_Damage"];
-                }
-                if (playerList[i].hasTag(`${BlastAttackTag}`)) {
-                    sidebarDisplayjson[pluginLanguage.Language_Blast_Attack] = attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"];
-                }
-                if (playerList[i].hasTag(`${MonsterGiftTag}`)) {
-                    sidebarDisplayjson[pluginLanguage.Language_Take_Your_Equipment] = attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"];
-                }
-                if (playerList[i].hasTag(`${HolyGuardianTag}`)) {
-                    sidebarDisplayjson[pluginLanguage.Language_Holy_Guardian] = attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"];
-                }
-                if (playerList[i].hasTag("arrears")) {
-                    sidebarDisplayjson[pluginLanguage.Language_Amount_owed] = parseInt(playerList[i].getScore(nameOfArrearsScoreboard));
-                }
-                playerList[i].setSidebar(pluginLanguage.Language_sidebar_title, sidebarDisplayjson);
-                if (attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] -= 1;
-                }
-                if (attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] -= 1;
-                }
-                if (attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"] -= 1;
-                }
-                if (attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] > 0) {
-                    attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] -= 1;
+                if(SystemLanguage == "zh_CN"){
+                    if (playerList[i].hasTag(`${TrueDamageTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_True_Damage] = attackSkillCDCountdown[playerList[i].xuid]["真实伤害"];
+                    }
+                    if (playerList[i].hasTag(`${BlastAttackTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Blast_Attack] = attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"];
+                    }
+                    if (playerList[i].hasTag(`${MonsterGiftTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Take_Your_Equipment] = attackSkillCDCountdown[playerList[i].xuid]["取你装备"];
+                    }
+                    if (playerList[i].hasTag(`${HolyGuardianTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Holy_Guardian] = attackSkillCDCountdown[playerList[i].xuid]["神圣守护"];
+                    }
+                    if (playerList[i].hasTag("arrears")) {
+                        sidebarDisplayjson[pluginLanguage.Language_Amount_owed] = parseInt(playerList[i].getScore(nameOfArrearsScoreboard));
+                    }
+                    playerList[i].setSidebar(pluginLanguage.Language_sidebar_title, sidebarDisplayjson);
+                    if (attackSkillCDCountdown[playerList[i].xuid]["真实伤害"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["真实伤害"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["爆炸攻击"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["取你装备"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["取你装备"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] -= 1;
+                    }
+                }else{
+                    if (playerList[i].hasTag(`${TrueDamageTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_True_Damage] = attackSkillCDCountdown[playerList[i].xuid]["True_Damage"];
+                    }
+                    if (playerList[i].hasTag(`${BlastAttackTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Blast_Attack] = attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"];
+                    }
+                    if (playerList[i].hasTag(`${MonsterGiftTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Take_Your_Equipment] = attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"];
+                    }
+                    if (playerList[i].hasTag(`${HolyGuardianTag}`)) {
+                        sidebarDisplayjson[pluginLanguage.Language_Holy_Guardian] = attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"];
+                    }
+                    if (playerList[i].hasTag("arrears")) {
+                        sidebarDisplayjson[pluginLanguage.Language_Amount_owed] = parseInt(playerList[i].getScore(nameOfArrearsScoreboard));
+                    }
+                    playerList[i].setSidebar(pluginLanguage.Language_sidebar_title, sidebarDisplayjson);
+                    if (attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["True_Damage"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["Blast_Attack"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["Monster_Gift"] -= 1;
+                    }
+                    if (attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] > 0) {
+                        attackSkillCDCountdown[playerList[i].xuid]["Holy_Guardian"] -= 1;
+                    }
                 }
             }
         }
@@ -353,6 +389,9 @@ function entityMobDieHandle(mob, source, cause) {
             if (source != undefined) {
                 if (source.isPlayer()) {//判断伤害是否来自玩家
                     let player = source.toPlayer();//实体转为玩家
+                    if(uid[player.xuid] != undefined){
+                        player.removeBossBar(uid[player.xuid])
+                    }
                     if (mob.type != "minecraft:ender_dragon") {//判断死亡生物是不是末影龙
                         if (playerAttackEntityHealthDisplay[player.xuid] == 1) {
                             playerAttackEntityHealthDisplay[player.xuid] = 0;
@@ -513,19 +552,23 @@ function playerMoveHandle(player, pos) {
                     let coordinateSum = XJudge + YJudge + ZJudge;
                     let jieguo = Math.sqrt(coordinateSum);
                     if (jieguo >= 7) {
-                        player.removeBossBar("")
+                        if(uid[player.xuid] != undefined){
+                            player.removeBossBar(uid[player.xuid])
+                        }
                     } else {
-                        player.removeBossBar("")
                         let bloodVolumeDisplayPercentage = 100 / entity.maxHealth;//取得百分比
                         let currentBloodVolume = entity.health * bloodVolumeDisplayPercentage - entityBossHealthMsg[player.xuid].damage * bloodVolumeDisplayPercentage;
                         let bossDisplayText = `             ${entityBossHealthMsg[player.xuid].biologicalName} \n\n${pluginLanguage.Language_Boss_Blood_strip[0]}${entity.health}/${entity.maxHealth}       ${pluginLanguage.Language_Boss_Blood_strip[1]}${entityBossHealthMsg[player.xuid].damage}`;
-                        player.setBossBar(bossDisplayText, currentBloodVolume)
+                        uid[player.xuid] = parseInt(myId());
+                        player.setBossBar(uid[player.xuid], bossDisplayText, currentBloodVolume)
 
                     }
                 }
             }
             if (!whetherLivingThingsExist) {
-                player.removeBossBar("")
+                if(uid[player.xuid] != undefined){
+                    player.removeBossBar(uid[player.xuid])
+                }
             }
         }
     }
@@ -629,7 +672,11 @@ function palyerJoinHandle(player) {
         if (attackSkillCDCountdown[player.xuid] == undefined) {//判断玩家是否有技能CD数据
             attackSkillCDCountdown[player.xuid] = {};//创建玩家技能cd数据
             for (let i in purchaseSkillsMoneyListJson) {//获取所有技能名称
-                attackSkillCDCountdown[player.xuid][i] = 0;//所有技能cd归零
+                if(SystemLanguage == "zh_CN"){
+                    attackSkillCDCountdown[player.xuid][purchaseSkillsMoneyListJson[i].CNName] = 0;//所有技能cd归零
+                }else{
+                    attackSkillCDCountdown[player.xuid][i] = 0;//所有技能cd归零
+                }
             }
         }
         if (playersDestroyRecords[player.xuid] == undefined) {//判断玩家是否有破坏上限数据
@@ -866,9 +913,9 @@ function serverServerStarted() {
         if (showsidebar) {//判断是否显示侧边栏
             setIntervalId = setInterval(sidebarDisplay, 1000);//每秒调用侧边栏函数
         }
-        setInterval(minebbsVersionMonitoring, 1000 * 60 * 60 * 3);//调用minebbs版本监测函数
+        //setInterval(minebbsVersionMonitoring, 1000 * 60 * 60 * 3);//调用minebbs版本监测函数
         setInterval(everyTenMinutes, 1000 * 60 * 10);//调用欠款扣款函数
-        minebbsVersionMonitoring();//启动进行一次版本检查
+        //minebbsVersionMonitoring();//启动进行一次版本检查
         log(pluginLanguage.Language_Loading_succeeded.replace(/{v}/g, version))
     } catch (err) {
         log(`服务器启动完毕事件报错：${err}`);
@@ -879,6 +926,9 @@ function serverServerStarted() {
 function setBossBloodVolumeBarDisplay(mob, source, damage) {
     let entityMaxHealth = mob.maxHealth;
     let player = source.toPlayer();//实体转玩家
+    if(uid[player.xuid] != undefined){
+        player.removeBossBar(uid[player.xuid])
+    }
     playerAttackEntityUniqueId[player.xuid] = mob.uniqueId
     playerAttackEntityHealthDisplay[player.xuid] = 1;
     let bloodVolumeDisplayPercentage = 100 / entityMaxHealth;//取得百分比
@@ -891,18 +941,13 @@ function setBossBloodVolumeBarDisplay(mob, source, damage) {
     if (pluginLanguageFile[mob.type.split(':')[1]] != undefined) {
         biologicalName = pluginLanguageFile[mob.type.split(':')[1]];
     }
-    player.removeBossBar("")
     if (remainingBloodVolume < 0) {
         remainingBloodVolume = 0
     }
     let bossDisplayText = `             ${biologicalName} \n\n${pluginLanguage.Language_Boss_Blood_strip[0]}${remainingBloodVolume}/${entityMaxHealth}       ${pluginLanguage.Language_Boss_Blood_strip[1]}${damage}`;
     entityBossHealthMsg[player.xuid] = { "biologicalName": `${biologicalName}`, "damage": `${parseInt(damage)}` };
-    player.setBossBar(bossDisplayText, currentBloodVolume)
-    setTimeout(function () {
-        if (playerAttackEntityHealthDisplay[player.xuid] == 0) {
-            player.removeBossBar("")
-        }
-    }, 2000);
+    uid[player.xuid] = parseInt(myId());
+    player.setBossBar(uid[player.xuid], bossDisplayText, currentBloodVolume, 2)
 }
 
 //玩家PVP使用技能操作
@@ -915,11 +960,15 @@ function playerPVPUseSkills(mob, source, damage) {
             let playerItemLore = playerHandItemJson.tag.display.Lore;//获取物品Lore数据
             if (playerItemLore != undefined && playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断物品是否拥有技能
                 let skillName = playerItemLore[1];//获得技能名称
+                let skillName1;
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
-                    let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                    let currentSkillLevel = parseInt(playerItemLore[2].split(':')[1]);//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
-                        let skillTreatment = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
+                        if(SystemLanguage == "zh_CN"){
+                            skillName1 = SkillNamesChineseToEnglish[skillName]
+                        }
+                        let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
+                        let skillTreatment = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
                         let playerNbtData = player.getNbt();//获得玩家自己Nbt数据
                         let getPlayerHealth = player.health;//获得玩家当前生命值
                         for (let i = 0; i < 14; i++) {
@@ -950,21 +999,31 @@ function playerPVEUseSkills(mob, source, damage) {
             let playerItemLore = playerHandItemJson.tag.display.Lore;//获取物品Lore数据
             if (playerItemLore != undefined && playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断物品是否拥有技能
                 let skillName = playerItemLore[1];//获得技能名称
+                let skillName1;
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
-                    let currentSkillLevel = playerItemLore[2].split("：")[1];//切割字符串获得等级
+                    let currentSkillLevel = playerItemLore[2].split(":")[1];//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_True_Damage && attackSkillCDCountdown[player.xuid][skillName] == 0) {//判断技能名称和CD情况
-                        let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
-                        let skillHurt = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Harm;//获取技能伤害
+                        if(SystemLanguage == "zh_CN"){
+                            skillName1 = SkillNamesChineseToEnglish[skillName]
+                        }
+                        let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
+                        let skillHurt = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel].Harm;//获取技能伤害
                         attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
                         mob.hurt(parseInt(damage + skillHurt))//造成额外真实伤害
                         TellMsg(player, pluginLanguage.Language_Real_injury.replace(/{d}/g, parseInt(damage + skillHurt)), 'MsgType1');
                     } else if (skillName == pluginLanguage.Language_Blast_Attack && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
-                        let skillHurt = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Harm;//获取技能伤害
-                        let skillRange = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel].Scope;//获取技能范围
+                        if(SystemLanguage == "zh_CN"){
+                            skillName1 = SkillNamesChineseToEnglish[skillName]
+                        }
+                        let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
+                        let skillHurt = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel].Harm;//获取技能伤害
+                        let skillRange = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel].Scope;//获取技能范围
                         attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
                         mc.explode(mob.pos, null, skillHurt, skillRange, false, false);//生成爆炸
                     } else if (skillName == pluginLanguage.Language_Take_Your_Equipment && attackSkillCDCountdown[player.xuid][skillName] == 0) {
+                        if(SystemLanguage == "zh_CN"){
+                            skillName1 = SkillNamesChineseToEnglish[skillName]
+                        }
                         if (!mob.getArmor().isEmpty()) {//判断受伤者容器盔甲栏是否为空
                             let entityArmorData = mob.getArmor().getAllItems();//获取实体盔甲栏容器数据
                             let acquisitionTimes = 1;//设置获取次数便于等级对比
@@ -978,12 +1037,15 @@ function playerPVEUseSkills(mob, source, damage) {
                             }
                             mob.getArmor().removeAllItems()//清空生物容器
                             mob.refreshItems()//刷新实体容器数据
-                            let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
+                            let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
                             attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
                         }
                     } else if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        let skillCd = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["CD"];//获取技能cd
-                        let skillTreatment = purchaseSkillsMoneyListJson[skillName].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
+                        if(SystemLanguage == "zh_CN"){
+                            skillName1 = SkillNamesChineseToEnglish[skillName]
+                        }
+                        let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
+                        let skillTreatment = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["Healing amount"];//获取技能治疗量
                         let playerNbtData = player.getNbt();//获得玩家自己Nbt数据
                         let getPlayerHealth = player.health;//获得玩家当前生命值
                         for (let i = 0; i < 14; i++) {
@@ -1125,15 +1187,15 @@ function generateEntitiesAndEnforceOperations(entityType, entityPos, player) {
                         let currentfollow = parseInt(currentLocationObject.getTag("Current").toString());//获取当前跟随范围
                         currentLocationObject.setFloat("Base", basefollow + 10)//设置基础跟随范围增加10
                         currentLocationObject.setFloat("Current", currentfollow + 10)//设置当前跟随范围增加10
-                    /*} else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
-                        let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
-                        //-----------伤害全面提升6
-                        currentLocationObject.setFloat("Base", baseattack + 6);
-                        currentLocationObject.setFloat("Current", baseattack + 6);
-                        currentLocationObject.setFloat("DefaultMax", baseattack + 6);
-                        currentLocationObject.setFloat("Max", baseattack + 6);
-                        currentLocationObject.setFloat("DefaultMin", baseattack + 6);
-                        currentLocationObject.setFloat("Min", baseattack + 6);*/
+                        /*} else if (currentLocationObject.getTag("Name") == "minecraft:attack_damage") {//判断是否是攻击伤害数据
+                            let baseattack = parseInt(currentLocationObject.getTag("Base").toString());//获取基础伤害数值
+                            //-----------伤害全面提升6
+                            currentLocationObject.setFloat("Base", baseattack + 6);
+                            currentLocationObject.setFloat("Current", baseattack + 6);
+                            currentLocationObject.setFloat("DefaultMax", baseattack + 6);
+                            currentLocationObject.setFloat("Max", baseattack + 6);
+                            currentLocationObject.setFloat("DefaultMin", baseattack + 6);
+                            currentLocationObject.setFloat("Min", baseattack + 6);*/
                     } else if (currentLocationObject.getTag("Name") == "minecraft:knockback_resistance") {//判断是不是击退抗性
                         currentLocationObject.setFloat("Base", 6);//修改基础击退抗性为6
                         currentLocationObject.setFloat("DefaultMax", 6);//修改最大击退抗性为6
@@ -1403,7 +1465,7 @@ function sendSkillListAfterStrengtheningWeapons(player, choiceId) {
                 let playerItemLore = playerHandItemJson.tag.display.Lore;//获取lore对象
                 if (playerItemLore[0] == pluginLanguage.Language_Lore_1) {//判断是否是技能Lore
                     let skillName = playerItemLore[1];//获得技能名称
-                    let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                    let currentSkillLevel = parseInt(playerItemLore[2].split(':')[1]);//切割字符串获得等级
                     if (currentSkillLevel < purchaseSkillsMoneyListJson[skillName].SkillLevel) {//判断物品技能等级是否还能强化
                         let upgradePrice = purchaseSkillsMoneyListJson[skillName].Upgrade[currentSkillLevel + 1];//获取升级需要的价格
                         playerUpgradeSkillMoney[player.xuid] = upgradePrice;
@@ -1437,7 +1499,7 @@ function upgradeSkillsSelectSkills(player, choiceId) {
                 let playerHandItemJson = JSON.parse(weaponObjectSelectedByThePlayer.getNbt().toString());//获取玩家选择物品的json数据
                 let playerItemLore = playerHandItemJson.tag.display.Lore;//获取lore对象
                 let skillName = playerItemLore[1];//获得技能名称
-                let currentSkillLevel = parseInt(playerItemLore[2].split('：')[1]);//切割字符串获得等级
+                let currentSkillLevel = parseInt(playerItemLore[2].split(':')[1]);//切割字符串获得等级
                 weaponObjectSelectedByThePlayer.setLore([pluginLanguage.Language_Strengthen_success1[0], skillName, pluginLanguage.Language_Strengthen_success1[2].replace(/{l}/g, String(currentSkillLevel + 1))]);//写入lore数据
                 player.giveItem(weaponObjectSelectedByThePlayer);//给玩家物品
                 player.refreshItems();//刷新玩家物品栏
@@ -1464,7 +1526,11 @@ function sendSkillListAfterSelectingWeapon(player, choiceId) {
             playerForm.setTitle(pluginLanguage.Language_Purchase_interface);
             playerForm.setContent(pluginLanguage.Language_Purchase_interface_Content);
             for (let skillName in purchaseSkillsMoneyListJson) {//遍历技能列表
-                playerForm.addButton(`§l§3${skillName} ${purchaseSkillsMoneyListJson[skillName].buy}`, purchaseSkillsMoneyListJson[skillName].PictureURL);
+                if (SystemLanguage == "zh_CN") {
+                    playerForm.addButton(`§l§3${purchaseSkillsMoneyListJson[skillName].CNName} ${purchaseSkillsMoneyListJson[skillName].buy}`, purchaseSkillsMoneyListJson[skillName].PictureURL);
+                } else {
+                    playerForm.addButton(`§l§3${skillName} ${purchaseSkillsMoneyListJson[skillName].buy}`, purchaseSkillsMoneyListJson[skillName].PictureURL);
+                }
             }
             player.sendForm(playerForm, purchaseSkillFormProcessing);//发送表单并调用处理函数
         }
@@ -1485,10 +1551,18 @@ function purchaseSkillFormProcessing(player, choiceId) {
             if (!playerInvenTory.isEmpty() && JSON.stringify(playerHandItemJson).indexOf("Lore") == -1) {//判断此武器是否购买过技能
                 let playerMoney = money.get(player.xuid);//获取玩家金币
                 let newskiullList = [];//新建一个技能列表
+                let newskiullList1 = [];
                 for (let i in purchaseSkillsMoneyListJson) {//遍历技能列表
-                    newskiullList[newskiullList.length] = i;//在新建的技能列表尾部追加技能名称
+                    if (SystemLanguage == "zh_CN") {
+                        newskiullList[newskiullList.length] = purchaseSkillsMoneyListJson[i].CNName;//在新建的技能列表尾部追加技能名称
+                        newskiullList1[newskiullList1.length] = i
+                    } else {
+                        newskiullList[newskiullList.length] = i;//在新建的技能列表尾部追加技能名称
+                        newskiullList1[newskiullList1.length] = i
+                    }
                 }
-                let purchaseSkillNeeds = purchaseSkillsMoneyListJson[newskiullList[choiceId]].buy//购买技能所需金币
+
+                let purchaseSkillNeeds = purchaseSkillsMoneyListJson[newskiullList1[choiceId]].buy//购买技能所需金币
                 if (playerMoney >= purchaseSkillNeeds) {//判断玩家金币是否足够购买技能
                     if (money.reduce(player.xuid, purchaseSkillNeeds)) {//扣款并判断是否成功
                         playerHandItem.setLore([pluginLanguage.Language_Lore_1, newskiullList[choiceId], pluginLanguage.Language_Purchase_success1[2]]);//给物品增加Lore内容
@@ -1518,7 +1592,7 @@ function enchantFormProcessing(player, choiceId) {
             return false;//停止后续
         } else {
             let playerInvenTory = player.getInventory();//获取玩家物品栏的容器对象
-            let playerInvenToryItem = playerInvenTory.getAllItems();//获取玩家背包所有物品对象
+            //let playerInvenToryItem = playerInvenTory.getAllItems();//获取玩家背包所有物品对象
             let playerMoney = money.get(player.xuid);//获取玩家金币
             if (!playerInvenTory.isEmpty() && playerMoney >= ConfigEnchantMoneyList[choiceId[2]]) {//判断玩家金币是否足够
                 if (money.reduce(player.xuid, ConfigEnchantMoneyList[choiceId[2]])) {//扣款并判断是否成功
@@ -1845,6 +1919,16 @@ function TellMsg(player, msg, msgType) {
     if (PlayerMsgDataListJson[player.xuid][msgType]) {
         player.tell(msg, PlayerMsgDataListJson[player.xuid].MsgType4)
     }
+}
+
+/**
+ * 当前时间
+ * @returns 当前时间
+ */
+function myId() {
+    const time = new Date().getTime().toString()
+    const timeArr = time.split('')
+    return timeArr.join('')
 }
 
 /*-----------监听注册，函数调用专区-----------*/
