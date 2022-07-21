@@ -1,13 +1,13 @@
 //--------------基础信息定义--------------
 const pluginName = 'Difficult_survival_Cn';
 const pluginDescribe = '强化生存';
-const pluginVersion = [2, 1, 3];
+const pluginVersion = [2, 1, 4];
 const pluginOther = { "作者": "清漪花开" };
 const path = './plugins/Difficult survival/';
 const path1 = './plugins/Difficult survival/data/';
 const path2 = './plugins/Difficult survival/data/Book/';
 const path3 = './plugins/Difficult survival/data/Lang/';
-const version = '2.1.3';
+const version = '2.1.4';
 
 if (!File.exists(path)) {
     //玩家选择消息位置，通知内容配置文件
@@ -209,8 +209,9 @@ let playerAttackEntityHealthDisplay = {};//玩家攻击实体记录相关数据
 let playerAttackEntityUniqueId = {};//玩家攻击实体记录相关数据
 let entityBossHealthMsg = {};//
 let uid = {};
+let playerMovePosJson = {};
 
-const SkillNamesChineseToEnglish = {"True_Damage":"真实伤害","真实伤害":"True_Damage","Blast_Attack":"爆炸攻击","爆炸攻击":"Blast_Attack","Monster_Gift":"取你装备","取你装备":"Monster_Gift","Holy_Guardian":"神圣守护","神圣守护":"Holy_Guardian"};
+const SkillNamesChineseToEnglish = { "True_Damage": "真实伤害", "真实伤害": "True_Damage", "Blast_Attack": "爆炸攻击", "爆炸攻击": "Blast_Attack", "Monster_Gift": "取你装备", "取你装备": "Monster_Gift", "Holy_Guardian": "神圣守护", "神圣守护": "Holy_Guardian" };
 const enderDragonAttribute = '{"Armor":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b},{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"AttackTime":0s,"Attributes":[{"Base":0f,"Current":0f,"DefaultMax":1024f,"DefaultMin":-1024f,"Max":1024f,"Min":-1024f,"Name":"minecraft:luck"},{"Base":200f,"Current":200f,"DefaultMax":200f,"DefaultMin":0f,"Max":200f,"Min":0f,"Name":"minecraft:health"},{"Base":0f,"Current":0f,"DefaultMax":16f,"DefaultMin":0f,"Max":16f,"Min":0f,"Name":"minecraft:absorption"},{"Base":100f,"Current":100f,"DefaultMax":100f,"DefaultMin":0f,"Max":100f,"Min":0f,"Name":"minecraft:knockback_resistance"},{"Base":0.3f,"Current":0.3f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:movement"},{"Base":0.02f,"Current":0.02f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:underwater_movement"},{"Base":0.02f,"Current":0.02f,"DefaultMax":3.40282e+38f,"DefaultMin":0f,"Max":3.40282e+38f,"Min":0f,"Name":"minecraft:lava_movement"},{"Base":16f,"Current":16f,"DefaultMax":2048f,"DefaultMin":0f,"Max":2048f,"Min":0f,"Name":"minecraft:follow_range"},{"Base":3f,"Current":3f,"DefaultMax":3f,"DefaultMin":3f,"Max":3f,"Min":3f,"Name":"minecraft:attack_damage"}],"BodyRot":89.6083f,"Chested":0b,"Color":0b,"Color2":0b,"Dead":0b,"DeathTime":0s,"FallDistance":0f,"Fire":0s,"HurtTime":0s,"Invulnerable":0b,"IsAngry":0b,"IsAutonomous":1b,"IsBaby":0b,"IsEating":0b,"IsGliding":0b,"IsGlobal":1b,"IsIllagerCaptain":0b,"IsOrphaned":0b,"IsOutOfControl":0b,"IsPregnant":0b,"IsRoaring":0b,"IsScared":0b,"IsStunned":0b,"IsSwimming":0b,"IsTamed":0b,"IsTrusting":0b,"LastDimensionId":2,"LeasherID":-1l,"LootDropped":0b,"Mainhand":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"MarkVariant":0,"Motion":[0.41062f,-0.0801882f,0.0189916f],"NaturalSpawn":0b,"Offhand":[{"Count":0b,"Damage":0s,"Name":"","WasPickedUp":0b}],"OnGround":0b,"OwnerNew":-1l,"Persistent":1b,"PortalCooldown":0,"Pos":[-3.61875f,72.6525f,0.525409f],"Rotation":[89.6083f,0f],"Saddled":0b,"Sheared":0b,"ShowBottom":0b,"Sitting":0b,"SkinID":0,"SpawnedByNight":0b,"Strength":0,"StrengthMax":0,"Surface":0b,"Tags":[],"TargetID":-1l,"TradeExperience":0,"TradeTier":0,"UniqueID":-197568495580l,"Variant":0,"boundX":0,"boundY":0,"boundZ":0,"canPickupItems":0b,"definitions":["+minecraft:ender_dragon","+","-dragon_flying","+dragon_sitting"],"hasBoundOrigin":0b,"hasSetCanPickupItems":1b,"identifier":"minecraft:ender_dragon"}';//末影龙原始属性
 const weaponStandardTypeName = ["minecraft:wooden_sword", "minecraft:stone_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:golden_sword", "minecraft:netherite_sword"];
 const minebbsApiUrl = ["http://49.235.118.203/resource-info?resource_id=2970", "http://124.222.132.223/resource-info?resource_id=2970"];
@@ -224,7 +225,7 @@ function sidebarDisplay() {
                 let sidebarDisplayjson = {}
                 sidebarDisplayjson[pluginLanguage.Language_sidebar_avgPing] = playerList[i].getDevice().avgPing;
                 sidebarDisplayjson[pluginLanguage.Language_sidebar_money] = money.get(playerList[i].xuid);
-                if(SystemLanguage == "zh_CN"){
+                if (SystemLanguage == "zh_CN") {
                     if (playerList[i].hasTag(`${TrueDamageTag}`)) {
                         sidebarDisplayjson[pluginLanguage.Language_True_Damage] = attackSkillCDCountdown[playerList[i].xuid]["真实伤害"];
                     }
@@ -253,7 +254,7 @@ function sidebarDisplay() {
                     if (attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] > 0) {
                         attackSkillCDCountdown[playerList[i].xuid]["神圣守护"] -= 1;
                     }
-                }else{
+                } else {
                     if (playerList[i].hasTag(`${TrueDamageTag}`)) {
                         sidebarDisplayjson[pluginLanguage.Language_True_Damage] = attackSkillCDCountdown[playerList[i].xuid]["True_Damage"];
                     }
@@ -330,6 +331,25 @@ function everyTenMinutes() {
     }
 }
 
+//移动监测
+function playerMove() {
+    setInterval(() => {
+        let playerList = mc.getOnlinePlayers();
+        if (JSON.stringify(playerList) != "[]") {
+            playerList.forEach(player => {
+                let xuid = player.xuid;
+                let pos = player.pos;
+                if (playerMovePosJson[xuid] == undefined) {
+                    playerMovePosJson[xuid] = `${parseInt(pos.x)} ${parseInt(pos.y)} ${parseInt(pos.z)}`;
+                } else if (playerMovePosJson[xuid] != `${parseInt(pos.x)} ${parseInt(pos.y)} ${parseInt(pos.z)}`) {
+                    playerMovePosJson[xuid] = `${parseInt(pos.x)} ${parseInt(pos.y)} ${parseInt(pos.z)}`;
+                    playerMoveHandle(player, pos);
+                }
+            });
+        }
+    }, 500);
+}
+
 //抛射物创建监听事件处理
 function entitySpawnProjectileHandle(entity, itemType) {
     try {
@@ -372,10 +392,12 @@ function blockRespawnAnchorExplode(pos, player) {
 }
 
 //床爆炸事件处理
-function blockBedExplodeHandle(pos) {
+function blockBedExplodeHandle(source,pos,_radius,_maxResistance,_isDestroy,_isFire) {
     if (whetherToInterceptBedExplosion) {//判断是否拦截
-        if (pos.dimid == 2 && terminalExplosionRecord == 0) {//判断爆炸发生区域，避免拦截插件制造的爆炸
-            return false;//拦截爆炸
+        if(source.type == "minecraft:bed"){
+            if (pos.dimid == 2 && terminalExplosionRecord == 0) {//判断爆炸发生区域，避免拦截插件制造的爆炸
+                return false;//拦截爆炸
+            }
         }
     }
 }
@@ -389,7 +411,7 @@ function entityMobDieHandle(mob, source, cause) {
             if (source != undefined) {
                 if (source.isPlayer()) {//判断伤害是否来自玩家
                     let player = source.toPlayer();//实体转为玩家
-                    if(uid[player.xuid] != undefined){
+                    if (uid[player.xuid] != undefined) {
                         player.removeBossBar(uid[player.xuid])
                     }
                     if (mob.type != "minecraft:ender_dragon") {//判断死亡生物是不是末影龙
@@ -494,7 +516,7 @@ function entityMobHurtHandle(mob, source, damage, cause) {
                 }
                 if (enderDragonInvalidAttackProbability) {//是否开启对末影龙伤害随机无效
                     let randomNumber = specifiedRangeRandomNumber(0, 100);//取随机数
-                    if (randomNumber >= contendenderDragonDamageProbability) {//判断是否在范围内
+                    if (randomNumber <= contendenderDragonDamageProbability) {//判断是否在范围内
                         return false;//拦截伤害
                     }
                 }
@@ -552,7 +574,7 @@ function playerMoveHandle(player, pos) {
                     let coordinateSum = XJudge + YJudge + ZJudge;
                     let jieguo = Math.sqrt(coordinateSum);
                     if (jieguo >= 7) {
-                        if(uid[player.xuid] != undefined){
+                        if (uid[player.xuid] != undefined) {
                             player.removeBossBar(uid[player.xuid])
                         }
                     } else {
@@ -566,7 +588,7 @@ function playerMoveHandle(player, pos) {
                 }
             }
             if (!whetherLivingThingsExist) {
-                if(uid[player.xuid] != undefined){
+                if (uid[player.xuid] != undefined) {
                     player.removeBossBar(uid[player.xuid])
                 }
             }
@@ -672,9 +694,9 @@ function palyerJoinHandle(player) {
         if (attackSkillCDCountdown[player.xuid] == undefined) {//判断玩家是否有技能CD数据
             attackSkillCDCountdown[player.xuid] = {};//创建玩家技能cd数据
             for (let i in purchaseSkillsMoneyListJson) {//获取所有技能名称
-                if(SystemLanguage == "zh_CN"){
+                if (SystemLanguage == "zh_CN") {
                     attackSkillCDCountdown[player.xuid][purchaseSkillsMoneyListJson[i].CNName] = 0;//所有技能cd归零
-                }else{
+                } else {
                     attackSkillCDCountdown[player.xuid][i] = 0;//所有技能cd归零
                 }
             }
@@ -916,6 +938,7 @@ function serverServerStarted() {
         //setInterval(minebbsVersionMonitoring, 1000 * 60 * 60 * 3);//调用minebbs版本监测函数
         setInterval(everyTenMinutes, 1000 * 60 * 10);//调用欠款扣款函数
         //minebbsVersionMonitoring();//启动进行一次版本检查
+        playerMove()
         log(pluginLanguage.Language_Loading_succeeded.replace(/{v}/g, version))
     } catch (err) {
         log(`服务器启动完毕事件报错：${err}`);
@@ -926,7 +949,7 @@ function serverServerStarted() {
 function setBossBloodVolumeBarDisplay(mob, source, damage) {
     let entityMaxHealth = mob.maxHealth;
     let player = source.toPlayer();//实体转玩家
-    if(uid[player.xuid] != undefined){
+    if (uid[player.xuid] != undefined) {
         player.removeBossBar(uid[player.xuid])
     }
     playerAttackEntityUniqueId[player.xuid] = mob.uniqueId
@@ -964,7 +987,7 @@ function playerPVPUseSkills(mob, source, damage) {
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
                     let currentSkillLevel = parseInt(playerItemLore[2].split(':')[1]);//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        if(SystemLanguage == "zh_CN"){
+                        if (SystemLanguage == "zh_CN") {
                             skillName1 = SkillNamesChineseToEnglish[skillName]
                         }
                         let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
@@ -1003,7 +1026,7 @@ function playerPVEUseSkills(mob, source, damage) {
                 if (player.hasTag(`${skillName}`)) {//判断玩家是否能使用这个技能
                     let currentSkillLevel = playerItemLore[2].split(":")[1];//切割字符串获得等级
                     if (skillName == pluginLanguage.Language_True_Damage && attackSkillCDCountdown[player.xuid][skillName] == 0) {//判断技能名称和CD情况
-                        if(SystemLanguage == "zh_CN"){
+                        if (SystemLanguage == "zh_CN") {
                             skillName1 = SkillNamesChineseToEnglish[skillName]
                         }
                         let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
@@ -1012,7 +1035,7 @@ function playerPVEUseSkills(mob, source, damage) {
                         mob.hurt(parseInt(damage + skillHurt))//造成额外真实伤害
                         TellMsg(player, pluginLanguage.Language_Real_injury.replace(/{d}/g, parseInt(damage + skillHurt)), 'MsgType1');
                     } else if (skillName == pluginLanguage.Language_Blast_Attack && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        if(SystemLanguage == "zh_CN"){
+                        if (SystemLanguage == "zh_CN") {
                             skillName1 = SkillNamesChineseToEnglish[skillName]
                         }
                         let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
@@ -1021,7 +1044,7 @@ function playerPVEUseSkills(mob, source, damage) {
                         attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
                         mc.explode(mob.pos, null, skillHurt, skillRange, false, false);//生成爆炸
                     } else if (skillName == pluginLanguage.Language_Take_Your_Equipment && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        if(SystemLanguage == "zh_CN"){
+                        if (SystemLanguage == "zh_CN") {
                             skillName1 = SkillNamesChineseToEnglish[skillName]
                         }
                         if (!mob.getArmor().isEmpty()) {//判断受伤者容器盔甲栏是否为空
@@ -1041,7 +1064,7 @@ function playerPVEUseSkills(mob, source, damage) {
                             attackSkillCDCountdown[player.xuid][skillName] = skillCd;//设置技能进入cd状态
                         }
                     } else if (skillName == pluginLanguage.Language_Holy_Guardian && attackSkillCDCountdown[player.xuid][skillName] == 0) {
-                        if(SystemLanguage == "zh_CN"){
+                        if (SystemLanguage == "zh_CN") {
                             skillName1 = SkillNamesChineseToEnglish[skillName]
                         }
                         let skillCd = purchaseSkillsMoneyListJson[skillName1].Damage[currentSkillLevel]["CD"];//获取技能cd
@@ -1933,18 +1956,17 @@ function myId() {
 
 /*-----------监听注册，函数调用专区-----------*/
 mc.listen("onRespawnAnchorExplode", blockRespawnAnchorExplode);//重生锚爆炸监听注册
-mc.listen("onBedExplode", blockBedExplodeHandle);//床爆炸监听注册
+mc.listen("onBlockExplode", blockBedExplodeHandle);//床爆炸监听注册
 mc.listen("onSpawnProjectile", entitySpawnProjectileHandle)//抛射物创建监听注册
 mc.listen("onMobDie", entityMobDieHandle);//实体死亡监听注册
 mc.listen("onMobHurt", entityMobHurtHandle);//实体受伤监听注册
 mc.listen("onRespawn", playerRespawnHandle);//玩家复活监听
 mc.listen("onMoneyAdd", playerMoneyAddHandle);//玩家金币增加事件
 mc.listen("onMoneyReduce", playerMoneyReduceHandle);//玩家金币减少事件
-mc.listen("onMove", playerMoveHandle);//玩家移动监听注册
 mc.listen("onDropItem", playerDropItemHurt);//玩家丢出物品监听注册
 mc.listen("onDestroyBlock", playerDestroyBlockHandle);//玩家破坏方块监听注册
 mc.listen("onJoin", palyerJoinHandle);//玩家进入游戏监听注册
-mc.listen("onAttack", playerAttackHandle);//玩家攻击实体监听注册
+mc.listen("onAttackEntity", playerAttackHandle);//玩家攻击实体监听注册
 mc.listen("onChangeDim", playerChangeDimHandle);//玩家切换维度监听注册
 mc.listen("onPlayerDie", playerDieHandle);//玩家死亡监听注册
 mc.listen("onEat", playerEatHandle);//吃食物监听注册
