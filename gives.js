@@ -1,6 +1,6 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
-const PluginsVersion = [0, 1, 8];
+const PluginsVersion = [0, 1, 9];
 const PluginsOtherInformation = { "插件作者": "清漪花开", "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/gives.js" };
 let itemCmdType;
 
@@ -14,7 +14,7 @@ function CommandRegistration() {
     Command.optional("Json", ParamType.JsonValue);
     Command.overload(["player", "item", "amount", "itemDIsplayName", "Json"]);
     Command.overload(["player", "item", "amount", "Json"]);
-    Command.setCallback((cmd, origin, output, results) => {
+    Command.setCallback((_cmd, _origin, output, results) => {
         setTimeout(function () {
             let nbt = ""
             if (results.Json == undefined) {
@@ -73,14 +73,21 @@ function NewItemNbt(item, itemDIsplayName, itemEnch, itemCount) {
     return nbt
 }
 
-mc.listen("onPlayerCmd", (player, cmd) => {
-    if (cmd.split(' ')[0] == 'gives') {
+mc.listen("onPlayerCmd", (_player, cmd) => {
+    if (cmd.split(' ')[0] == 'gives' || cmd.split(' ')[0] == '/gives') {
         itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
     }
 })
 
-mc.listen("onCmdBlockExecute",(cmd,pos,isMinecart)=>{
-    if (cmd.split(' ')[0] == 'gives') {
+mc.listen("onCmdBlockExecute", (cmd, _pos, _isMinecart) => {
+    if (cmd.split(' ')[0] == 'gives' || cmd.split(' ')[0] == '/gives') {
+        itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
+    }
+})
+
+
+mc.listen("onNpcCmd", (_npc, _pl, cmd) => {
+    if (cmd.split(' ')[0] == 'gives' || cmd.split(' ')[0] == '/gives') {
         itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
     }
 })
