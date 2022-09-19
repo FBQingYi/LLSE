@@ -1,6 +1,6 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
-const PluginsVersion = [0, 1, 9];
+const PluginsVersion = [0, 2, 1];
 const PluginsOtherInformation = { "插件作者": "清漪花开", "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/gives.js" };
 let itemCmdType;
 
@@ -30,7 +30,7 @@ function CommandRegistration() {
                 player.giveItem(it);
                 playerName += `${player.name} `;
             }
-        }, 2)
+        }, 10)
         output.success(`ok`)
     });
     Command.setup();
@@ -85,10 +85,9 @@ mc.listen("onCmdBlockExecute", (cmd, _pos, _isMinecart) => {
     }
 })
 
-
 mc.listen("onNpcCmd", (_npc, _pl, cmd) => {
-    if (cmd.split(' ')[0] == 'gives' || cmd.split(' ')[0] == '/gives') {
-        itemCmdType = mc.newItem('minecraft:' + cmd.split(' ')[2], 1)
+    if (cmd.indexOf('gives') != -1) {
+        itemCmdType = mc.newItem('minecraft:' + cmd.split('gives')[1].split(' ')[2], 1)
     }
 })
 
