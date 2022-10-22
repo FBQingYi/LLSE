@@ -10,19 +10,27 @@ function CommandRegistration() {
     Command.mandatory("player", ParamType.Player);
     Command.mandatory("item", ParamType.Item);
     Command.mandatory("amount", ParamType.Int);
+    Command.optional("itemAux", ParamType.Int);
     Command.optional("itemDIsplayName", ParamType.String);
     Command.optional("Json", ParamType.JsonValue);
+    Command.overload(["player", "item", "amount", "itemAux", "itemDIsplayName", "Json"]);
     Command.overload(["player", "item", "amount", "itemDIsplayName", "Json"]);
     Command.overload(["player", "item", "amount", "Json"]);
+    Command.overload(["player", "item", "amount", "itemAux", "Json"]);
     Command.setCallback((_cmd, _origin, output, results) => {
         setTimeout(function () {
-            let nbt = ""
+            let nbt = "";
             if (results.Json == undefined) {
                 nbt = NewItemNbt(itemCmdType, results.itemDIsplayName, "", results.amount)
             } else {
                 nbt = NewItemNbt(itemCmdType, results.itemDIsplayName, JSON.parse(results.Json), results.amount)
             }
             let it = mc.newItem(nbt);
+            log(results.itemAux)
+            if(results.itemAux != undefined){
+                it.setAux(results.itemAux);
+                log(it.getNbt().toString())
+            }
             let playerList = results.player;
             let playerName = "";
             for (let i in playerList) {
