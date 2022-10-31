@@ -1,6 +1,6 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
-const PluginsVersion = [0, 2, 1];
+const PluginsVersion = [0, 2, 2];
 const PluginsOtherInformation = { "插件作者": "清漪花开", "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/gives.js" };
 let itemCmdType;
 
@@ -36,7 +36,14 @@ function CommandRegistration() {
     Command.setup();
 }
 
-//修改nbt
+/**
+ * 修改物品nbt
+ * @param {Item} item 物品对象
+ * @param {String} itemDIsplayName 显示名称
+ * @param {Array} itemEnch 魔咒列表 
+ * @param {Int} itemCount 数量
+ * @returns 
+ */
 function NewItemNbt(item, itemDIsplayName, itemEnch, itemCount) {
     let nbt = item.getNbt();
     let nbt1 = "";
@@ -92,4 +99,6 @@ mc.listen("onNpcCmd", (_npc, _pl, cmd) => {
 })
 
 mc.listen("onServerStarted", () => { CommandRegistration() })
+
+ll.export(NewItemNbt,"NewItemNbt");
 ll.registerPlugin(PluginsName, PluginsIntroduction, PluginsVersion, PluginsOtherInformation)
