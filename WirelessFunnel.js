@@ -1,7 +1,7 @@
 //--------------基础信息定义--------------
 const pluginName = 'WirelessFunnel';
 const pluginDescribe = '无线漏斗';
-const pluginVersion = [0, 0, 1];
+const pluginVersion = [0, 0, 2];
 const pluginOther = { "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/WirelessFunnel.js" };
 const path = './plugins/WirelessFunnel/';
 
@@ -102,6 +102,18 @@ mc.listen("onUseItemOn", (player, item, block, _side) => {
                     }
                 }
             }
+        }
+    }
+})
+
+mc.listen("onDestroyBlock",(player,block)=>{
+    if(block.type = "minecraft:hopper"){
+        let pos = block.pos;
+        pos = `${parseInt(pos.x)},${parseInt(pos.y)},${parseInt(pos.z)},${pos.dimid}`;
+        if(configJson.data[pos] != undefined){
+            delete configJson.data[pos];
+            File.writeTo(path + 'config.json', JSON.stringify(configJson, null, "\t"));
+            player.tell(`${pos} 处漏斗被摧毁，无线漏斗链接已移除！`)
         }
     }
 })
