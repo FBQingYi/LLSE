@@ -1,29 +1,37 @@
 const PluginsName = 'gives';
 const PluginsIntroduction = '一个用于强化give指令功能的插件';
-const PluginsVersion = [0, 2, 2];
+const PluginsVersion = [0, 2, 4];
 const PluginsOtherInformation = { "插件作者": "清漪花开", "开源地址": "https://github.com/FBQingYi/LLSE/blob/main/gives.js" };
 let itemCmdType;
 
 //命令注册
 function CommandRegistration() {
     let Command = mc.newCommand("gives", "给你一个原版无法实现的give！", PermType.GameMasters);
-    Command.mandatory("player", ParamType.Player);
-    Command.mandatory("item", ParamType.Item);
-    Command.mandatory("amount", ParamType.Int);
-    Command.optional("itemDIsplayName", ParamType.String);
-    Command.optional("Json", ParamType.JsonValue);
-    Command.overload(["player", "item", "amount", "itemDIsplayName", "Json"]);
-    Command.overload(["player", "item", "amount", "Json"]);
+    Command.mandatory("玩家对象", ParamType.Player);
+    Command.mandatory("物品对象", ParamType.Item);
+    Command.mandatory("数量", ParamType.Int);
+    Command.optional("显示名称", ParamType.String);
+    Command.optional("Lore", ParamType.JsonValue);
+    Command.optional("附魔数据", ParamType.JsonValue);
+    Command.overload(["玩家对象", "物品对象", "数量", "显示名称", "附魔数据", "Lore"]);
+    Command.overload(["玩家对象", "物品对象", "数量", "显示名称", "附魔数据"]);
+    Command.overload(["玩家对象", "物品对象", "数量", "附魔数据"]);
+    Command.overload(["玩家对象", "物品对象", "数量", "附魔数据", "Lore"]);
+
     Command.setCallback((_cmd, _origin, output, results) => {
         setTimeout(function () {
             let nbt = ""
-            if (results.Json == undefined) {
-                nbt = NewItemNbt(itemCmdType, results.itemDIsplayName, "", results.amount)
+            if (results.附魔数据 == undefined || results.附魔数据 == "") {
+                nbt = NewItemNbt(itemCmdType, results.显示名称, "", results.数量)
             } else {
-                nbt = NewItemNbt(itemCmdType, results.itemDIsplayName, JSON.parse(results.Json), results.amount)
+                nbt = NewItemNbt(itemCmdType, results.显示名称, JSON.parse(results.附魔数据), results.数量)
             }
             let it = mc.newItem(nbt);
-            let playerList = results.player;
+            if (results.Lore != undefined) {
+                let lore = JSON.parse(results.Lore).lore;
+                it.setLore(lore);
+            }
+            let playerList = results.玩家对象;
             let playerName = "";
             for (let i in playerList) {
                 let player = playerList[i];
@@ -63,7 +71,7 @@ function NewItemNbt(item, itemDIsplayName, itemEnch, itemCount) {
             "ench": new NbtList([]),
         })
     }
-    if (itemEnch != "") {
+    if (itemEnch != "" && itemEnch != {} && JSON.stringify(itemEnch) != "{}") {
         if (itemEnch.Enchantments != undefined) {
             for (let i = 0; i < itemEnch.Enchantments.length; i++) {
                 let nbt2 = new NbtCompound({
@@ -92,13 +100,7 @@ mc.listen("onCmdBlockExecute", (cmd, _pos, _isMinecart) => {
     }
 })
 
-mc.listen("onNpcCmd", (_npc, _pl, cmd) => {
-    if (cmd.indexOf('gives') != -1) {
-        itemCmdType = mc.newItem('minecraft:' + cmd.split('gives')[1].split(' ')[2], 1)
-    }
-})
-
 mc.listen("onServerStarted", () => { CommandRegistration() })
 
-ll.export(NewItemNbt,"NewItemNbt");
+ll.export(NewItemNbt, "NewItemNbt");
 ll.registerPlugin(PluginsName, PluginsIntroduction, PluginsVersion, PluginsOtherInformation)
